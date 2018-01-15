@@ -710,7 +710,7 @@ box()
 \def\scriptfilename{integration\string_numerique.R}
 
 \scriptfile{\scriptfilename}
-\lstinputlisting[firstline=13]{\scriptfilename}
+\lstinputlisting[firstline=14]{\scriptfilename}
 
 
 \section{Exercices}

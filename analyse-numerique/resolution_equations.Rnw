@@ -1411,7 +1411,7 @@ uniroot(f, c(1, 31))$root
 \def\scriptfilename{resolution\string_equations.R}
 
 \scriptfile{\scriptfilename}
-\lstinputlisting[firstline=13]{\scriptfilename}
+\lstinputlisting[firstline=14]{\scriptfilename}
 
 
 \section{Exercices}

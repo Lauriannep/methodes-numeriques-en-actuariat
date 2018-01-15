@@ -1691,7 +1691,7 @@ sommaire des plus importants résultats à connaître en algèbre linéaire.
 \def\scriptfilename{notions\string_fondamentales.R}
 
 \scriptfile{\scriptfilename}
-\lstinputlisting[firstline=13]{\scriptfilename}
+\lstinputlisting[firstline=14]{\scriptfilename}
 
 
 \section{Exercices}

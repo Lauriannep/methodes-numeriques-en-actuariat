@@ -1043,7 +1043,7 @@ sim.disque2 <- function(n)
 \def\scriptfilename{simulation.R}
 
 \scriptfile{\scriptfilename}
-\lstinputlisting[firstline=13]{\scriptfilename}
+\lstinputlisting[firstline=14]{\scriptfilename}
 
 
 \section{Exercices}

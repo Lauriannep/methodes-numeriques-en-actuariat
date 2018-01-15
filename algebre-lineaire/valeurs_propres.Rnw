@@ -928,7 +928,7 @@ découle le théorème suivant.
 \def\scriptfilename{valeurs\string_propres.R}
 
 \scriptfile{\scriptfilename}
-\lstinputlisting[firstline=13]{\scriptfilename}
+\lstinputlisting[firstline=14]{\scriptfilename}
 
 
 \section{Exercices}
