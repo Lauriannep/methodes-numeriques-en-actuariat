@@ -276,36 +276,6 @@
     \item}%
     {\end{enumerate}}
 
-  %% Encadré générique pour les remarques importantes et autres
-  %% comportant une icône sur la gauche. Argument: symbole à
-  %% placer sur la gauche (obligatoire).
-  \newenvironment{infobox}[1]{%
-    \setlength{\FrameRule}{1pt}
-    \begin{framed}%
-      \noindent
-      \begin{minipage}{0.1\linewidth}
-        \raisebox{-1.5em}[0em][0em]{\HUGE#1}
-      \end{minipage}
-      \begin{minipage}[t]{0.88\linewidth}}%
-      {\end{minipage}\end{framed}}
-
-  %% Remarques importantes
-  % \newenvironment{important}{%
-  %   \begin{infobox}{\faExclamationCircle}}%
-  %   {\end{infobox}}
-
-  %% Informations
-  % \newenvironment{information}{%
-  %   \begin{infobox}{\faInfoCircle}}%
-  %   {\end{infobox}}
-
-  %% Boites additionnelles (basées sur awesomebox.sty) pour remarques
-  %% spécifiques à macOS et pour les changements au fil de la lecture.
-  \newcommand{\osxbox}[1]{%
-    \awesomebox{\faApple}{\aweboxrulewidth}{black}{#1}}
-  \newcommand{\gotorbox}[1]{%
-    \awesomebox{\faMapSigns}{\aweboxrulewidth}{black}{\sffamily #1}}
-
   %% Redéfinition de l'environnement de matrices de amsmath pour
   %% aligner les colonnes à droite. Pris dans
   %% <http://texblog.net/latex-archive/maths/matrix-align-left-right/>
@@ -339,6 +309,13 @@
   %% Indications de capsule vidéo
   \newcommand{\capsule}[2]{\href{#1}{#2}\marginpar{%
       \href{#1}{\raisebox{-0.5em}[0em][0em]{\HUGE\faYoutubePlay}}}}
+
+  %% Boites additionnelles (basées sur awesomebox.sty) pour remarques
+  %% spécifiques à macOS et pour les changements au fil de la lecture.
+  \newcommand{\osxbox}[1]{%
+    \awesomebox{\faApple}{\aweboxrulewidth}{black}{#1}}
+  \newcommand{\gotorbox}[1]{%
+    \awesomebox{\faMapSigns}{\aweboxrulewidth}{black}{\sffamily #1}}
 
   %% Boite pour le nom du fichier de script correspondant au début des
   %% sections d'exemples.
