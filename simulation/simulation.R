@@ -127,7 +127,9 @@ rgamma(n, 11:2, 2:11)      # G(11, 2), G(10, 3), ..., G(2, 11)
 ## désirée. Par défaut, l'échantillonnage se fait avec remise
 ## et avec des probabilités égales sur tout le support.
 sample(1:49, 7)            # numéros pour le 7/49
-sample(1:10, 10)           # mélange des nombres de 1 à 10
+sample(1:10, 10)           # permutation des nombres de 1 à 10
+sample(1:10)               # idem, plus simple
+sample(10)                 # idem, encore plus simple!
 
 ## On peut échantillonner avec remise.
 sample(1:10, 10, replace = TRUE)
@@ -139,8 +141,76 @@ x <- sample(c(0, 2, 5), 1000, replace = TRUE,
 table(x)                   # tableau de fréquences
 
 ###
-### AUTRES TECHNIQUES DE SIMULATION
+### MODÈLES ACTUARIELS COURANTS
 ###
+
+## Le paquetage actuar contient plusieurs fonctions de
+## simulation de modèles actuariels. Nous allons fournir des
+## exemples d'utilisation de ces fonctions dans la suite.
+library(actuar)            # charger le paquetage
+
+## MÉLANGES DISCRETS
+
+## La clé pour simuler facilement d'un mélange discret en R
+## consiste à réaliser que l'ordre des observations est sans
+## importance et, donc, que l'on peut simuler toutes les
+## observations de la première loi, puis toutes celles de la
+## seconde loi.
+##
+## Reste à déterminer le nombre d'observations qui provient de
+## chaque loi. Pour chaque observation, la probabilité qu'elle
+## provienne de la première loi est p. Le nombre
+## d'observations provenant de la première loi suit donc une
+## distribution binomiale de paramètres n et p, où n est le
+## nombre total d'observations à simuler.
+##
+## Voici un exemple de simulation d'observations du mélange
+## discret de deux lois log-normales présenté dans le
+## chapitre. Les paramètres de la première loi sont 3,6 et
+## 0,6; ceux de la seconde loi sont 4,5 et 0,3. Le paramètre de
+## mélange est p = 0,55.
+n <- 10000                   # taille de l'échantillon
+n1 <- rbinom(1, n, 0.55)     # quantité provenant de la loi 1
+x <- c(rlnorm(n1, 3.6, 0.6),     # observations de la loi 1
+       rlnorm(n - n1, 4.5, 0.3)) # observations de la loi 2
+hist(x, prob = TRUE)             # histogramme
+curve(0.55 * dlnorm(x, 3.6, 0.6) +
+      0.45 * dlnorm(x, 4.5, 0.3),
+      add = TRUE, lwd = 2, col = "red3") # densité théorique
+
+## La fonction 'rmixture' du paquetage actuar offre une
+## interface conviviale pour simuler des observations de
+## mélanges discrets (avec un nombre quelconque de
+## distributions).
+##
+## La fonction compte trois arguments:
+##
+## 'n': nombre d'observations à simuler;
+## 'probs': vecteur de poids relatif de chaque modèle dans le
+##          mélange (normalisé pour sommer à 1);
+## 'models': vecteur d'expressions contenant les modèles
+##           formant le mélange.
+##
+## La méthode de formulation des modèles est commune à toutes
+## les fonctions de simulations de actuar. Il s'agit de
+## fournir, sous forme d'expression non évaluée, des appels à
+## des fonctions de simulation en omettant le nombre de
+## valeurs à simuler.
+##
+## Pour illustrer, reprenons l'exemple ci-dessus avec
+## 'rmixture'.
+x <- rmixture(10000, probs = c(0.55, 0.45),
+              models = expression(rlnorm(3.6, 0.6),
+                                  rlnorm(4.5, 0.3)))
+hist(x, prob = TRUE)       # histogramme
+curve(0.55 * dlnorm(x, 3.6, 0.6) +
+      0.45 * dlnorm(x, 4.5, 0.3),
+      add = TRUE, lwd = 2, col = "red3") # densité théorique
+
+## Simulation d'un mélange de deux exponentielles (de moyennes
+## 1/3 et 1/7) avec poids égal.
+rmixture(10, 0.5, expression(rexp(3), rexp(7)))
+
 
 ## MÉLANGES CONTINUS
 
@@ -195,67 +265,6 @@ plot(p/length(x))          # graphique
 (xu <- unique(x))          # valeurs distinctes de x
 points(xu, dnbinom(xu, 5, 0.8), pch = 21, bg = "red3")
 
-## MÉLANGES DISCRETS
-
-## Le mélange discret est un cas limite du mélange continu
-## lorsque la distribution de Theta est une Bernoulli de
-## paramètre p, c'est-à-dire que Pr[Theta = 1] = p. Le
-## résultat du mélange est une distribution avec densité de la
-## forme
-##
-## f(x) = p f1(x) + (1 - p) f2(x),
-##
-## où f1 et f2 sont deux densités quelconques. Les mélanges
-## discrets sont très souvent utilisés pour créer de nouvelles
-## distributions aux caractéristiques particulières que l'on
-## ne retrouve pas chez les distributions d'usage courant.
-##
-## Par exemple, le mélange suivant de deux distributions
-## log-normales résulte en une fonction de densité de
-## probabilité bimodale, mais ayant néanmoins une queue
-## similaire à celle d'une log-normale. Graphiquement:
-op <- par(mfrow = c(3, 1)) # trois graphiques superposés
-curve(dlnorm(x, 3.575, 0.637),
-      xlim = c(0, 250),  ylab = "f(x)",
-      main = expression(paste("Log-normale(",
-          mu, " = 3,575, ", sigma, " = 0,637)")))
-curve(dlnorm(x, 4.555, 0.265),
-      xlim = c(0, 250), ylab = "f(x)",
-      main = expression(paste("Log-normale(",
-          mu, " = 4,555, ", sigma, " = 0,265)")))
-curve(0.554 * dlnorm(x, 3.575, 0.637) +
-      0.446 * dlnorm(x, 4.555, 0.265),
-      xlim = c(0, 250),  ylab = "f(x)",
-      main = expression(paste("Mélange (p = 0,554)")))
-par(op)                    # revenir aux paramètres par défaut
-
-## L'algorithme de simulation d'un mélange discret est
-##
-## 1. Simuler un nombre u uniforme sur (0, 1).
-## 2. Si u <= p, simuler un nombre de f1(x), sinon simuler de
-##    f2(x).
-##
-## La clé pour simuler facilement d'un mélange discret en R:
-## réaliser que l'ordre des observations est sans importance
-## et, donc, que l'on peut simuler toutes les observations de
-## la première loi, puis toutes celles de la seconde loi. La
-## seule chose dont il reste à tenir compte: le nombre
-## d'observations qui provient de chaque loi; pour chaque
-## observation, la probabilité qu'elle provienne de la
-## première loi est p.
-##
-## Ici, on veut simuler des observations d'un mélange discret
-## de deux lois log-normales, l'une de paramètres 3,575 et
-## 0,637, l'autre de paramètres 4,555 et 0,265. Le paramètre
-## de mélange est p = 0,554.
-n <- 1000                  # taille de l'échantillon
-n1 <- rbinom(1, n, 0.554)  # quantité provenant de la loi 1
-x <- c(rlnorm(n1, 3.575, 0.637),     # observations de loi 1
-       rlnorm(n - n1, 4.555, 0.265)) # observations de loi 2
-hist(x, prob = TRUE)                 # histogramme
-curve(0.554 * dlnorm(x, 3.575, 0.637) +
-      0.446 * dlnorm(x, 4.555, 0.265),
-      add = TRUE, lwd = 2, col = "red3") # densité théorique
 
 ## CONVOLUTIONS
 

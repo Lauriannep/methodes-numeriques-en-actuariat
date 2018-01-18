@@ -328,6 +328,7 @@ axis(2, at = 0:2/2)
 \end{exemple}
 
 \begin{exemple}
+  \label{ex:simulation:binomiale}
   On veut simuler des observations d'une distribution binomiale de
   paramètres $n$ et $\theta$. On pourrait, pour chaque $x$ simulé,
   faire $n$ expériences de Bernoulli et compter le nombre de succès.
@@ -888,6 +889,181 @@ avec remise.
 \gotorbox{Le code informatique R de la \autoref{sec:simulation:code}
   contient des exemples plus détaillés d'utilisation des fonctions
   mentionnées ci-dessus.}
+
+
+\section{Modèles actuariels courants}
+\label{sec:simulation:modeles-actuariels}
+
+Cette section traite de techniques de simulation pour des
+distributions couramment utilisés dans la modélisation des risques en
+sciences actuarielles.
+
+\subsection{Mélanges discrets}
+\label{sec:simulation:modeles-actuariels:melanges}
+
+Les mélanges discrets (ou finis; \emph{mixture} en anglais) sont
+utiles pour décrire des phénomènes considérés comme provenant de la
+combinaison de plusieurs phénomènes qui surviennent chacun avec une
+probabilité connue d'avance. Par exemple, si nous estimons qu'il y a
+90~\% de chances que la distribution du nombre de personnes dans une
+file d'attente soit une Poisson de paramètre $2$ et 10~\% de chances
+qu'il s'agisse plutôt d'une Poisson de paramètre $10$, alors la
+fonction de masse de probabilité de la distribution du nombre de
+personnes dans la file d'attente en tout temps est:
+\begin{equation*}
+  \Pr[X = x] =
+  0,9 \frac{2^x e^{-2}}{x!} + 0,1 \frac{10^x e^{-10}}{x!}.
+\end{equation*}
+Cette fonction de masse de probabilité est un mélange discret de deux
+lois de Poisson.
+
+\begin{definition}
+  La variable aléatoire $Y$ est un mélange discret à $k$ points des
+  variables aléatoires $X_1, X_2, \dots X_k$ si sa fonction de
+  répartition est
+  \begin{equation*}
+    F_Y(x) = p_1 F_{X_1}(x) + p_2 F_{X_2}(x) + \dots + p_k F_{X_k}(x),
+  \end{equation*}
+  où $p_j \in [0, 1]$ pour tout $j = 1, \dots, k$ et
+  $\sum_{i = 1}^k p_j = 1$.
+\end{definition}
+
+Dans la suite, nous ne considérerons que les mélanges de $k = 2$
+distributions. Lorsque celles-ci sont continues avec fonctions de
+densité de probabilité $f_1$ et $f_2$, la densité du mélange peut
+s'écrire $f(x) = p f_1(x) + (1 - p) f_2(x)$.
+
+\begin{exemple}
+  Les mélanges discrets sont très souvent utilisés pour créer de
+  nouvelles distributions aux caractéristiques particulières que l'on
+  ne retrouve pas chez les distributions d'usage courant.
+
+  Par exemple, la \autoref{fig:simulation:ln.ln} montre qu'un
+  mélange de deux distributions log-normales peut résulter en une
+  fonction de densité de probabilité bimodale, mais ayant néanmoins
+  une queue similaire à celle d'une log-normale.
+
+  \begin{figure}
+    \centering
+<<echo=FALSE, fig=TRUE, width=4.5, height=7>>=
+par(mfrow = c(3, 1), lwd = 1)
+par1 <- c(3.6, 0.6)
+par2 <- c(4.5, 0.3)
+p <- 0.55
+titre1 <- bquote(paste("Log-normale(", mu, " = ", .(par1[1]), ", ", sigma, " = ", .(par1[2]), ")"))
+titre2 <- bquote(paste("Log-normale(", mu, " = ", .(par2[1]), ", ", sigma, " = ", .(par2[2]), ")"))
+titre3 <- bquote(paste("Mélange (p = ", .(p), ")"))
+curve(dlnorm(x, par1[1], par1[2]), xlim = c(0, 250),
+      main = titre1, ylab = "f(x)", lwd = 2)
+curve(dlnorm(x, par2[1], par2[2]), xlim = c(0, 250),
+      main = titre2, ylab = "f(x)", lwd = 2)
+curve(p * dlnorm(x, par1[1], par1[2]) + (1 - p) * dlnorm(x, par2[1], par2[2]),
+      xlim = c(0, 250), main = titre3, ylab = "f(x)", lwd = 2)
+@
+    \caption{Fonctions de densité de probabilité de deux log-normales et
+      de leur mélange discret}
+    \label{fig:simulation:ln.ln}
+  \end{figure}
+  \qed
+\end{exemple}
+
+Pour concevoir un algorithme de simulation d'un mélange discret à deux
+distributions, il faut bien comprendre que chaque observation provient
+de l'une ou de l'autre des distributions. Reste, à chaque fois, à
+déterminer de quelle distribution simuler.
+
+\begin{algorithme}[Mélange discret de deux distributions]
+  \label{algo:simulation:melange}
+  Soit $F(x) = p F_1(x) + (1 - p) F_2(x)$ la fonction de répartition
+  d'un mélange discret des distributions avec fonctions de répartition
+  $F_1$ et $F_2$. Les étapes ci-dessous permettent de générer un
+  nombre aléatoire de la distribution $F$.
+  \begin{enumerate}
+  \item Obtenir un nombre $u$ d'une loi $U(0, 1)$.
+  \item Si $u \leq p$, générer un nombre aléatoire de la distribution
+    $F_1$, sinon générer un nombre aléatoire de $F_2$.
+  \end{enumerate}
+\end{algorithme}
+
+Vous aurez reconnu dans le test $u \leq p$, où $u$ provient d'une loi
+$U(0, 1)$, le cœur de la procédure de simulation d'une loi de
+Bernoulli mentionnée à l'\autoref{ex:simulation:binomiale}.
+L'\autoref{algo:simulation:melange} revient donc à simuler
+$I\{u \leq p\}$ nombre de la distribution $F_1$ et
+$1 - I\{u \leq p\} = I\{u > p\}$ nombre de la distribution $F_2$.
+Cette observation joue un rôle important dans la création d'une
+procédure de simulation de $n > 1$ valeurs d'un mélange.
+
+La fonction \code{rmixture} du paquetage \pkg{actuar} \citep{actuar}
+offre une interface conviviale pour obtenir des nombres aléatoires de
+mélanges discrets.
+
+\gotorbox{Le code informatique de la \autoref{sec:simulation:code}
+  propose une procédure de simulation d'un mélange discret ainsi que
+  des exemples d'utilisation de la fonction \code{rmixture}.}
+
+\subsection{Mélanges continus et modèles hiérarchiques}
+\label{sec:simulation:modeles-actuariels:hierarchiques}
+
+%% Un mélange continu de deux variables aléatoires est créé
+%% lorsque l'on suppose qu'un paramètre d'une distribution f
+%% est une réalisation d'une autre variable aléatoire avec
+%% densité u, comme ceci:
+
+%% X|Theta = theta ~ f(x|theta)
+%%           Theta ~ u(theta)
+
+%% Ce genre de modèle est fréquent en analyse bayesienne et
+%% souvent utilisé en actuariat. Certaines lois de probabilité
+%% sont aussi uniquement définies en tant que mélanges.
+
+%% L'intérêt, ici, est d'obtenir des observations de la
+%% variable aléatoire non conditionnelle X. L'algorithme de
+%% simulation est simple:
+
+%% 1. Simuler un nombre theta de la distribution de Theta.
+%% 2. Simuler une valeur x de la distribution de
+%%    X|Theta = theta.
+
+%% Ce qu'il importe de remarquer dans l'algorithme ci-dessus,
+%% c'est que le paramètre de mélange (theta) change pour
+%% chaque observation simulée. Autrement il n'y a juste pas de
+%% mélange, on obtient simplement un échantillon de la
+%% distribution f(x|theta).
+
+%% Les mélanges continus sont simples à faire en R puisque les
+%% fonctions de simulation sont vectorielles. Par exemple,
+%% simulons 1000 observations du mélange
+
+%% X|Theta = theta ~ Poisson(theta)
+%%           Theta ~ Gamma(5, 4)
+%% theta <- rgamma(1000, 5, 4) # 1000 paramètres de mélange...
+%% x <- rpois(1000, theta)     # ... pour 1000 Poisson différentes
+
+%% On peut écrire le tout en une seule expression.
+%% x <- rpois(1000, rgamma(1000, 5, 4))
+
+%% On peut démontrer que la distribution non conditionnelle de
+%% X est une binomiale négative de paramètres 5 et 4/(4 + 1) =
+%% 0,8. Faisons une vérification empirique. On calcule d'abord
+%% le tableau de fréquences des observations de l'échantillon
+%% avec la fonction 'table'. Il existe une méthode de 'plot'
+%% pour les tableaux de fréquences.
+%% (p <- table(x))            # tableau de fréquences
+%% plot(p/length(x))          # graphique
+
+%% On ajoute au graphique les masses de probabilités théoriques.
+%% (xu <- unique(x))          # valeurs distinctes de x
+%% points(xu, dnbinom(xu, 5, 0.8), pch = 21, bg = "red3")
+
+
+
+
+\subsection{Distributions composées}
+\label{sec:simulation:modeles-actuariels:composees}
+
+
+
 
 
 
