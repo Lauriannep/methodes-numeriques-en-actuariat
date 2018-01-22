@@ -1070,7 +1070,7 @@ sont vectorielles rend la simulation de mélanges continus très simples
 \begin{exemple}
   Soit $X$ une variable aléatoire issue du mélange
   $X|\Theta = \theta \sim \text{Poisson}(\theta)$ et
-  $\Theta ~ \text{Gamma}(5, 4)$. Les deux expressions R ci-dessous
+  $\Theta \sim \text{Gamma}(5, 4)$. Les deux expressions R ci-dessous
   permettent de générer \nombre{1000} observations de $X$.
 <<echo=TRUE, eval=FALSE>>=
 theta <- rgamma(1000, 5, 4)
@@ -2457,7 +2457,7 @@ options(op)
 
 \begin{exercice}
   Dans la mise en œuvre de
-  l'~\autoref{algo:simulation:melange-discret} de simulation d'un
+  l'\autoref{algo:simulation:melange-discret} de simulation d'un
   mélange discret présentée à la \autoref{sec:simulation:code}, nous
   générons un nombre d'une distribution binomiale pour déterminer la
   quantité de nombres à simuler de la première distribution du mélange
@@ -2482,6 +2482,114 @@ options(op)
     \dots, p_k$ données. C'est la stratégie employée par la fonction
     \code{rmixture} de \pkg{actuar}.
   \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Écrire des expressions R pour simuler des observations des modèles
+  ci-dessous d'abord sans, puis avec, les fonctions dédiées du
+  paquetage \pkg{actuar}, le cas échéant.
+  \begin{enumerate}
+  \item Variable aléatoire dont la fonction de densité est
+    $f(x) = 0,3 f_1(x) + 0,7 f_2(x)$, où $f_1$ est la densité d'une
+    distribution exponentielle de moyenne $1/2$ et $f_2$ est la
+    densité d'une distribution gamma de paramètre $\alpha = 3$ et de
+    moyenne $6$.
+  \item Mélange $f(x) = 0,5647 I\{x = 0\} + 0,4353 (2^x e^{-2}/x!)$,
+    où $I\{\mathcal{A}\}$ est une fonction indicatrice qui vaut $1$
+    lorsque la condition $\mathcal{A}$ est vraie et $0$ sinon.
+  \item Variable aléatoire $X$ définie ainsi:
+    $X|\Theta = \theta \sim \text{Poisson}(\theta)$,
+    $\Theta \sim \text{Inverse gaussienne}(2, 1)$. La fonction de
+    densité de probabilité de la distribution inverse gaussienne de
+    moyenne $\mu$ et de dispersion $\phi$ est
+    \begin{equation*}
+      f(x) = \left( \frac{1}{2 \pi \phi x^3} \right)^{1/2}
+      \exp\left( -\frac{(x - \mu)^2}{2 \mu^2 \phi x} \right), \quad
+      x \ge 0, \mu > 0, \phi > 0.
+    \end{equation*}
+    \emph{Astuce}: la fonction \code{rinvgauss} du paquetage
+    \pkg{actuar} permet de simuler des observations de la distribution
+    inverse gaussienne.
+  \item Dsitribution composée $S = X_1 + \dots + X_N$ avec
+    $N \sim \text{Poisson}(2)$ et $X \sim \text{Log-normale}(7,1, 1)$.
+  \item Binomiale négative composée où les paramètres de la binomiale
+    négative sont $r = 2$ et $p = 0,3$, et la distribution de la
+    variable aléatoire $X$ est une log-normale de paramètres
+    $(7,1, 1)$.
+  \end{enumerate}
+  \begin{sol}
+    Dans chacun des cas ci-dessous, nous considérons que l'objet
+    \code{n} contient le nombre de valeurs à simuler.
+    \begin{enumerate}
+    \item Il s'agit de simuler des observations d'un mélange discret
+      d'une Exponentielle$(2)$ et d'une Gamma$(2, 1/3)$. Nous pouvons
+      procéder en suivant la procédure explicitée à la
+      \autoref{sec:simulation:exercices} ou avec la fonction
+      \code{rmixture} du paquetage \pkg{actuar}.
+<<echo=TRUE, eval=FALSE>>=
+n1 <- rbinom(1, n, 0.3)
+c(rexp(n1, 2), rgamma(n - n1, 2, scale = 3))
+@
+<<echo=TRUE, eval=FALSE>>=
+rmixture(n, c(0.3, 0.7),
+         expression(rexp(2), rgamma(2, scale = 3)))
+@
+    \item Le mélange discret est, ici, celui d'une distribution dégénérée
+      en $x = 0$ et d'une Poisson de paramètre $\lambda = 2$. La
+      simulation «manuelle» est en tous points similaire à ce que nous
+      avons fait en b). Cependant, à moins de créer une fonction de
+      «simulation» d'une distribution dégénérée, nous ne pouvons
+      utiliser directement la fonction \code{rmixture}.
+<<echo=TRUE, eval=FALSE>>=
+n1 <- rbinom(1, n, 0.3)
+c(rep(n1, 0), rpois(n - n1, 2))
+@
+      Le paquetage \pkg{actuar} fournit néanmoins une fonction pour
+      simuler des observations d'un tel mélange. En effet, celui-ci
+      est simplement une distribution de Poisson avec une probabilité
+      en $x = 0$ de $p_0 = 0,5647 + 0,4353 e^{-2} = 0,6236$, une
+      distribution autrement connue sous le nom de Poisson
+      zéro-modifiée. Les fonctions avec racine \meta{zmpois} de
+      \pkg{actuar} permettent de travailler avec cette distribution.
+<<echo=TRUE, eval=FALSE>>=
+rzmpois(n, 2, p0 = 0.6236)
+@
+    \item Nous devons simuler des observations de la distribution
+      Poisson-inverse gaussienne qui, par ailleurs, est définie par le
+      mélange continu présenté dans la question. Nous pouvons procéder
+      «manuellement» à l'aide de la fonction \code{rinvgauss} du
+      paquetage \pkg{actuar}, ou encore plus directement avec la
+      fonction \code{rpoisinvgauss} du même paquetage.
+<<echo=TRUE, eval=FALSE>>=
+rpois(n, rinvgauss(2, 1))
+@
+<<echo=TRUE, eval=FALSE>>=
+rpoisinvgauss(n, 2, 1)
+@
+    \item Nous devons simuler des observations d'une distribution
+      Poisson composée. Le paquetage \pkg{actuar} fournit la fonction
+      \code{rcomppois} pour ce faire.
+<<echo=TRUE, eval=FALSE>>=
+sapply(rpois(n, 2),
+       function(n) sum(rlnorm(n, log(2000), 1)))
+@
+<<echo=TRUE, eval=FALSE>>=
+rcomppois(n, 2, rlnorm(log(2000), 1))
+@
+    \item Il faut cette fois simuler des observations d'une distribution
+      binomiale négative composée. Le paquetage \pkg{actuar} fournit
+      la fonction \code{rcompound} pour ce cas général.
+<<echo=TRUE, eval=FALSE>>=
+sapply(rnbinom(n, 2, 0.3),
+       function(n) sum(rlnorm(n, log(2000), 1)))
+@
+<<echo=TRUE, eval=FALSE>>=
+rcompound(n, rnbinom(2, 0.3), rlnorm(log(2000), 1))
+@
+    \end{enumerate}
+  \end{sol}
+
+
 \end{exercice}
 
 \Closesolutionfile{reponses}
