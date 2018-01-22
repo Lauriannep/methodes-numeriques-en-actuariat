@@ -23,7 +23,7 @@ options(width = 52)
   à partir de la méthode d'acceptation-rejet.
 \item Calculer des nombres pseudo-aléatoires non uniformes en
   suivant un algorithme donné.
-\item Utiliser les outils de Excel, VBA et R pour la simulation de
+\item Utiliser les outils de Excel et R pour la simulation de
   nombres non uniformes.
 \end{objectifs}
 
@@ -163,9 +163,9 @@ $F_X^{-1}(\cdot)$, résoudre numériquement
 \end{displaymath}
 peut s'avérer aussi efficace que bien d'autres méthodes.
 
-\tipbox{Dans Excel (et VBA), il faut nécessairement utiliser la
-  méthode de l'inverse. Plusieurs fonctions de quantiles sont
-  disponibles; voir la \autoref{sec:simulation:excel_et_al}.}
+\tipbox{Dans Excel, il faut nécessairement utiliser la méthode de
+  l'inverse. Plusieurs fonctions de quantiles sont disponibles; voir
+  la \autoref{sec:simulation:excel_et_al}.}
 
 
 \subsection{Distributions continues}
@@ -704,8 +704,8 @@ rect(-1, -1, 1, 1, border = "orange", lwd = 2)
 \end{figure}
 
 
-\section{Fonctions de simulation de variables aléatoires dans Excel,
-  VBA et \textsf{R}}
+\section{Fonctions de simulation de variables aléatoires dans Excel et
+  \textsf{R}}
 \label{sec:simulation:excel_et_al}
 
 Il est important de savoir simuler des valeurs d'une variable
@@ -716,7 +716,7 @@ en général la majorité des fonctions de simulation de variables
 aléatoires dont on peut avoir besoin pour un usage quotidien.
 
 
-\subsection{Excel et VBA}
+\subsection{Excel}
 
 Tel que mentionné à la section 3.1, il faut généralement utiliser la
 méthode de l'inverse pour simuler des observations de lois de
@@ -735,9 +735,11 @@ traducteurs français ont omis de faire de même.
 
 \begin{table}[t]
   \centering
+  \begingroup
+    \renewcommand{\code}[1]{\texttt{\small #1}}
   \begin{tabularx}{\linewidth}{lp{17ex}X}
     \toprule
-    Loi de probabilité &
+    Loi &
     Fonctions Excel \newline (nom anglais) &
     Fonctions Excel \newline (nom français) \\
     \midrule
@@ -747,7 +749,7 @@ traducteurs français ont omis de faire de même.
     Binomiale &
     \code{BINOM.DIST} \newline \code{BINOM.INV} &
     \code{LOI.BINOMALE.N} \newline \code{LOI.BINOMIALE.INVERSE} \\
-    Binomiale négative &
+    Binomiale nég. &
     \code{NEGBINOM.DIST} &
     \code{LOI.BINOMIALE.NEG.N} \\
     Exponentielle &
@@ -759,7 +761,7 @@ traducteurs français ont omis de faire de même.
     Gamma &
     \code{GAMMA.DIST} \newline \code{GAMMA.INV} &
     \code{LOI.GAMMA.N} \newline \code{LOI.GAMMA.INVERSE.N} \\
-    Hypergéométrique &
+    Hypergéom.
     \code{HYPGEOM.DIST} &
     \code{LOI.HYPERGEOMETRIQUE.N} \\
     Khi carré &
@@ -788,23 +790,11 @@ traducteurs français ont omis de faire de même.
     \code{LOI.WEIBULL.N} \\
     \bottomrule
   \end{tabularx}
+  \endgroup
   \caption{Liste des fonctions relatives à des lois de probabilité
     depuis Excel 2010.}
   \label{tab:excel}
 \end{table}
-
-Aucune fonction statistique n'existe dans VBA. On fera donc appel aux
-fonctions de Excel en préfixant les noms de fonctions \emph{anglais}
-du \autoref{tab:excel} de la propriété \code{WorksheetFunction}.
-En utilisant une structure
-\begin{verbatim}
-With WorksheetFunction
-    ...
-End With
-\end{verbatim}
-dans une routine VBA, il est également possible accéder directement
-aux fonctions Excel en les préfixant seulement d'un point.
-
 
 \subsection{R}
 
