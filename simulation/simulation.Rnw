@@ -101,6 +101,16 @@ Par conséquent, si $U \sim U(0, 1)$, alors
 La fonction de répartition inverse, $F_X^{-1}$, est aussi appelée
 \emph{fonction de quantile}.
 
+\begin{algorithme}[Méthode de l'inverse]
+  Soit $X$ une variable aléatoire avec fonction de répartition
+  $F_X(x)$. Les étapes ci-dessous permettent de générer une
+  observation $x$ de cette variable aléatoire.
+  \begin{enumerate}
+  \item Obtenir un nombre $u$ d'une loi $U(0, 1)$.
+  \item Poser $x = F_X^{-1}(u)$.
+  \end{enumerate}
+\end{algorithme}
+
 La méthode de l'inverse consiste à choisir un nombre uniformément sur
 l'axe des ordonnées d'une fonction de répartition (donc un nombre
 entre $0$ et $1$) et à trouver la valeur correspondante sur l'axe des
@@ -432,16 +442,22 @@ pour tout $x$, alors nous pouvons utiliser l'algorithme
 d'acceptation-rejet ci-dessous pour générer des observations de la
 variable aléatoire $X$.
 
-\begin{enumerate}
-\item Générer une réalisation $y$ de la variable aléatoire $Y$ avec
-  fonction de densité de probabilité $g_Y(\cdot)$.
-\item Générer un nombre $u$ d'une $U(0, 1)$.
-\item Si
-  \begin{displaymath}
-    u \leq \frac{f_X(y)}{c g_Y(y)},
-  \end{displaymath}
-  poser $x = y$. Sinon, retourner à l'étape 1.
-\end{enumerate}
+\begin{algorithme}[Méthode d'acceptation-rejet]
+  Soit $X$ une variable aléatoire avec fonction de densité de
+  probabilité $f_X(x)$ et $Y$ une variable aléatoire avec fonction de
+  densité de probabilité $g_Y(x)$. Les étapes ci-dessous permettent de
+  générer un nombre $x$ issu de la distribution $f$.
+  \begin{enumerate}
+  \item Obtenir une réalisation $y$ de distribution avec densité
+    $g_Y(\cdot)$.
+  \item Obtenir un nombre $u$ d'une $U(0, 1)$.
+  \item Si
+    \begin{equation*}
+      u \leq \frac{f_X(y)}{c g_Y(y)},
+    \end{equation*}
+    poser $x = y$. Sinon, retourner à l'étape 1.
+  \end{enumerate}
+\end{algorithme}
 
 \begin{rem}
   Puisque, par définition, l'aire sous les densités $f$ et $g$ vaut
