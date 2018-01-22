@@ -163,11 +163,9 @@ $F_X^{-1}(\cdot)$, résoudre numériquement
 \end{displaymath}
 peut s'avérer aussi efficace que bien d'autres méthodes.
 
-\begin{rem}
-  Dans Excel (et VBA), il faut nécessairement utiliser la méthode de
-  l'inverse. Plusieurs fonctions de quantiles sont disponibles
-  (\autoref{sec:simulation:excel_et_al}).
-\end{rem}
+\tipbox{Dans Excel (et VBA), il faut nécessairement utiliser la
+  méthode de l'inverse. Plusieurs fonctions de quantiles sont
+  disponibles; voir la \autoref{sec:simulation:excel_et_al}.}
 
 
 \subsection{Distributions continues}
@@ -400,11 +398,9 @@ axis(2, at = 0:2/2)
   \qed
 \end{exemple}
 
-\begin{rem}
-  La méthode de l'inverse pour les distributions discrètes à support
+\tipbox{La méthode de l'inverse pour les distributions discrètes à support
   fini est facile à mettre en œuvre dans Excel à l'aide de la
-  fonction \texttt{RECHERCHEV()}.
-\end{rem}
+  fonction \code{RECHERCHEV()}.}
 
 \begin{prob-astuce}
   Au cœur du problème que nous tentons de résoudre, il y a la
@@ -459,25 +455,27 @@ variable aléatoire $X$.
   \end{enumerate}
 \end{algorithme}
 
-\begin{rem}
-  Puisque, par définition, l'aire sous les densités $f$ et $g$ vaut
-  $1$ dans les deux cas, la relation $c g_Y(x) \geq f_X(x)$ ne peut
-  être vraie pour tout $x$ que si $c > 1$.
-\end{rem}
+\tipbox{Puisque, par définition, l'aire sous les densités $f$ et $g$
+  vaut $1$ dans les deux cas, la relation $c g_Y(x) \geq f_X(x)$ ne
+  peut être vraie pour tout $x$ que si $c > 1$.}
 
 L'idée de la %
 \capsule{http://youtu.be/acceptation-rejet}{méthode
   d'acceptation-rejet} %
 consiste à accepter la «bonne proportion» des réalisations de $Y$
-comme provenant de $X$. Dans l'illustration de la
-\autoref{fig:simulation:acceptation-rejet}, la densité $f$ à support
-fini est facilement enveloppée par un rectangle. Un nombre $y$ simulé
-de cette distribution (à toutes fins pratiques une uniforme, ici) est
-accepté comme provenant de $f$ dans une proportion correspondant au
-ratio entre la valeur de $f_X(y)$ (les segments pointillés dans la
-figure) et la valeur de $c g_Y(y)$ (les segments pleins). On constate
-aisément que certaines valeurs $y$ seront acceptées plus souvent que
-d'autres en conformité avec la forme de la densité.
+comme provenant de $X$. La principale difficulté avec la méthode
+d'acceptation-rejet consiste à trouver la fonction enveloppante
+$c g_Y(x)$.
+
+Dans l'illustration de la \autoref{fig:simulation:acceptation-rejet},
+la densité $f$ à support fini est facilement enveloppée par un
+rectangle. Un nombre $y$ simulé de cette distribution (à toutes fins
+pratiques une uniforme, ici) est accepté comme provenant de $f$ dans
+une proportion correspondant au ratio entre la valeur de $f_X(y)$ (les
+segments pointillés dans la figure) et la valeur de $c g_Y(y)$ (les
+segments pleins). On constate aisément que certaines valeurs $y$
+seront acceptées plus souvent que d'autres en conformité avec la forme
+de la densité.
 
 \begin{figure}
   \centering
@@ -541,18 +539,9 @@ text(0.1, m + 0.08, "c g(y)")
   \label{fig:simulation:acceptation-rejet2}
 \end{figure}
 
-\begin{rems}
-  \begin{enumerate}
-  \item La principale difficulté avec la méthode d'acceptation-rejet
-    consiste à trouver la fonction enveloppante $c g_Y(x)$.
-  \item Évidemment, plus l'enveloppe est près de $f_X(x)$, plus
-    l'algorithme est performant puisque l'on rejette alors moins de
-    valeurs.
-  \item Il est aussi possible d'envelopper une densité à support
-    infini\dots\ par une autre densité à support fini; voir les
-    exercices.
-  \end{enumerate}
-\end{rems}
+\tipbox{Évidemment, plus l'enveloppe est près de $f_X(x)$, plus
+  l'algorithme est performant puisque l'on rejette alors moins de
+  valeurs.}
 
 \begin{exemple}
   \label{exemple:simulation:beta:1}
@@ -2544,7 +2533,7 @@ options(op)
 
 \input{reponses-simulation}
 
-x%%% Local Variables:
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-engine: xetex
 %%% TeX-master: "methodes-numeriques-en-actuariat_simulation"
