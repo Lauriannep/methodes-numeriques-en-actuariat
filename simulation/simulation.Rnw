@@ -154,7 +154,7 @@ $F_X^{-1}(\cdot)$, résoudre numériquement
 peut s'avérer aussi efficace que bien d'autres méthodes.
 
 \begin{rem}
-  Dans Excel (et VBA), on doit nécessairement utiliser la méthode de
+  Dans Excel (et VBA), il faut nécessairement utiliser la méthode de
   l'inverse. Plusieurs fonctions de quantiles sont disponibles
   (\autoref{sec:simulation:excel_et_al}).
 \end{rem}
@@ -173,7 +173,7 @@ fonction de répartition est simple à inverser (exponentielle, Pareto,
 Weibull). Il faut parfois utiliser d'autres méthodes.
 
 \begin{exemple}
-  On veut obtenir un échantillon aléatoire d'une distribution
+  Nous voulons obtenir un échantillon aléatoire d'une distribution
   exponentielle de paramètre $\lambda$ avec fonction de densité de
   probabilité
   \begin{align*}
@@ -192,7 +192,7 @@ Weibull). Il faut parfois utiliser d'autres méthodes.
     X = - \frac{1}{\lambda} \ln (1 - U) \sim \text{Exponentielle}(\lambda),
   \end{displaymath}
   où $U \sim U(0, 1)$. En fait, puisque $U \sim U(0, 1)
-  \Leftrightarrow 1 - U \sim U(0, 1)$, on peut se contenter de la
+  \Leftrightarrow 1 - U \sim U(0, 1)$, nous pouvons nous contenter de la
   relation
   \begin{displaymath}
     X = - \frac{1}{\lambda} \ln U \sim \text{Exponentielle}(\lambda).
@@ -225,7 +225,7 @@ Supposons une distribution avec un saut en $x_0$ et
   F_X(x_0^-) &= a \\
   F_X(x_0) &= b > a.
 \end{align*}
-Si $a < u < b$, on pose $x = x_0$. Ainsi, $x_0$ sera simulé dans une
+Si $a < u < b$, nous posons $x = x_0$. Ainsi, nous simulerons $x_0$ dans une
 proportion $b - a$ du temps, ce qui correspond à $\Pr[X = x_0]$. Voir
 la \autoref{fig:simulation:discrete} pour une illustration.
 
@@ -251,13 +251,13 @@ axis(2)
   \label{fig:simulation:discrete}
 \end{figure}
 
-Que faire si $u = a$ ou $u = b$? On prend la plus grande valeur de
+Que faire si $u = a$ ou $u = b$? Nous prenons la plus grande valeur de
 l'intervalle où $F_X(x)$ est constante:
 \begin{align*}
   u = a  &\Rightarrow x = x_0 \\
   u = b  &\Rightarrow x = x_1.
 \end{align*}
-On procède ainsi parce que plusieurs générateurs produisent des
+Nous procédons ainsi parce que plusieurs générateurs produisent des
 nombres uniformes sur $[0, 1)$.
 
 \begin{exemple}
@@ -271,8 +271,8 @@ nombres uniformes sur $[0, 1)$.
       0,5, & 2 \leq x < 3.
     \end{cases}
   \end{displaymath}
-  On a une variable aléatoire \emph{mixte} (en partie continue et en
-  partie continue) dont la fonction de répartition est
+  Il s'agit d'une variable aléatoire \emph{mixte} (en partie continue
+  et en partie continue) dont la fonction de répartition est
   \begin{displaymath}
     F(x) =
     \begin{cases}
@@ -281,8 +281,7 @@ nombres uniformes sur $[0, 1)$.
       0,5x - 0,5, & 2 \leq x < 3.
     \end{cases}
   \end{displaymath}
-  \enlargethispage{5mm}
-  (Voir la \autoref{fig:simulation:mixte}.)
+  Cette fonction est représentée à la \autoref{fig:simulation:mixte}.
 
   \begin{figure}
     \centering
@@ -307,8 +306,8 @@ axis(2, at = 0:2/2)
     \label{fig:simulation:mixte}
   \end{figure}
 
-  Par conséquent, un algorithme pour simuler des nombres aléatoires de
-  cette distribution est:
+  Un algorithme pour simuler des nombres aléatoires de cette
+  distribution est donc:
   \begin{enumerate}
   \item Obtenir un nombre $u$ d'une loi $U(0, 1)$.
   \item Poser
@@ -329,8 +328,8 @@ axis(2, at = 0:2/2)
 
 \begin{exemple}
   \label{ex:simulation:binomiale}
-  On veut simuler des observations d'une distribution binomiale de
-  paramètres $n$ et $\theta$. On pourrait, pour chaque $x$ simulé,
+  Nous voulons simuler des observations d'une distribution binomiale de
+  paramètres $n$ et $\theta$. Nous pourrions, pour chaque $x$ simulé,
   faire $n$ expériences de Bernoulli et compter le nombre de succès.
   Par la méthode de l'inverse pour la loi de Bernoulli, on a un succès
   si $u \leq \theta$. Par conséquent, un algorithme serait:
@@ -422,14 +421,17 @@ axis(2, at = 0:2/2)
 
 Supposons qu'il est compliqué de simuler des réalisations de la
 variable aléatoire $X$ avec fonction de densité de probabilité
-$f_X(x)$. Si on peut trouver une variable aléatoire $Y$ avec fonction
+$f_X(x)$. Si nous pouvons trouver une variable aléatoire $Y$ avec fonction
 de densité de probabilité $g_Y(x)$ pour laquelle la simulation est
 simple (uniforme, triangle, exponentielle, etc.) et qu'il est possible
 d'«envelopper» la densité $f$ par un multiple de $g$, c'est-à-dire que
 \begin{displaymath}
   c g_Y(x) \geq f_X(x)
 \end{displaymath}
-pour tout $x$, alors on a l'algorithme d'acceptation-rejet suivant:
+pour tout $x$, alors nous pouvons utiliser l'algorithme
+d'acceptation-rejet ci-dessous pour générer des observations de la
+variable aléatoire $X$.
+
 \begin{enumerate}
 \item Générer une réalisation $y$ de la variable aléatoire $Y$ avec
   fonction de densité de probabilité $g_Y(\cdot)$.
@@ -442,9 +444,9 @@ pour tout $x$, alors on a l'algorithme d'acceptation-rejet suivant:
 \end{enumerate}
 
 \begin{rem}
-  Puisque, par définition, l'aire sous les densités $f$ et $g$ vaut $1$
-  dans les deux cas on ne peut avoir $c g_Y(x) \geq f_X(x)$ pour tout
-  $x$ que si $c > 1$.
+  Puisque, par définition, l'aire sous les densités $f$ et $g$ vaut
+  $1$ dans les deux cas, la relation $c g_Y(x) \geq f_X(x)$ ne peut
+  être vraie pour tout $x$ que si $c > 1$.
 \end{rem}
 
 L'idée de la %
@@ -547,14 +549,14 @@ text(0.1, m + 0.08, "c g(y)")
   \end{align*}
   C'est la densité représentée aux figures
   \ref{fig:simulation:acceptation-rejet} et
-  \ref{fig:simulation:acceptation-rejet2}. On l'inscrit facilement
+  \ref{fig:simulation:acceptation-rejet2}. Nous pouvons facilement l'inscrire
   dans un rectangle. Le mode de la densité se trouvant en $x = 2/3$,
   la hauteur du rectangle est $f(2/3) = 48/27 = 16/9$. Par conséquent,
   \begin{displaymath}
     c g_Y(x) = \frac{16}{9}, \quad 0 < x < 1.
   \end{displaymath}
-  On déduit que $c = 16/9$ et que la densité $g$ est une uniforme sur
-  $(0 , 1)$. On a donc l'algorithme suivant:
+  Nous déduisons que $c = 16/9$ et que la densité $g$ est une uniforme sur
+  $(0 , 1)$. Nous avons donc l'algorithme suivant:
   \begin{enumerate}
   \item Simuler deux nombres $u_1$ et $u_2$ d'une $U(0, 1)$.
   \item Poser $y = u_1$.
@@ -565,8 +567,8 @@ text(0.1, m + 0.08, "c g(y)")
     alors poser $x = y$. Sinon, retourner à l'étape 1.
   \end{enumerate}
 
-  L'aire du rectangle étant de $16/9$, on peut s'attendre
-  à rejeter
+  L'aire du rectangle étant de $16/9$, nous pouvons nous attendre
+  à rejeter une proportion de
   \begin{equation*}
     \frac{16/9 - 1}{16/9} = \frac{7}{16} \approx 44~\%
   \end{equation*}
@@ -579,8 +581,8 @@ text(0.1, m + 0.08, "c g(y)")
 
 \begin{exemple}
   \label{exemple:simulation:beta:2}
-  On reprend l'\autoref{exemple:simulation:beta:1} en tentant
-  d'améliorer l'efficacité de l'algorithme. Il s'avère que l'on peut
+  Reprenons l'\autoref{exemple:simulation:beta:1} en tentant
+  d'améliorer l'efficacité de l'algorithme. Il s'avère que nous pouvons
   inscrire la densité de la loi Bêta$(3, 2)$ dans un triangle aux
   caractéristiques suivantes (voir la
   \autoref{fig:simulation:beta-triangle}):
@@ -604,7 +606,7 @@ axis(side = 1, at = 0.5)
     $0$, d'où $y = 3 x$;
   \item l'arête droite passe par $(1, 0)$, donc est de la forme $y =
     mx + b$ avec $m + b = 0$. Comme la pente de cette droite est égale
-    à la pente de $f(x)$ en $x = 1$, on trouve que $y = 12 - 12 x$.
+    à la pente de $f(x)$ en $x = 1$, nous trouvons que $y = 12 - 12 x$.
   \end{enumerate}
   Ainsi,
   \begin{displaymath}
@@ -628,7 +630,7 @@ axis(side = 1, at = 0.5)
     \end{cases}
   \end{align*}
   Pour simuler des observations de cette densité par la méthode de
-  l'inverse, on calcule la fonction de répartition correspondante
+  l'inverse, nous calculons la fonction de répartition correspondante,
   \begin{align*}
     G_Y(x)
     &=
@@ -644,7 +646,7 @@ axis(side = 1, at = 0.5)
       1 - \sqrt{0,2 - 0,2 y}, & 0,8 < y < 1.
     \end{cases}
   \end{align*}
-  Au final, on a l'algorithme suivant:
+  Au final, nous obtenons l'algorithme suivant:
   \begin{enumerate}
   \item Simuler deux nombres $u_1$ et $u_2$ d'une $U(0, 1)$.
   \item Poser $y = G_Y^{-1}(u_1)$.
@@ -656,9 +658,10 @@ axis(side = 1, at = 0.5)
     alors poser $x = y$. Sinon, retourner à l'étape 1.
   \end{enumerate}
 
-  L'aire du triangle étant de $1,2$, on peut maintenant s'attendre à
-  ne rejeter que $0,2/1,2 \approx 17~\%$ des nombres simulés, une amélioration
-  importante par rapport à l'\autoref{exemple:simulation:beta:1}. %
+  L'aire du triangle étant de $1,2$, nous pouvons maintenant
+  s'attendre à ne rejeter que $0,2/1,2 \approx 17~\%$ des nombres
+  simulés, une amélioration importante par rapport à
+  l'\autoref{exemple:simulation:beta:1}. %
   \qed
 \end{exemple}
 
@@ -901,7 +904,7 @@ sciences actuarielles.
 \subsection{Mélanges discrets}
 \label{sec:simulation:modeles-actuariels:melanges}
 
-Les mélanges discrets (ou finis; \emph{mixture} en anglais) sont
+Les \emph{mélanges discrets} (ou finis; \emph{mixture} en anglais) sont
 utiles pour décrire des phénomènes considérés comme provenant de la
 combinaison de plusieurs phénomènes qui surviennent chacun avec une
 probabilité connue d'avance. Par exemple, si nous estimons qu'il y a
@@ -912,12 +915,13 @@ fonction de masse de probabilité de la distribution du nombre de
 personnes dans la file d'attente en tout temps est:
 \begin{equation*}
   \Pr[X = x] =
-  0,9 \frac{2^x e^{-2}}{x!} + 0,1 \frac{10^x e^{-10}}{x!}.
+  0,9 \times \frac{2^x e^{-2}}{x!} + 0,1 \times \frac{10^x e^{-10}}{x!}.
 \end{equation*}
 Cette fonction de masse de probabilité est un mélange discret de deux
 lois de Poisson.
 
 \begin{definition}
+  \label{def:simulation:melange-discret}
   La variable aléatoire $Y$ est un mélange discret à $k$ points des
   variables aléatoires $X_1, X_2, \dots X_k$ si sa fonction de
   répartition est
@@ -931,17 +935,21 @@ lois de Poisson.
 Dans la suite, nous ne considérerons que les mélanges de $k = 2$
 distributions. Lorsque celles-ci sont continues avec fonctions de
 densité de probabilité $f_1$ et $f_2$, la densité du mélange peut
-s'écrire $f(x) = p f_1(x) + (1 - p) f_2(x)$.
+s'écrire
+\begin{equation*}
+  f(x) = p f_1(x) + (1 - p) f_2(x).
+\end{equation*}
+
 
 \begin{exemple}
   Les mélanges discrets sont très souvent utilisés pour créer de
   nouvelles distributions aux caractéristiques particulières que l'on
   ne retrouve pas chez les distributions d'usage courant.
 
-  Par exemple, la \autoref{fig:simulation:ln.ln} montre qu'un
-  mélange de deux distributions log-normales peut résulter en une
-  fonction de densité de probabilité bimodale, mais ayant néanmoins
-  une queue similaire à celle d'une log-normale.
+  La \autoref{fig:simulation:ln.ln} montre un mélange de deux
+  distributions log-normales qui résulte en une fonction de densité de
+  probabilité bimodale ayant une queue similaire à celle d'une
+  log-normale.
 
   \begin{figure}
     \centering
@@ -973,7 +981,7 @@ de l'une ou de l'autre des distributions. Reste, à chaque fois, à
 déterminer de quelle distribution simuler.
 
 \begin{algorithme}[Mélange discret de deux distributions]
-  \label{algo:simulation:melange}
+  \label{algo:simulation:melange-discret}
   Soit $F(x) = p F_1(x) + (1 - p) F_2(x)$ la fonction de répartition
   d'un mélange discret des distributions avec fonctions de répartition
   $F_1$ et $F_2$. Les étapes ci-dessous permettent de générer un
@@ -988,11 +996,11 @@ déterminer de quelle distribution simuler.
 Vous aurez reconnu dans le test $u \leq p$, où $u$ provient d'une loi
 $U(0, 1)$, le cœur de la procédure de simulation d'une loi de
 Bernoulli mentionnée à l'\autoref{ex:simulation:binomiale}.
-L'\autoref{algo:simulation:melange} revient donc à simuler
-$I\{u \leq p\}$ nombre de la distribution $F_1$ et
-$1 - I\{u \leq p\} = I\{u > p\}$ nombre de la distribution $F_2$.
-Cette observation joue un rôle important dans la création d'une
-procédure de simulation de $n > 1$ valeurs d'un mélange.
+L'\autoref*{algo:simulation:melange-discret} revient donc à simuler
+$1$ nombre de la distribution $F_1$ si $u \leq p$ $0$ nombre de la
+distribution $F_2$ ou, au contraire, $0$ nombre de $F_1$ si $u > p$ et
+$1$ nombre de $F_2$. Cette observation joue un rôle important pour
+concevoir une procédure de simulation de $n > 1$ valeurs d'un mélange.
 
 La fonction \code{rmixture} du paquetage \pkg{actuar} \citep{actuar}
 offre une interface conviviale pour obtenir des nombres aléatoires de
@@ -1005,59 +1013,103 @@ mélanges discrets.
 \subsection{Mélanges continus et modèles hiérarchiques}
 \label{sec:simulation:modeles-actuariels:hierarchiques}
 
-%% Un mélange continu de deux variables aléatoires est créé
-%% lorsque l'on suppose qu'un paramètre d'une distribution f
-%% est une réalisation d'une autre variable aléatoire avec
-%% densité u, comme ceci:
+Nous pouvons étendre le concept de mélange discret à un quantité non
+dénombrable de distributions. Il en résulte ce que l'on nomme un
+\emph{mélange continu}. La fonction de densité de probabilité $u(\theta)$
+dans la définition ci-dessous joue le rôle des probabilités discrètes
+$p_j$ de la \autoref{def:simulation:melange-discret}.
 
-%% X|Theta = theta ~ f(x|theta)
-%%           Theta ~ u(theta)
+\begin{definition}
+  Soit $X$ une variable aléatoire dont la distribution dépend d'un
+  paramètre $\theta$. On considère ce paramètre comme une réalisation
+  d'une variable aléatoire $\Theta$ avec fonction de densité
+  $u(\theta)$. La fonction de densité de la variable aléatoire
+  $X|\Theta = \theta$ est $f(x|\theta)$. Par la loi des probabilités
+  totales, la fonction de densité marginale (ou non conditionnelle) de
+  la variable aléatoire $X$ est
+  \begin{equation*}
+    f_X(x) = \int_\Omega f(x|\theta) u(\theta)\, d\theta.
+  \end{equation*}
+  Cette distribution distribution est un mélange continu des
+  distributions de $X|\Theta$ et $\Theta$.
+\end{definition}
 
-%% Ce genre de modèle est fréquent en analyse bayesienne et
-%% souvent utilisé en actuariat. Certaines lois de probabilité
-%% sont aussi uniquement définies en tant que mélanges.
+Les mélanges continus sont beaucoup utilisés en analyse bayesienne et
+dans certaines disciplines de l'actuariat. Plusieurs lois de
+probabilité sont uniquement définies en tant que mélanges.
 
-%% L'intérêt, ici, est d'obtenir des observations de la
-%% variable aléatoire non conditionnelle X. L'algorithme de
-%% simulation est simple:
+L'algorithme ci-dessous, très simple, permet d'obtenir des
+observations aléatoires d'un mélange de distributions.
 
-%% 1. Simuler un nombre theta de la distribution de Theta.
-%% 2. Simuler une valeur x de la distribution de
-%%    X|Theta = theta.
+\begin{algorithme}[Mélange continu de deux distributions]
+  \label{algo:simulation:melange-continu}
+  Soit $f(x)$ la fonction de densité de probabilité du mélange continu
+  des distributions avec densités $f(x|\theta)$ et $u(\theta)$.  Les
+  étapes ci-dessous permettent de générer un nombre aléatoire de la
+  densité $f_X$.
+  \begin{enumerate}
+  \item Obtenir un nombre $\theta$ issu de la distribution avec
+    densité $u(\theta)$.
+  \item Obtenir un nombre $x$ issu de la distribution avec
+    densité $f(x|\theta)$.
+  \end{enumerate}
+\end{algorithme}
 
-%% Ce qu'il importe de remarquer dans l'algorithme ci-dessus,
-%% c'est que le paramètre de mélange (theta) change pour
-%% chaque observation simulée. Autrement il n'y a juste pas de
-%% mélange, on obtient simplement un échantillon de la
-%% distribution f(x|theta).
+Pour simuler plusieurs observations d'un mélange, il faut répéter les
+deux étapes de l'\autoref*{algo:simulation:melange-continu} pour
+\emph{chaque} observation. Le paramètre de mélange ($\theta$) change
+donc à chaque fois. C'est essentiel, autrement il n'y aurait pas de
+mélange et nous obtiendrions simplement un échantillon de la
+distribution $f(x|theta)$ pour une valeur de $\theta$ quelconque.
 
-%% Les mélanges continus sont simples à faire en R puisque les
-%% fonctions de simulation sont vectorielles. Par exemple,
-%% simulons 1000 observations du mélange
+Le fait que les fonctions de simulation de variables aléatoire de R
+sont vectorielles rend la simulation de mélanges continus très simples
+à réaliser.
 
-%% X|Theta = theta ~ Poisson(theta)
-%%           Theta ~ Gamma(5, 4)
-%% theta <- rgamma(1000, 5, 4) # 1000 paramètres de mélange...
-%% x <- rpois(1000, theta)     # ... pour 1000 Poisson différentes
+\begin{exemple}
+  Soit $X$ une variable aléatoire issue du mélange
+  $X|\Theta = \theta \sim \text{Poisson}(\theta)$ et
+  $\Theta ~ \text{Gamma}(5, 4)$. Les deux expressions R ci-dessous
+  permettent de générer \nombre{1000} observations de $X$.
+<<echo=TRUE, eval=FALSE>>=
+theta <- rgamma(1000, 5, 4)
+x <- rpois(1000, theta)
+@
 
-%% On peut écrire le tout en une seule expression.
-%% x <- rpois(1000, rgamma(1000, 5, 4))
+  Il est tout-à-fait raisonnable, ici, d'écrire le tout en une seule
+  expression. Cela fait d'ailleurs bien ressortir le fait que le
+  paramètre de la loi de Poisson est lui-même issu d'une simulation.
+<<echo=TRUE, eval=FALSE>>=
+x <- rpois(1000, rgamma(1000, 5, 4))
+@
+  \qed
+\end{exemple}
 
-%% On peut démontrer que la distribution non conditionnelle de
-%% X est une binomiale négative de paramètres 5 et 4/(4 + 1) =
-%% 0,8. Faisons une vérification empirique. On calcule d'abord
-%% le tableau de fréquences des observations de l'échantillon
-%% avec la fonction 'table'. Il existe une méthode de 'plot'
-%% pour les tableaux de fréquences.
-%% (p <- table(x))            # tableau de fréquences
-%% plot(p/length(x))          # graphique
+Il est possible de répéter la procédure de mélange plus d'une fois, ce
+qui donne lieu à ce que nous nommerons des \emph{modèles
+  hiérarchiques}\footnote{%
+  En sciences actuarielles, cette terminologie est surtout employée
+  dans les contextes de structures de classification des risques sous
+  forme d'arbre. Dans de tels cas, le nombre de valeurs à simuler
+  pourrait différer à chaque niveau de l'arbre.}. %
+La généralisation de l'\autoref{algo:simulation:melange-continu} pour
+les modèles hiérarchique devrait aller de soi.
 
-%% On ajoute au graphique les masses de probabilités théoriques.
-%% (xu <- unique(x))          # valeurs distinctes de x
-%% points(xu, dnbinom(xu, 5, 0.8), pch = 21, bg = "red3")
-
-
-
+\begin{exemple}
+  Soit le modèle hiérarchique suivant où les variables aléatoires
+  $\Theta$ et $\Lambda$ représentent les paramètres de mélange:
+  \begin{align*}
+    X|\Lambda, \Theta &\sim \text{Poisson}(\Lambda) \\
+    \Lambda|\Theta    &\sim \text{Gamma}(3, \Theta) \\
+    \Theta            &\sim \text{Gamma}(2, 2).
+  \end{align*}
+  L'expression R suivante permet de générer $n$ observations de la
+  variable aléatoire $X$.
+<<echo=TRUE, eval=FALSE>>=
+rpois(n, rgamma(n, 3, rgamma(n, 2, 2)))
+@
+  \qed
+\end{exemple}
 
 \subsection{Distributions composées}
 \label{sec:simulation:modeles-actuariels:composees}
