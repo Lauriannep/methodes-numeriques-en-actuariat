@@ -1336,13 +1336,6 @@ sim.disque2 <- function(n)
 
 \end{Filesave}
 
-Les étudiants jugent souvent que les exercices de ce chapitre sont
-plus difficiles que ceux des autres chapitres. Les exercices font
-beaucoup appel à des notions de transformations de variables
-aléatoires qui ont pourtant déjà fait l'objet d'autres cours. Pour un
-rappel des principaux résultats dans ce domaine, consulter
-l'\autoref{chap:rappels_transformations}.
-
 \begin{exercice}
   La transformation de Box--Muller est populaire pour simuler des
   nombres normaux à partir de nombres uniformes. Soit $U_1 \sim U(0,
@@ -1574,10 +1567,9 @@ points(x1, x2, pch = 19, col = col)
 
 \begin{exercice}
   \label{ex:simulation:gamma}
-  Faire la mise en œuvre informatique (dans le langage de votre
-  choix) de l'algorithme de simulation suivant. Il s'agit d'un
-  algorithme pour simuler des observations d'une loi Gamma$(\alpha,
-  1)$, où $\alpha > 1$.
+  Réaliser une mise en œuvre informatique de l'algorithme de
+  simulation suivant. Il s'agit d'un algorithme pour simuler des
+  observations d'une loi Gamma$(\alpha, 1)$, où $\alpha > 1$.
   \begin{enumerate}[1.]
   \item Générer $u_1$ et $u_2$ indépendemment d'une loi $U(0, 1)$ et
     poser
@@ -1648,8 +1640,8 @@ rgamma2 <- function(nsim, alpha)
       nombre $x$ d'une loi Gamma$(\alpha, 1)$ avec l'algorithme de
       l'\autoref{ex:simulation:gamma}, puis poser $y =
       x/\lambda$.
-    \item Si $\alpha$ est entier, nous pouvons générer $\alpha$ nombres
-      (indépendants) $x_1, \dots, x_\alpha$ d'une distribution
+    \item Si $\alpha$ est entier, nous pouvons également générer
+      $\alpha$ nombres $x_1, \dots, x_\alpha$ d'une distribution
       Exponentielle$(\lambda)$ et poser $y = \sum_{i=1}^\alpha x_i$.
     \end{enumerate}
   \end{sol}
@@ -1672,10 +1664,9 @@ rgamma2 <- function(nsim, alpha)
   \end{enumerate}
   \begin{sol}
     \begin{enumerate}
-    \item Nous avons un mélange continu avec
-      $X|\Theta \sim \text{Exponentielle}(\Theta)$ et
-      $\Theta \sim \text{Gamma}(\alpha, \lambda)$. Par la loi des
-      probabilités totales,
+    \item Vous aurez reconnu dans cette combinaison de variables
+      aléatoires un mélange d'une exponentielle et d'une gamma. Par la
+      loi des probabilités totales,
       \begin{align*}
         f_{X}(x)
         &= \int_0^\infty f(x|\theta) u(\theta)\, d\theta  \\
@@ -2410,8 +2401,8 @@ options(op)
     \leq \alpha^{\alpha - 1} e^{-x/\alpha + 1 -  \alpha}, \quad x > 0.
   \end{displaymath}
   Utiliser cette inégalité pour justifier l'algorithme
-  d'acceptation-rejet ci-dessous pour simuler des observations d'une loi
-  Gamma$(\alpha, 1)$ avec $\alpha \geq 1$:
+  d'acceptation-rejet ci-dessous servant à simuler des observations d'une loi
+  Gamma$(\alpha, 1)$ avec $\alpha \geq 1$.
   \begin{enumerate}[1.]
   \item Simuler deux observations indépendantes $v_1$ et $v_2$ d'une
     loi exponentielle de moyenne $1$.
@@ -2461,6 +2452,35 @@ options(op)
     Or, tant la distribution de $-\ln U$ que celle de $Y/\alpha$ est
     une exponentielle de moyenne $1$, d'où l'algorithme donné dans
     l'énoncé.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Dans la mise en œuvre de
+  l'~\autoref{algo:simulation:melange-discret} de simulation d'un
+  mélange discret présentée à la \autoref{sec:simulation:code}, nous
+  générons un nombre d'une distribution binomiale pour déterminer la
+  quantité de nombres à simuler de la première distribution du mélange
+  (et, conséquemment, de celle de la seconde distribution).
+  Généraliser le concept pour simuler des observations d'un mélange
+  discret de $k > 2$ distributions. \emph{Astuce}: consulter le
+  code source de la fonction \code{rmixture}.
+  \begin{sol}
+    Il faut déterminer le nombre d'observations provenant de chacune
+    des $k$ distributions $F_1, \dots, F_k$ sachant que la probabilité
+    qu'une observation provienne de la distribution $j$ est $p_j$. La
+    distribution conjointe du nombre d'observations de chaque
+    distribution est une multinomiale de paramètres $p_1, \dots, p_k$
+    dont la fonction de masse de probabilité est:
+    \begin{equation*}
+      \Pr[X_1 = x_1, ... , X_k = x_k] =
+      \frac{n!}{x_1! \cdots x_k!}
+      \prod_{j = 1 , ..., k} p_j^{x_j},
+    \end{equation*}
+    où $n = x_1 + \dots + x_k$. La fonction \code{rmultinom} de R
+    permet de simuler des valeurs $x_1, \dots, x_k$ pour $n$ et $p_1,
+    \dots, p_k$ données. C'est la stratégie employée par la fonction
+    \code{rmixture} de \pkg{actuar}.
   \end{sol}
 \end{exercice}
 
