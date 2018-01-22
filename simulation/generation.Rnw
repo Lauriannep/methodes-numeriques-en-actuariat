@@ -26,7 +26,7 @@ options(width = 52)
   congruentiel linéaire.
 \item Établir les caractéristiques d'un générateur congruentiel
   linéaire, notamment sa période.
-\item Utiliser les générateurs de nombres aléatoires de Excel, VBA et
+\item Utiliser les générateurs de nombres aléatoires de Excel et
   R.
 \end{objectifs}
 
@@ -70,7 +70,6 @@ lines(X[hpts, ])
   uniformément sur un carré, la probabilité que leur enveloppe convexe
   forme un triangle est $\frac{11}{36} \approx 0,30556$.
 \end{prob-enonce}
-
 
 
 \section{Pourquoi faire de la simulation?}
@@ -192,7 +191,7 @@ du cours; la lire avant d'aller plus loin.
 C'est fait? Bien. Intéressant, n'est-ce pas?
 
 Dans la suite, nous nous concentrerons sur les générateurs de nombres
-pseudo-aléatoires. En général, on exige d'un générateur de ce type
+pseudo-aléatoires. En général, nous exigerons d'un générateur de ce type
 qu'il:
 \begin{enumerate}
 \item produise des nombres distribués approximativement uniformément;
@@ -256,8 +255,7 @@ La plupart des langages de programmation et logiciels à connotation
 mathématique comportent un opérateur ou une fonction modulo:
 \begin{itemize}
 \item R: \verb|%%|;
-\item Excel: \code{MOD()};
-\item VBA: \verb|%|.
+\item Excel: \code{MOD()}.
 \end{itemize}
 
 
@@ -286,15 +284,15 @@ de définir
   u_i = \frac{x_i}{m}.
 \end{equation*}
 
+\tipbox{La méthode de génération des nombres est entièrement
+  déterministe, c'est pourquoi il convient mieux de parler de nombres
+  \emph{pseudo}-aléatoires.}
+
 \begin{prob-astuce}
   Ce générateur de nombres pseudo-aléatoires distribués uniformément
   sur $(0, 1)$ pourrait nous permettre de générer les coordonnées en
   abscisse et en ordonnée de quatre points sur un carré $1 \times 1$.
 \end{prob-astuce}
-
-\tipbox{La méthode de génération des nombres est entièrement
-  déterministe, c'est pourquoi il convient mieux de parler de nombres
-  \emph{pseudo}-aléatoires.}
 
 Un générateur congruentiel est forcément périodique puisqu'il ne peut
 prendre, au mieux, que les valeurs
@@ -318,7 +316,6 @@ $m - 1$ est atteinte si:
 \end{itemize}
 Des valeurs populaires sont $m = 2^{31} - 1$ (nombre premier de
 Mersenne) et $a = 7^5$.
-\end{enumerate}
 
 \begin{exemple}
   Soit un générateur congruentiel multiplicatif avec $a = 7$ et $m =
@@ -358,7 +355,7 @@ Mersenne) et $a = 7^5$.
 \end{exemple}
 
 
-\section{Générateurs utilisés dans Excel, VBA et R}
+\section{Générateurs utilisés dans Excel et R}
 
 Avant d'utiliser pour quelque tâche moindrement importante un
 générateur de nombres aléatoires inclus dans un logiciel, il importe
@@ -366,7 +363,7 @@ de s'assurer de la qualité de celui-ci. Vous trouverez en général
 relativement facilement l'information pertinente dans Internet.
 
 Nous présentons ici, sans entrer dans les détails, les générateurs
-utilisés dans Excel, VBA et R.
+utilisés dans Excel et R.
 
 \subsection{Générateur de Excel}
 
@@ -418,23 +415,22 @@ du produit, il demeure difficile d'obtenir des détails qui
 permettraient de dissiper tout doute sur la qualité des nombres
 aléatoires fournis pas Excel.
 
+\cautionbox{Si vous programmez en VBA, peut-être serez-vous tenté
+  d'utiliser la fonction \code{RND()} pour générer un nombre
+  aléatoire. Selon
+  l'\link{http://support.microsoft.com/kb/231847}{article 231847} de
+  la base de connaissances Microsoft, le générateur de nombres
+  aléatoires utilisé par la fonction \code{RND()} est un simple
+  générateur congruentiel linéaire.
 
-\subsection{Générateur de VBA}
-
-La fonction \code{RND()} de VBA génère un nombre aléatoire. Selon
-l'\link{http://support.microsoft.com/kb/231847}{article 231847} de la
-base de connaissances Microsoft, le générateur de nombres aléatoires
-utilisé par la fonction \code{RND()} est un simple générateur
-congruentiel linéaire.
-
-Étant donné l'avancement actuel des connaissances dans le domaine des
-générateurs de nombres pseudo-aléatoires, un tel générateur est tout à
-fait archaïque. De plus, le générateur utilise toujours la même amorce
-et, par conséquent, les suites de nombres aléatoires sont toujours les
-mêmes. Pour toute utilisation moindrement sérieuse de nombres
-aléatoires, vous devez donc à tout prix éviter la fonction
-\code{RND()} et de lui préférer un appel à la fonction \code{RAND()}
-de Excel.
+  Étant donné l'avancement actuel des connaissances dans le domaine
+  des générateurs de nombres pseudo-aléatoires, un tel générateur est
+  tout à fait archaïque. De plus, le générateur utilise toujours la
+  même amorce et, par conséquent, les suites de nombres aléatoires
+  sont toujours les mêmes. Pour toute utilisation moindrement sérieuse
+  de nombres aléatoires, vous devez donc à tout prix éviter la
+  fonction \code{RND()} et de lui préférer un appel à la fonction
+  \code{RAND()} de Excel.}
 
 
 \subsection{Générateurs de R}

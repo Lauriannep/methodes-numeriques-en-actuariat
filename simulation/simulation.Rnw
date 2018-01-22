@@ -266,7 +266,7 @@ l'intervalle où $F_X(x)$ est constante:
   u = a  &\Rightarrow x = x_0 \\
   u = b  &\Rightarrow x = x_1.
 \end{align*}
-Nous procédons ainsi parce que plusieurs générateurs produisent des
+Il faut procéder ainsi parce que plusieurs générateurs produisent des
 nombres uniformes sur $[0, 1)$.
 
 \begin{exemple}
@@ -2094,8 +2094,9 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
 
 \begin{exercice}
   \label{ex:simulation:beta}
-  Considérer le problème de simulation d'observations d'une loi
-  Bêta$(3, 2)$ à l'aide de la méthode d'acceptation-rejet.
+  Effectuer les calculs ci-dessous dans le contexte de la simulation
+  d'observations d'une loi Bêta$(3, 2)$ à l'aide de la méthode
+  d'acceptation-rejet.
   \begin{enumerate}
   \item Calculer l'efficacité de l'algorithme développé à
     l'\autoref{ex:simulation:mode} et à

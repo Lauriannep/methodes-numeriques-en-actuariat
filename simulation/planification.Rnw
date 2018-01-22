@@ -340,7 +340,7 @@ simul3 <- function(nsimul, size, theta)
 
 
 \section{Gestion des fichiers}
-\label{planification:fichiers}
+\label{sec:planification:fichiers}
 
 Pour un petit projet comme celui utilisé en exemple ici, il est simple
 et pratique de placer tout le code informatique dans un seul fichier
@@ -349,7 +349,7 @@ avoir recours à plusieurs fichiers différents. Le présent auteur
 utilise pour sa part un fichier par fonction.
 
 À des fins d'illustration, supposons que nous utilisons l'approche de la
-\autoref{planification:replicate} avec la fonction
+\autoref{sec:planification:replicate} avec la fonction
 \code{replicate} et que le code des fonctions \code{fun2} et
 \code{simul3} est sauvegardé dans des fichiers \code{fun2.R} et
 \code{simul3.R}, dans l'ordre. Si nous créons un autre fichier, disons
