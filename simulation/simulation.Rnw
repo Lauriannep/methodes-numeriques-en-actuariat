@@ -985,11 +985,11 @@ déterminer de quelle distribution simuler.
   Soit $F(x) = p F_1(x) + (1 - p) F_2(x)$ la fonction de répartition
   d'un mélange discret des distributions avec fonctions de répartition
   $F_1$ et $F_2$. Les étapes ci-dessous permettent de générer un
-  nombre aléatoire de la distribution $F$.
+  nombre aléatoire $x$ de la distribution $F$.
   \begin{enumerate}
   \item Obtenir un nombre $u$ d'une loi $U(0, 1)$.
-  \item Si $u \leq p$, générer un nombre aléatoire de la distribution
-    $F_1$, sinon générer un nombre aléatoire de $F_2$.
+  \item Si $u \leq p$, obtenir $x$ de la distribution $F_1$, sinon
+    obtenir $x$ de $F_2$.
   \end{enumerate}
 \end{algorithme}
 
@@ -1044,14 +1044,13 @@ observations aléatoires d'un mélange de distributions.
 \begin{algorithme}[Mélange continu de deux distributions]
   \label{algo:simulation:melange-continu}
   Soit $f(x)$ la fonction de densité de probabilité du mélange continu
-  des distributions avec densités $f(x|\theta)$ et $u(\theta)$.  Les
-  étapes ci-dessous permettent de générer un nombre aléatoire de la
-  densité $f_X$.
+  des distributions avec densités $f(x|\theta)$ et $u(\theta)$. Les
+  étapes ci-dessous permettent de générer un nombre aléatoire $x$ de
+  la densité $f_X$.
   \begin{enumerate}
   \item Obtenir un nombre $\theta$ issu de la distribution avec
     densité $u(\theta)$.
-  \item Obtenir un nombre $x$ issu de la distribution avec
-    densité $f(x|\theta)$.
+  \item Obtenir $x$ de la distribution avec densité $f(x|\theta)$.
   \end{enumerate}
 \end{algorithme}
 
@@ -1114,9 +1113,69 @@ rpois(n, rgamma(n, 3, rgamma(n, 2, 2)))
 \subsection{Distributions composées}
 \label{sec:simulation:modeles-actuariels:composees}
 
+Les distributions composées jouent un rôle central dans la
+modélisation des risques en actuariat puisqu'elles permettent de
+représenter séparément l'effet de la fréquence et de la sévérité des
+sinistres dans un portefeuille d'assurance.
 
+\begin{definition}
+  Soit $N$ une variable aléatoire discrète avec fonction de
+  répartition $P_N(x)$ et $X_1, X_2, \dots$ des variables aléatoires
+  mutuellement indépendantes, identiquement distribuées avec fonction
+  de répartition $F_X(x)$ et indépendantes de la variable aléatoire
+  $N$. La variable aléatoire $S = X_1 + \dots + X_N$ --- avec, par
+  convention, $S = 0$ lorsque $N = 0$ --- a une distribution composée.
+  Sa fonction de répartition est
+  \begin{equation*}
+    F_S(x) = \sum_{n = 0}^\infty F_X^{* n}(x) p_N(n),
+  \end{equation*}
+  où $p_N$ est la fonction de masse de probabilité de $N$ et
+  $F_X^{* n}$ est la fonction de répartition de la $n\ieme$
+  convolution de $X$.
+\end{definition}
 
+Dans l'appellation de la distribution de la variable aléatoire $X$,
+l'adjectif «composée» est accolé au nom de la distribution de la
+variable aléatoire $N$. Par exemple, si la distribution de $N$ est une
+loi de Poisson, alors la distribution de $S$ est une Poisson composée.
+C'est d'ailleurs là le cas le plus fréquent, et de loin, en
+modélisation des risques d'assurance.
 
+L'algorithme suivant décrit la procédure de simulation d'observations
+d'une distribution composée.
+
+\begin{algorithme}[Distribution composée]
+  \label{algo:simulation:compound}
+  Soit $S = X_1 + \dots + X_N$ une distribution composée. Les étapes
+  ci-dessous permettent de générer une observation $s$ de la variable
+  aléatoire $S$.
+  \begin{enumerate}
+  \item Obtenir un nombre $n$ de la distribution avec fonction de
+    répartition $P_N$.
+  \item Obtenir des nombres $x_1, \dots, x_n$ de la distribution avec
+    fonction de répartition $F_X$.
+  \item Poser $s = x_1 + \dots + x_n$.
+  \end{enumerate}
+\end{algorithme}
+
+Contrairement à la simulation des mélanges continus, il n'est pas
+possible, en R, de vectoriser la procédure de simulation de
+l'\autoref*{algo:simulation:compound}. Il faut avoir recours à une
+boucle ou, mieux, à une fonction d'application.
+
+La fonction \code{rcompound} du paquetage \pkg{actuar} permet de
+générer facilement et intuitivement des nombres aléatoires d'une
+distribution composée quelconque. La fonction \code{rcomppois} offre
+une interface simplifiée pour le cas le plus courant de la Poisson
+composée. Enfin, bien que le sujet se trouve hors de la portée du
+présent document, mentionnons que la très générale fonction
+\code{rcomphierarc} permet de générer des observations de modèles
+hiérarchiques composés.
+
+\gotorbox{Le code informatique de la \autoref{sec:simulation:code}
+  fournit deux mises en œuvre de l'\autoref{algo:simulation:compound}
+  ainsi que des exemples d'utilisation des fonctions
+  \code{rcomppois} et \code{rcompound}.}
 
 
 \section{Autres techniques de simulation}
