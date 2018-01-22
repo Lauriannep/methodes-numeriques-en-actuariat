@@ -66,7 +66,7 @@ lines(X[hpts, ])
   \citeauthor{Mathworld:FourPoint} dans MathWorld pour plus de
   détails).
 
-  On souhaite vérifier que lorsque les quatre points sont distribués
+  Nous souhaitons vérifier que lorsque les quatre points sont distribués
   uniformément sur un carré, la probabilité que leur enveloppe convexe
   forme un triangle est $\frac{11}{36} \approx 0,30556$.
 \end{prob-enonce}
@@ -145,10 +145,10 @@ chull(x, y)
 \section{Générateurs de nombres aléatoires}
 \label{sec:generation:generateurs}
 
-On veut obtenir des nombres issus d'une distribution uniforme sur un
+Nous souhaitons obtenir des nombres issus d'une distribution uniforme sur un
 intervalle quelconque, en général $(0, 1)$. Comment procéder?
 \begin{enumerate}
-\item On peut utiliser les résultats de processus physiques aléatoires
+\item Nous pouvons utiliser les résultats de processus physiques aléatoires
   en apparence comme, par exemple:
   \begin{itemize}
   \item le lancer d'une pièce de monnaie ou d'un dé;
@@ -173,7 +173,7 @@ intervalle quelconque, en général $(0, 1)$. Comment procéder?
     8744^2 &= 76\symbf{4575}36 \\
     4575^2 &= 20\symbf{9306}25
   \end{align*}
-\item On peut construire des générateurs basés sur la suite de
+\item Nous pouvsons construire des générateurs basés sur la suite de
   Fibonacci, des générateurs chaotiques, etc.
 \end{enumerate}
 
@@ -276,9 +276,8 @@ où $0 \leq x_i < m$ et
 \item $x_0$ (un nombre quelconque) est l'\emph{amorce} («\emph{seed}»).
 \end{itemize}
 
-Lorsque l'incrément $c = 0$, on parle d'un générateur
-\emph{multiplicatif}; dans le cas contraire on a un générateur
-\emph{mixte}.
+Un générateur est dit \emph{multiplicatif} lorsque l'incrément est
+$c = 0$, et \emph{mixte} dans le cas contraire.
 
 Pour obtenir des nombre uniformes sur $[0, 1]$ ou $(0, 1)$, il suffit
 de définir
@@ -292,34 +291,33 @@ de définir
   abscisse et en ordonnée de quatre points sur un carré $1 \times 1$.
 \end{prob-astuce}
 
-\begin{rems}
-  \begin{enumerate}
-  \item La méthode de génération des nombres est entièrement
-    déterministe, c'est pourquoi il convient mieux de parler de
-    nombres \emph{pseudo}-aléatoires.
-  \item Un générateur congruentiel est forcément périodique puisqu'il
-    ne peut prendre, au mieux, que les valeurs
-    \begin{itemize}
-    \item $0, 1, 2, \dots, m - 1$ pour un générateur mixte;
-    \item $1, 2, \dots, m - 1$ pour un générateur multiplicatif.
-    \end{itemize}
-    C'est pourquoi on cherche donc à avoir la période la plus longue
-    possible, tout en obtenant des suites en apparence aléatoires.
-  \item Pour les générateurs multiplicatifs ($c = 0$), on atteint la
-    période maximale $m - 1$ si
-    \begin{itemize}
-    \item $m$ est un nombre premier (on en choisira un grand);
-    \item $a$ est une \emph{racine primitive} de $m$, c'est à dire que
-      le plus petit entier $k$ satisfaisant
-      \begin{equation*}
-        1 = a^k \bmod m
-      \end{equation*}
-      est $k = m - 1$.
-    \end{itemize}
-    Des valeurs populaires sont $m = 2^{31} - 1$ (nombre premier de
-    Mersenne) et $a = 7^5$.
-  \end{enumerate}
-\end{rems}
+\tipbox{La méthode de génération des nombres est entièrement
+  déterministe, c'est pourquoi il convient mieux de parler de nombres
+  \emph{pseudo}-aléatoires.}
+
+Un générateur congruentiel est forcément périodique puisqu'il ne peut
+prendre, au mieux, que les valeurs
+\begin{itemize}
+\item $0, 1, 2, \dots, m - 1$ pour un générateur mixte;
+\item $1, 2, \dots, m - 1$ pour un générateur multiplicatif.
+\end{itemize}
+C'est pourquoi nous cherchons donc à avoir la période la plus longue
+possible, tout en obtenant des suites en apparence aléatoires.
+
+Pour les générateurs multiplicatifs ($c = 0$), la période maximale
+$m - 1$ est atteinte si:
+\begin{itemize}
+\item $m$ est un nombre premier (on en choisira un grand);
+\item $a$ est une \emph{racine primitive} de $m$, c'est à dire que
+  le plus petit entier $k$ satisfaisant
+  \begin{equation*}
+    1 = a^k \bmod m
+  \end{equation*}
+  est $k = m - 1$.
+\end{itemize}
+Des valeurs populaires sont $m = 2^{31} - 1$ (nombre premier de
+Mersenne) et $a = 7^5$.
+\end{enumerate}
 
 \begin{exemple}
   Soit un générateur congruentiel multiplicatif avec $a = 7$ et $m =
@@ -363,8 +361,8 @@ de définir
 
 Avant d'utiliser pour quelque tâche moindrement importante un
 générateur de nombres aléatoires inclus dans un logiciel, il importe
-de s'assurer de la qualité de celui-ci. On trouvera en général
-relativement facilement de l'information dans Internet.
+de s'assurer de la qualité de celui-ci. Vous trouverez en général
+relativement facilement l'information pertinente dans Internet.
 
 Nous présentons ici, sans entrer dans les détails, les générateurs
 utilisés dans Excel, VBA et R.
@@ -433,7 +431,7 @@ générateurs de nombres pseudo-aléatoires, un tel générateur est tout à
 fait archaïque. De plus, le générateur utilise toujours la même amorce
 et, par conséquent, les suites de nombres aléatoires sont toujours les
 mêmes. Pour toute utilisation moindrement sérieuse de nombres
-aléatoires, on doit donc à tout prix éviter la fonction
+aléatoires, vous devez donc à tout prix éviter la fonction
 \code{RND()} et de lui préférer un appel à la fonction \code{RAND()}
 de Excel.
 
@@ -443,7 +441,7 @@ de Excel.
 On obtient des nombres uniformes sur un intervalle quelconque avec la
 fonction \code{runif} dans R. La fonction \code{set.seed} permet de
 spécifier la valeur de l'amorce du générateur aléatoire, ce qui est
-utile si on veut répéter une simulation absolument à l'identique.
+utile si nous voulons répéter une simulation absolument à l'identique.
 
 R offre la possibilité de choisir entre plusieurs générateurs de
 nombres aléatoires différents, ou encore de spécifier son propre
@@ -463,7 +461,6 @@ consulter les rubriques d'aide des fonctions \code{.Random.seed} et
   rapide avec la fonction \code{runif} de R.
 \end{prob-astuce}
 
-
 \begin{prob-solution}
   En premier lieu, écrivons une fonction \code{is.triangle} pour
   déterminer si l'enveloppe convexe de quatre points forme un
@@ -471,7 +468,6 @@ consulter les rubriques d'aide des fonctions \code{.Random.seed} et
   coordonnées en abscisse des quatre points et un vecteur \code{y} des
   coordonnées en ordonnée. La fonction retournera \code{TRUE} ou
   \code{FALSE} selon que l'enveloppe convexe est un triangle ou non.
-  On a:
 <<echo=TRUE>>=
 is.triangle <- function(x, y) 3 == length(chull(x, y))
 is.triangle(c(8, 1, 7, 10), c(8, 2, 4, 3))
@@ -480,31 +476,25 @@ is.triangle(c(7, 5, 2, 1), c(9, 3, 10, 7))
 
   L'expression suivante permet de placer quatre points au hasard dans
   un carré $1 \times 1$, puis de vérifier si leur enveloppe convexe
-  est un triangle:
+  est un triangle.
 <<echo=TRUE, eval=FALSE>>=
 is.triangle(runif(4), runif(4))
 @
 
-  Pour répéter cette expression un grand nombre de fois, on aura
-  recours, tel qu'expliqué à l'\autoref{planification}, à la fonction
+  Pour répéter cette expression un grand nombre de fois, nous aurons
+  recours, tel qu'expliqué à l'\autoref{chap:planification}, à la fonction
   \code{replicate}. Puisque chaque expression exécutée par
-  \code{replicate} retourne \code{TRUE} ou \code{FALSE}, le résultat de
-<<echo=TRUE, eval=FALSE>>=
-replicate(1E5, is.triangle(x = runif(4), y = runif(4)))
-@
-  sera un vecteur booléen. Comme on le sait, ces valeurs booléennes
-  sont converties en valeurs numériques $0$ et $1$ pour les calculs
-  algébriques. La valeur moyenne du vecteur booléen correspond donc à
-  la proportion d'enveloppes convexes triangulaires au fil des
-  \nombre{100 000} simulations.
-
-  Au final, on obtient:
+  \code{replicate} retourne \code{TRUE} ou \code{FALSE}, le résultat
+  sera un vecteur booléen. La valeur moyenne du vecteur booléen
+  correspond donc à la proportion d'enveloppes convexes triangulaires
+  au fil des \nombre{100 000} simulations.
 <<echo=TRUE>>=
 mean(replicate(1E5,
      is.triangle(x = runif(4), y = runif(4))))
 @
-  soit une valeur suffisamment proche de $\frac{11}{36} \approx
-  0,30556$ pour juger l'expérience concluante.
+
+  La valeur ci-dessus est suffisamment proche de $\frac{11}{36} \approx
+  0,30556$ pour que nous jugions l'expérience concluante.
 \end{prob-solution}
 
 
@@ -611,7 +601,6 @@ rand(n = 5, a = 11, c = 0, m = 64, seed = 19)
   \end{sol}
 \end{exercice}
 
-
 \begin{exercice}
   \begin{enumerate}
   \item Composer une fonction R faisant la mise en œuvre du générateur
@@ -623,16 +612,16 @@ rand(n = 5, a = 11, c = 0, m = 64, seed = 19)
   \end{enumerate}
   \begin{sol}
     \begin{enumerate}
-    \item On utilise de nouveau la fonction \code{rand} de la
+    \item Utilisons de nouveau la fonction \code{rand} de la
       \autoref{fig:generation:rand}. Le graphique de la
       \autoref{fig:generation:a=17} a été créé avec les commandes
+      ci-dessous. On compte 17 lignes dans le graphique.
 <<echo=TRUE, eval=FALSE>>=
 x <- rand(n = 500, a = 17, c = 0, m = 2^13 - 1,
           seed = 19)
 plot(x[-length(x)], x[-1], xlab = expression(x[i]),
      ylab = expression(x[i + 1]), pch = 19)
 @
-      On compte 17 lignes dans le graphique.
       \begin{figure}
         \centering
 <<echo=FALSE,fig=TRUE>>=
@@ -646,7 +635,7 @@ plot(head(x, -1), x[-1],
         \label{fig:generation:a=17}
       \end{figure}
     \item Similaire à la partie a), sauf que les nombres sont générés
-      avec
+      avec l'expression suivante.
 <<echo=TRUE, eval=FALSE>>=
 x <- rand(n = 500, a = 85, c = 0, m = 2^13 - 1,
           seed = 19)
@@ -681,8 +670,8 @@ plot(x[-length(x)], x[-1],
   toutefois démontrer mathématiquement qu'en trois dimensions, les
   triplets $(x_i, x_{i+1}, x_{i+2})$ se retrouvent sur quinze plans ou
   moins, rendant ainsi assez prévisible la valeur de $x_{i+2}$ étant
-  donné les deux autres valeurs. On se contente de constater cet état
-  de fait graphiquement.
+  donné les deux autres valeurs. Contentons-nous, ici, de constater
+  cet état de fait graphiquement.
   \begin{enumerate}
   \item Générer une suite $\{x_i\}$ de longueur $\nombre{20002}$ avec le
     générateur RANDU et poser $u_i = 2^{-31} x_i$. Pour tous les
