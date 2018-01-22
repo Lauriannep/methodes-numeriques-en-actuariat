@@ -36,9 +36,10 @@ provenant de distributions non-uniformes.
 Il existe de très nombreux algorithmes pour générer des nombres
 aléatoires de différentes distributions; voir, par exemple,
 \cite{Devroye:random:1986}. Nous n'en étudierons que deux en détail,
-soit la méthode de l'inverse et la méthode d'acceptation-rejet.
-D'autres méthodes populaires en actuariat sont mentionnées à la
-\autoref{sec:simulation:autres}.
+soit la méthode de l'inverse et la méthode d'acceptation-rejet. Par
+ailleurs, la \autoref{sec:simulation:modeles-actuariels} présente des
+procédures de simulation pour les modèles actuariels les plus
+courants.
 
 Plusieurs algorithmes de simulation de nombres non uniformes reposent
 sur des résultats de transformations de variables aléatoires. Par
@@ -222,7 +223,7 @@ Weibull). Il faut parfois utiliser d'autres méthodes.
 \subsection{Distributions discrètes}
 \label{sec:simulation:inverse:discretes}
 
-On peut aussi utiliser la méthode de l'inverse avec les distributions
+Nous pouvons aussi utiliser la méthode de l'inverse avec les distributions
 discrètes. Cependant, puisque la fonction de répartition comporte des
 sauts, son inverse n'existe pas formellement. Par conséquent, il
 n'existe pas de solution de $u = F_X(x)$ pour certaines valeurs de
@@ -473,7 +474,7 @@ rectangle. Un nombre $y$ simulé de cette distribution (à toutes fins
 pratiques une uniforme, ici) est accepté comme provenant de $f$ dans
 une proportion correspondant au ratio entre la valeur de $f_X(y)$ (les
 segments pointillés dans la figure) et la valeur de $c g_Y(y)$ (les
-segments pleins). On constate aisément que certaines valeurs $y$
+segments pleins). Vous constaterez aisément que certaines valeurs $y$
 seront acceptées plus souvent que d'autres en conformité avec la forme
 de la densité.
 
@@ -545,18 +546,19 @@ text(0.1, m + 0.08, "c g(y)")
 
 \begin{exemple}
   \label{exemple:simulation:beta:1}
-  Soit $X \sim \text{Bêta}(3, 2)$. On a
+  Soit $X \sim \text{Bêta}(3, 2)$. La densité de cette distribution est:
   \begin{align*}
     f_X(x)
     &= \frac{\Gamma(5)}{\Gamma(3) \Gamma(2)}\,
     x^{3 - 1} (1 - x)^{2 - 1} \\
     &= 12 x^2 (1 - x), \quad 0 < x < 1.
   \end{align*}
-  C'est la densité représentée aux figures
+  Elle est représentée aux figures
   \ref{fig:simulation:acceptation-rejet} et
-  \ref{fig:simulation:acceptation-rejet2}. Nous pouvons facilement l'inscrire
-  dans un rectangle. Le mode de la densité se trouvant en $x = 2/3$,
-  la hauteur du rectangle est $f(2/3) = 48/27 = 16/9$. Par conséquent,
+  \ref{fig:simulation:acceptation-rejet2}. Nous pouvons facilement
+  inscrire celle-ci dans un rectangle. Le mode de la densité se trouvant en
+  $x = 2/3$, la hauteur du rectangle est $f(2/3) = 48/27 = 16/9$. Par
+  conséquent,
   \begin{displaymath}
     c g_Y(x) = \frac{16}{9}, \quad 0 < x < 1.
   \end{displaymath}
@@ -704,8 +706,7 @@ rect(-1, -1, 1, 1, border = "orange", lwd = 2)
 \end{figure}
 
 
-\section{Fonctions de simulation de variables aléatoires dans Excel et
-  \textsf{R}}
+\section{Fonctions de simulation dans Excel et R}
 \label{sec:simulation:excel_et_al}
 
 Il est important de savoir simuler des valeurs d'une variable
@@ -713,24 +714,23 @@ aléatoire quelconque à partir de la méthode de l'inverse ou d'un autre
 algorithme, surtout si la distribution de la variable aléatoire est
 peu usitée. Néanmoins, les différents outils statistiques fournissent
 en général la majorité des fonctions de simulation de variables
-aléatoires dont on peut avoir besoin pour un usage quotidien.
-
+aléatoires dont nous pouvons avoir besoin pour un usage quotidien.
 
 \subsection{Excel}
 
-Tel que mentionné à la section 3.1, il faut généralement utiliser la
-méthode de l'inverse pour simuler des observations de lois de
-probabilité dans Excel. Cette procédure est facilitée par le fait
-qu'il existe des fonctions Excel pour calculer la fonction de
-répartition inverse (ou fonction de quantile) des lois les plus
-courantes.
+Tel que mentionné à la \autoref{sec:simulation:inverse}, il faut
+généralement utiliser la méthode de l'inverse pour simuler des
+observations de lois de probabilité dans Excel. Cette procédure est
+facilitée par le fait qu'il existe des fonctions Excel pour calculer
+la fonction de répartition inverse (ou fonction de quantile) des lois
+les plus courantes.
 
-Ainsi, on trouvera dans Excel la fonction de densité de probabilité
-(lois continues) ou la fonction de masse de probabilité (lois
-discrètes) ou la fonction de répartition et, dans certains cas
-seulement, la fonction de quantile des lois de probabilité présentées
-au \autoref{tab:excel}. Les noms anglais des fonctions ont été
-modifiés pour être standardisés dans Excel~2010. On remarquera que les
+Ainsi, Excel fournit la fonction de densité de probabilité (lois
+continues) ou la fonction de masse de probabilité (lois discrètes) ou
+la fonction de répartition et, dans certains cas seulement, la
+fonction de quantile des lois de probabilité présentées au
+\autoref{tab:excel}. Les noms anglais des fonctions ont été modifiés
+pour être standardisés dans Excel~2010. Vous remarquerez que les
 traducteurs français ont omis de faire de même.
 
 \begin{table}[t]
@@ -761,7 +761,7 @@ traducteurs français ont omis de faire de même.
     Gamma &
     \code{GAMMA.DIST} \newline \code{GAMMA.INV} &
     \code{LOI.GAMMA.N} \newline \code{LOI.GAMMA.INVERSE.N} \\
-    Hypergéom.
+    Hypergéom. &
     \code{HYPGEOM.DIST} &
     \code{LOI.HYPERGEOMETRIQUE.N} \\
     Khi carré &
@@ -853,43 +853,51 @@ pour d'autres lois dont, entre autres, \pkg{actuar} \citep{actuar} et
 Toutes les fonctions du \autoref{tab:rng:lois} sont vectorielles,
 c'est-à-dire qu'elles acceptent en argument un vecteur de points où la
 fonction (de densité, de répartition ou de quantile) doit être évaluée
-et même un vecteur de paramètres. Par exemple,
+et même un vecteur de paramètres. Par exemple, l'expression ci-dessous
+retourne la probabilité que des lois de Poisson de paramètre $1$, $4$
+et $10$ prennent les valeurs $3$, $0$ et $8$, dans l'ordre.
 <<echo=TRUE>>=
 dpois(c(3, 0, 8), lambda = c(1, 4, 10))
 @
-retourne la probabilité que des lois de Poisson de paramètre $1$, $4$ et
-$10$ prennent les valeurs $3$, $0$ et $8$, dans l'ordre.
 
 Le premier argument de toutes les fonctions de simulation est la
-quantité de nombres aléatoires désirée. Ainsi,
+quantité de nombres aléatoires désirée. Ainsi, l'expression suivante
+retourne trois nombres aléatoires issus de distributions de Poisson de
+paramètre $1$, $4$ et $10$, respectivement.
 <<echo=TRUE>>=
 rpois(3, lambda = c(1, 4, 10))
 @
-retourne trois nombres aléatoires issus de distributions de Poisson
-de paramètre $1$, $4$ et $10$, respectivement.  Évidemment, passer un
-vecteur comme premier argument n'a pas tellement de sens, mais, si
-c'est fait, R retournera une quantité de nombres aléatoires égale à la
+
+Évidemment, spécifier un vecteur comme premier argument d'une fonction
+de simulation n'a pas tellement de sens, mais, si c'est fait, R
+retournera une quantité de nombres aléatoires égale à la
 \emph{longueur} du vecteur (sans égard aux valeurs contenues dans le
 vecteur).
 
-La fonction \code{sample} permet de simuler des nombres d'une
-distribution discrète quelconque. Sa syntaxe est
-\begin{quote}
-  \code{sample(x, size, replace = FALSE, prob = NULL)},
-\end{quote}
-où \code{x} est un vecteur des valeurs possibles de l'échantillon à
-simuler (le support de la distribution), \code{size} est la quantité
-de nombres à simuler et \code{prob} est un vecteur de probabilités
-associées à chaque valeur de \code{x} (\code{1/length(x)} par défaut).
-Enfin, si \code{replace} est \code{TRUE}, l'échantillonnage se fait
-avec remise.
+Autre joueur important dans l'équipe de simulation de R, la fonction
+\code{sample} permet de générer des nombres d'une distribution
+discrète quelconque. Sa syntaxe est
+\begin{Schunk}
+\begin{Verbatim}
+sample(x, size, replace = FALSE, prob = NULL)},
+\end{Verbatim}
+\end{Schunk}
+\begin{itemize}
+\item \code{x} est un vecteur des valeurs possibles de
+  l'échantillon à simuler (le support de la distribution);
+\item \code{size} est la quantité de nombres à simuler;
+\item \code{prob} est un vecteur de probabilités associées à chaque
+  valeur de \code{x} (par défaut \code{1/length(x)});
+\item \code{replace} détermine si l'échantillonnage s'effectue avec ou
+  sans remise.
+\end{itemize}
 
 \gotorbox{Le code informatique R de la \autoref{sec:simulation:code}
   contient des exemples plus détaillés d'utilisation des fonctions
   mentionnées ci-dessus.}
 
 
-\section{Modèles actuariels courants}
+\section{Modèles actuariels}
 \label{sec:simulation:modeles-actuariels}
 
 Cette section traite de techniques de simulation pour des
@@ -935,7 +943,6 @@ s'écrire
   f(x) = p f_1(x) + (1 - p) f_2(x).
 \end{equation*}
 
-
 \begin{exemple}
   Les mélanges discrets sont très souvent utilisés pour créer de
   nouvelles distributions aux caractéristiques particulières que l'on
@@ -944,7 +951,8 @@ s'écrire
   La \autoref{fig:simulation:ln.ln} montre un mélange de deux
   distributions log-normales qui résulte en une fonction de densité de
   probabilité bimodale ayant une queue similaire à celle d'une
-  log-normale.
+  log-normale. %
+  \qed
 
   \begin{figure}
     \centering
@@ -967,13 +975,12 @@ curve(p * dlnorm(x, par1[1], par1[2]) + (1 - p) * dlnorm(x, par2[1], par2[2]),
       de leur mélange discret}
     \label{fig:simulation:ln.ln}
   \end{figure}
-  \qed
 \end{exemple}
 
-Pour concevoir un algorithme de simulation d'un mélange discret à deux
-distributions, il faut bien comprendre que chaque observation provient
-de l'une ou de l'autre des distributions. Reste, à chaque fois, à
-déterminer de quelle distribution simuler.
+La conception d'un algorithme de simulation d'un mélange discret à
+deux distributions nécessite de bien comprendre que chaque observation
+provient de l'une \emph{ou} de l'autre des distributions. Reste, à
+chaque fois, à déterminer de quelle distribution simuler.
 
 \begin{algorithme}[Mélange discret de deux distributions]
   \label{algo:simulation:melange-discret}
@@ -997,9 +1004,9 @@ distribution $F_2$ ou, au contraire, $0$ nombre de $F_1$ si $u > p$ et
 $1$ nombre de $F_2$. Cette observation joue un rôle important pour
 concevoir une procédure de simulation de $n > 1$ valeurs d'un mélange.
 
-La fonction \code{rmixture} du paquetage \pkg{actuar} \citep{actuar}
-offre une interface conviviale pour obtenir des nombres aléatoires de
-mélanges discrets.
+La fonction \code{rmixture} du paquetage \pkg{actuar} offre une
+interface conviviale pour obtenir des nombres aléatoires de mélanges
+discrets.
 
 \gotorbox{Le code informatique de la \autoref{sec:simulation:code}
   propose une procédure de simulation d'un mélange discret ainsi que
@@ -1008,7 +1015,7 @@ mélanges discrets.
 \subsection{Mélanges continus et modèles hiérarchiques}
 \label{sec:simulation:modeles-actuariels:hierarchiques}
 
-Nous pouvons étendre le concept de mélange discret à un quantité non
+Nous pouvons étendre le concept de mélange discret à une quantité non
 dénombrable de distributions. Il en résulte ce que l'on nomme un
 \emph{mélange continu}. La fonction de densité de probabilité $u(\theta)$
 dans la définition ci-dessous joue le rôle des probabilités discrètes
@@ -1129,11 +1136,11 @@ sinistres dans un portefeuille d'assurance.
   convolution de $X$.
 \end{definition}
 
-Dans l'appellation de la distribution de la variable aléatoire $X$,
+Dans l'appellation de la distribution de la variable aléatoire $S$,
 l'adjectif «composée» est accolé au nom de la distribution de la
 variable aléatoire $N$. Par exemple, si la distribution de $N$ est une
 loi de Poisson, alors la distribution de $S$ est une Poisson composée.
-C'est d'ailleurs là le cas le plus fréquent, et de loin, en
+C'est d'ailleurs là le cas le plus fréquent --- et de loin --- en
 modélisation des risques d'assurance.
 
 L'algorithme suivant décrit la procédure de simulation d'observations
@@ -1172,25 +1179,8 @@ hiérarchiques composés.
   ainsi que des exemples d'utilisation des fonctions
   \code{rcomppois} et \code{rcompound}.}
 
-
-\section{Autres techniques de simulation}
-\label{sec:simulation:autres}
-
-Il existe plusieurs autres algorithmes de simulation de loi non
-uniformes, certains beaucoup plus élaborés que d'autres. Nous
-n'irons pas plus loin dans ce sujet dans ce cours, sinon pour
-mentionner deux autres techniques simples qui sont souvent employées
-en actuariat:
-\begin{enumerate}
-\item les mélanges de distributions continus et discrets;
-\item la convolution de variables aléatoires.
-\end{enumerate}
-
-\gotorbox{Ces techniques sont présentées et illustrées à même le code
-  informatique R de la \autoref{sec:simulation:code}.}
-
-En terminant, mentionnons que l'\autoref{planification} propose
-quelques trucs pour bien planifier une étude de simulation en R.
+\tipbox{L'\autoref{chap:planification} propose quelques trucs pour
+  bien planifier une étude de simulation en R.}
 
 \begin{figure}
   \centering
@@ -1199,7 +1189,7 @@ quelques trucs pour bien planifier une étude de simulation en R.
 sim.disque <- function(n)
 {
     ## La fonction retourne les coordonnées des points
-    ## dans une matrice de deux colonnes. On crée
+    ## dans une matrice de deux colonnes. Nous créons
     ## d'abord un contenant.
     X <- matrix(NA, n, 2)
 
@@ -1214,10 +1204,10 @@ sim.disque <- function(n)
         ## Si les coordonnées sont dans le disque...
         if (sum(x^2) < 1)
         {
-            ## ... on ajoute la paire à la matrice 'X'.
+            ## ... la paire est ajoutée à la matrice 'X'.
             X[i, ] <- x
 
-            ## On cesse après avoir accepté 'n' paires.
+            ## Il faut cesser après avoir accepté 'n' paires.
             if (n < (i <- i + 1))
                 break
         }
@@ -1375,10 +1365,10 @@ l'\autoref{chap:rappels_transformations}.
   \item Démontrer que $X_1$ et $X_2$ sont deux variables aléatoires
     indépendantes chacune distribuée selon une $N(0, 1)$.
   \item Vérifier empiriquement la validité de ces formules à l'aide de
-    Excel ou R. En R, on peut transformer les nombres uniformes
-    obtenus avec la fonction \code{runif} en nombres normaux sans même
-    utiliser de boucles grâce à la fonction \code{outer} et deux
-    fonctions anonymes.
+    Excel ou de R. Dans R, il est possible de transformer les nombres
+    uniformes obtenus avec la fonction \code{runif} en nombres normaux
+    sans même utiliser de boucles grâce à la fonction \code{outer} et
+    deux fonctions anonymes.
   \end{enumerate}
   \begin{sol}
     \begin{enumerate}
@@ -1468,16 +1458,16 @@ curve(dnorm(x), add = TRUE)
 @
     \end{enumerate}
     La \autoref{fig:simulation:boxmuller} illustre d'une autre façon que la
-    transformation de Box--Muller fonctionne bel et bien. Dans le
-    graphique de gauche, on a plusieurs couples de points $(u_1, u_2)$
+    transformation de Box--Muller fonctionne bel et bien. Le
+    graphique de gauche contient plusieurs couples de points $(u_1, u_2)$,
     où chaque composante provient d'une distribution uniforme sur
     l'intervalle $(0, 1)$.
 
     Chacun de ces points a été transformé en un point $(x_1, x_2)$
     selon la transformation de Box--Muller, puis placé dans le
-    graphique de droite. On a superposé le nuage de points ainsi
+    graphique de droite. Nous avons superposé le nuage de points ainsi
     obtenu aux lignes de niveau d'une distribution normale bivariée
-    (avec paramètre $\rho = 0$). On observe que la répartition et la
+    (avec paramètre $\rho = 0$). Vous observerez que la répartition et la
     densité du nuage de points correspond effectivement aux lignes de
     niveau.
     \begin{figure}
@@ -1539,13 +1529,13 @@ points(x1, x2, pch = 19, col = col)
           \frac{-1}{\lambda} \ln (2(1-u) ) & u \geq 0,5.
         \end{cases}
       \end{align*}
-      On peut donc utiliser la méthode inverse.
+      Il est donc aussi possible d'utiliser la méthode de l'inverse.
     \end{enumerate}
   \end{sol}
 \end{exercice}
 
 \begin{exercice}
-  En ouverture de chapitre, on mentionne qu'une façon de simuler des
+  En ouverture de chapitre, nous mentionnons qu'une façon de simuler des
   nombres issus d'une loi géométrique consiste à extraire la partie
   entière de nombres aléatoires provenant d'une loi exponentielle.
 
@@ -1558,7 +1548,7 @@ points(x1, x2, pch = 19, col = col)
   \end{rep}
   \begin{sol}
     Soit $X \sim \text{Exponentielle}(\lambda)$ et
-    $K = \lfloor X \rfloor$. On a donc:
+    $K = \lfloor X \rfloor$. Par conséquent:
     \begin{align*}
       \Pr[K = 0]
       &= \Pr[\lfloor X \rfloor = 0] \\
@@ -1584,7 +1574,7 @@ points(x1, x2, pch = 19, col = col)
 
 \begin{exercice}
   \label{ex:simulation:gamma}
-  Faire la mise en oeuvre informatique (dans le langage de votre
+  Faire la mise en œuvre informatique (dans le langage de votre
   choix) de l'algorithme de simulation suivant. Il s'agit d'un
   algorithme pour simuler des observations d'une loi Gamma$(\alpha,
   1)$, où $\alpha > 1$.
@@ -1608,8 +1598,9 @@ points(x1, x2, pch = 19, col = col)
   Faire les vérifications empiriques usuelles de la validité de
   l'algorithme.
   \begin{sol}
-    Voir la fonction R de la \autoref{fig:simulation:gamma}. On vérifie
-    graphiquement la validité de l'algorithme:
+    Voir la fonction R de la \autoref{fig:simulation:gamma}. Les
+    expressions suivantes permettent de tracer les graphiques pour vérifier
+    la validité de l'algorithme.
 <<echo=TRUE, eval=FALSE>>=
 hist(rgamma2(1000, 5), prob = TRUE)
 curve(dgamma(x, 5, 1), add = TRUE)
@@ -1647,17 +1638,17 @@ rgamma2 <- function(nsim, alpha)
 
 \begin{exercice}
   En utilisant le résultat de l'exercice précédent, quelle procédure
-  pourrait-on suivre pour simuler des nombres d'une loi Gamma$(\alpha,
+  pourriez-vous suivre pour simuler des nombres d'une loi Gamma$(\alpha,
   \lambda)$ où $\alpha > 1$?
   \begin{sol}
     Deux suggestions.
     \begin{enumerate}[1.]
     \item Si $X \sim \text{Gamma}(\alpha, 1)$, alors $Y = X/\lambda
-      \sim \text{Gamma}(\alpha, \lambda)$. On peut donc générer un
+      \sim \text{Gamma}(\alpha, \lambda)$. Nous pouvons donc générer un
       nombre $x$ d'une loi Gamma$(\alpha, 1)$ avec l'algorithme de
       l'\autoref{ex:simulation:gamma}, puis poser $y =
       x/\lambda$.
-    \item Si $\alpha$ est entier, on peut générer $\alpha$ nombres
+    \item Si $\alpha$ est entier, nous pouvons générer $\alpha$ nombres
       (indépendants) $x_1, \dots, x_\alpha$ d'une distribution
       Exponentielle$(\lambda)$ et poser $y = \sum_{i=1}^\alpha x_i$.
     \end{enumerate}
@@ -1676,14 +1667,15 @@ rgamma2 <- function(nsim, alpha)
     \end{displaymath}
   \item Utiliser le résultat ci-dessus pour proposer un algorithme de
     simulation de nombres issus d'une loi de Pareto. Faire la mise en
-    oeuvre informatique de cet algorithme et les vérifications d'usage
+    œuvre informatique de cet algorithme et les vérifications d'usage
     de sa validité.
   \end{enumerate}
   \begin{sol}
     \begin{enumerate}
-    \item On a $X|\Theta \sim \text{Exponentielle}(\Theta)$ et $\Theta
-      \sim \text{Gamma}(\alpha, \lambda)$. Par la loi des probabilités
-      totales,
+    \item Nous avons un mélange continu avec
+      $X|\Theta \sim \text{Exponentielle}(\Theta)$ et
+      $\Theta \sim \text{Gamma}(\alpha, \lambda)$. Par la loi des
+      probabilités totales,
       \begin{align*}
         f_{X}(x)
         &= \int_0^\infty f(x|\theta) u(\theta)\, d\theta  \\
@@ -1695,10 +1687,10 @@ rgamma2 <- function(nsim, alpha)
         &= \frac{\alpha \lambda^\alpha}{(\lambda + x)^{\alpha +1}}.
       \end{align*}
     \item Pour générer un nombre d'une distribution de Pareto de
-      paramètres $\alpha$ et $\lambda$ avec le résultat en a), on
-      génère d'abord un nombre $\theta$ d'une distribution gamma de
-      mêmes paramètres, puis on génère un nombre $x$ d'une
-      distribution exponentielle de paramètre $\theta$. En R:
+      paramètres $\alpha$ et $\lambda$ avec le résultat en a), il faut
+      d'abord obtenir un nombre $\theta$ d'une distribution gamma de
+      mêmes paramètres, puis obtenir un nombre $x$ d'une distribution
+      exponentielle de paramètre $\theta$.
 <<echo=TRUE, eval=FALSE>>=
 rexp(1, rgamma(1, alpha, lambda))
 @
@@ -1753,13 +1745,14 @@ rexp(1, rgamma(1, alpha, lambda))
     \begin{displaymath}
       x_n = (65 x_{n-1} + 1) \bmod \nombre{2048}
     \end{displaymath}
-    avec une amorce de $12$ sont $781$, $\nombre{1614}$ et $463$. En divisant
-    ces nombres par $\nombre{2048}$, on obtient des nombres dans
+    avec une amorce de $12$ sont $781$, $\nombre{1614}$ et $463$. La division
+    de ces nombres par $\nombre{2048}$ fournit des nombres dans
     l'intervalle $(0, 1)$:
     \begin{displaymath}
       0,3813 \quad 0,7881 \quad 0,2261.
     \end{displaymath}
-    Finalement, les observations de la Pareto$(2, \nombre{1000})$ sont
+    Finalement, les observations de la $\text{Pareto}(2,
+    \nombre{1000})$ sont les suivantes.
 <<echo=TRUE>>=
 1000/sqrt(1 - c(0.3813, 0.7881, 0.2261))
 @
@@ -1783,7 +1776,7 @@ rexp(1, rgamma(1, alpha, lambda))
   uniforme sur le disque de rayon de $1$ centré en $(x_1, x_2) = (0,
   0)$. À quoi ce résultat peut-il servir?
   \begin{sol}
-    On a la transformation
+    Nous avons la transformation
     \begin{displaymath}
       \begin{split}
         X_1 &= \sqrt{U_1} \cos(2 \pi U_2) \\
@@ -1806,9 +1799,9 @@ rexp(1, rgamma(1, alpha, lambda))
       u_2 &< 1 &\Rightarrow&& \frac{x_2}{x_1} &< 0.
     \end{align*}
     Les troisième et quatrième inégalités définissent les quadrants I
-    et III, puis II et IV de $\R^2$, respectivement. On remarque
-    également que le point $(0, 0)$, qui a probabilité zéro, ne se
-    trouve pas dans l'espace image.
+    et III, puis II et IV de $\R^2$, respectivement. Vous remarquerez
+    que le point $(0, 0)$, qui a probabilité zéro, ne se trouve pas
+    dans l'espace image.
 
     Le Jacobien de la transformation est
     \begin{align*}
@@ -1845,8 +1838,8 @@ rexp(1, rgamma(1, alpha, lambda))
     0)$. La \autoref{fig:simulation:disque2} illustre d'ailleurs cette
     transformation. Les points $(u_1, u_2)$ dans le graphique de gauche
     sont tirés aléatoirement sur le carré $(0, 1) \times (0, 1)$. Le
-    graphique de droite montre que suite à la tranformation ci-dessus,
-    on obtient des points $(x_1, x_2)$ distribués uniformément sur un
+    graphique de droite montre que suite à la transformation ci-dessus,
+    les points $(x_1, x_2)$ sont distribués uniformément sur un
     disque de rayon $1$ centré en $(0, 0)$.
     \begin{figure}
       \centering
@@ -1878,12 +1871,12 @@ plot(x1, x2, pch = 19, col = col)
     \end{displaymath}
   \item Utiliser le résultat en a) pour proposer un algorithme de
     simulation d'observations d'une loi Bêta$(\alpha, \lambda)$.
-  \item Faire la mise en oeuvre informatique de l'algorithme en b)
+  \item Faire la mise en œuvre informatique de l'algorithme en b)
     ainsi que les vérifications d'usage.
   \end{enumerate}
   \begin{sol}
     \begin{enumerate}
-    \item On a
+    \item Nous avons
       \begin{align*}
         f_{Y_1}(y_1)
         &= \frac{1}{\Gamma(\alpha)}\, y_1^{\alpha - 1} e^{-y_1}, \quad
@@ -1899,8 +1892,8 @@ plot(x1, x2, pch = 19, col = col)
       \end{align*}
       Soit $X_1 = Y_1/(Y_1 + Y_2)$ et $X_2 = Y_1 + Y_2$ (le choix de
       $X_2$ étant justifié par l'exposant de la distribution conjointe
-      de $Y_1$ et $Y_2$). On cherche la distribution conjointe de
-      $X_1$ et $X_2$, $f_{X_1, X_2}(x_1, x_2)$. On a la transformation
+      de $Y_1$ et $Y_2$). Nous cherchons la distribution conjointe de
+      $X_1$ et $X_2$, $f_{X_1, X_2}(x_1, x_2)$ à partir de la transformation
       \begin{displaymath}
         \begin{split}
           x_1 &= \frac{y_1}{y_1 + y_2} \\
@@ -1967,16 +1960,17 @@ plot(x1, x2, pch = 19, col = col)
       provenant d'une loi gamma est disponible.
 
       La \autoref{fig:simulation:gamma-beta} illustre le fonctionnement de
-      cette transformation. Dans le graphique de gauche, on a un nuage
-      de points $(y_1, y_2)$ tirés indépendemment de deux
-      distributions gamma de paramètre d'échelle égal à 1. On a
+      cette transformation. Dans le graphique de gauche, nous avons un nuage
+      de points $(y_1, y_2)$ tirés de manière indépendante de deux
+      distributions gamma de paramètre d'échelle égal à $1$. Nous avons
       superposé ce nuage de points aux courbes de niveaux de la
       distribution conjointe des deux lois gamma.
 
-      Dans le graphique de droite, on a placé en abscisse les points
-      $x = y_1/(y_1 + y_2)$ résultant de la transformation. On voit
-      que la répartition et la densité de ces points correspond à la
-      densité de la loi bêta également représentée sur le graphique.
+      Dans le graphique de droite, les points $x = y_1/(y_1 + y_2)$
+      résultant de la transformation sont placés en abscisse. Vous
+      constaterez que la répartition et la densité de ces points
+      correspond à la densité de la loi bêta également représentée sur
+      le graphique.
       \begin{figure}
         \centering
 <<echo=FALSE, fig=TRUE, width=10, height=5>>=
@@ -2039,7 +2033,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
   \end{rep}
   \begin{sol}
     \begin{enumerate}
-    \item On a
+    \item Nous avons
       \begin{align*}
         \Pr \left[ U \leq \frac{f_X(y)}{c g_Y(y)} \right]
         &= \int_{-\infty}^\infty
@@ -2051,7 +2045,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
         &= \frac{1}{c}.
       \end{align*}
     \item Les essais étant indépendants, la distribution du nombre
-      d'essais avant d'avoir un succès (accepter un nombre $y$) est
+      d'essais avant d'obtenir un succès (accepter un nombre $y$) est
       géométrique de paramètre $1/c$, c'est-à-dire que
       \begin{displaymath}
         \Pr[Z = z] =
@@ -2059,7 +2053,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
         \left( 1 - \frac{1}{c} \right)^{z - 1}, \quad z = 1, 2, \dots,
       \end{displaymath}
       où $Z$ représente le nombre d'essais avant d'accepter un nombre.
-    \item On a $\esp{Z} = 1/(1/c) = c$.
+    \item Nous savons que $\esp{Z} = 1/(1/c) = c$.
     \end{enumerate}
   \end{sol}
 \end{exercice}
@@ -2069,7 +2063,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
   Soit $X$ une variable aléatoire continue définie sur l'intervalle
   $(a, b)$, où $a$ et $b$ sont des nombres réels. Pour simuler des
   observations de cette variable aléatoire par la méthode
-  d'acceptation-rejet, on peut toujours inscrire la fonction de
+  d'acceptation-rejet, il est toujours possible d'inscrire la fonction de
   densité de probabilité de $X$ dans un rectangle de hauteur $M$, ou
   $M$ est la valeur de la densité au mode de $X$.
   \begin{enumerate}
@@ -2087,7 +2081,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
   \end{rep}
   \begin{sol}
     \begin{enumerate}
-    \item On pose
+    \item Posons
       \begin{displaymath}
         c g_Y(x) = M, \quad a < x < b,
       \end{displaymath}
@@ -2125,7 +2119,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
         12 - 12 x, & 0,8 \leq x < 1.
       \end{cases}
     \end{displaymath}
-  \item Faire la mise en oeuvre informatique de l'algorithme le plus
+  \item Faire la mise en œuvre informatique de l'algorithme le plus
     efficace entre celui de la partie a) et celui de la partie b).
     Vérifier la fonction en superposant l'histogramme d'un grand
     échantillon obtenu avec cette fonction et la vraie fonction de
@@ -2139,7 +2133,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
   \end{rep}
   \begin{sol}
     \begin{enumerate}
-    \item On démontre facilement que le mode $M$ d'une distribution
+    \item Il est facile de démontrer que le mode $M$ d'une distribution
       bêta de paramètres $\alpha$ et $\beta$ se trouve en
       \begin{displaymath}
         x = \frac{\alpha - 1}{\alpha + \beta - 2}.
@@ -2158,19 +2152,17 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
           \frac{\beta - 1}{\alpha + \beta - 2}
         \right)^{1 - \beta}.
       \end{align*}
-      Avec $\alpha = 3$ et $\beta = 2$, on obtient une efficacité de
-      $9/16$.
-    \item On a trouvé $c = 1,2$ dans
-      l'\autoref{exemple:simulation:beta:2}, d'où une efficacité de
+      Avec $\alpha = 3$ et $\beta = 2$, l'efficacité est $9/16$.
+    \item Nous avons obtenu $c = 1,2$ dans
+      l'\autoref{exemple:simulation:beta:2}, soit une efficacité de
       $1/c = 5/6$. Cet algorithme est évidemment plus efficace puisque
       la surface de l'enveloppe de la densité bêta est nettement plus
       petite.
-    \item On utilise l'algorithme développé à
+    \item Utilisons l'algorithme développé à
       l'\autoref{exemple:simulation:beta:2}. Une première mise en
       œuvre de l'algorithme en R est fournie dans le code
       informatique de la \autoref{sec:simulation:code}. La
-      \autoref{fig:simulation:rbeta.ar2} en propose une autre. On
-      propose aussi une mise en œuvre VBA à la \autoref{fig:simulation:betasim}.
+      \autoref{fig:simulation:rbeta.ar2} en propose une autre.
       \begin{figure}[t]
         \centering
         \begin{framed}
@@ -2198,53 +2190,8 @@ rbeta.ar2 <- function(n)
         \caption{Code R de la fonction \code{rbeta.ar2}}
         \label{fig:simulation:rbeta.ar2}
       \end{figure}
-      \begin{figure}
-        \centering
-        \begin{framed}
-\begin{lstlisting}
-Private Function sqrt(x)
-    sqrt = x ^ 0.5
-End Function
-
-Private Function g(x As Double)
-    DensiteTriangle = IIf(x < 0.8, 2.5 * x,
-                          10 - 10 * x)
-End Function
-
-Private Function Ginv(u As Double)
-    InverseTriangle = IIf(u < 0.8, sqrt(0.8 * u),
-                          1 - sqrt(0.2 - 0.2 * u))
-End Function
-
-Private Function dbeta(x As Double, shape1 As Double,
-                       shape2 As Double)
-    Dim cte As Double
-    With WorksheetFunction
-        cte = Exp(.GammaLn(shape1 + shape2) -
-                  .GammaLn(shape1) -
-                  .GammaLn(shape2))
-        dbeta = cte * x ^ (shape1 - 1) *
-                (1 - x) ^ (shape2 - 1)
-    End With
-End Function
-
-Function betasim()
-    Dim u1 As Double, u2 As Double, y As Double
-
-    Do
-        u1 = Rnd
-        u2 = Rnd
-        y = Ginv(u1)
-    Loop Until u2 <= dbeta(y, 3, 2) / (1.2 * g(y))
-
-    SimuleBeta = y
-End Function
-\end{lstlisting}
-        \end{framed}
-        \caption{Code VBA de la fonction \code{betasim}}
-        \label{fig:simulation:betasim}
-      \end{figure}
-      On peut vérifier l'exactitude la fonction \code{rbeta.ar2} avec
+      Vous pouvez vérifier l'exactitude la fonction \code{rbeta.ar2}
+      avec les expressions suivantes.
 <<echo=TRUE, eval=FALSE>>=
 x <- rbeta.ar2(10000)
 hist(x, prob = TRUE)
@@ -2258,8 +2205,8 @@ curve(dbeta(x, 3, 2), add = TRUE)
   \label{ex:simulation:rejet}
   La fonction R de la \autoref{fig:simulation:fonction} permet de
   simuler des observations de la distribution Bêta$(\alpha, \beta)$.
-    \begin{figure}[t]
-      \begin{framed}
+  \begin{figure}[t]
+    \begin{framed}
 \begin{lstlisting}
 simul <- function(n, alpha, beta)
 {
@@ -2278,15 +2225,14 @@ simul <- function(n, alpha, beta)
     x
 }
 \end{lstlisting}
-      \end{framed}
-      \caption{Fonction de simulation d'une loi Bêta$(\alpha, \beta)$
-        pour l'\autoref{ex:simulation:rejet}}
-      \label{fig:simulation:fonction}
-    \end{figure}
+    \end{framed}
+    \caption{Fonction de simulation d'une loi Bêta$(\alpha, \beta)$
+      pour l'\autoref{ex:simulation:rejet}}
+    \label{fig:simulation:fonction}
+  \end{figure}
   \begin{enumerate}
   \item Identifier le type d'algorithme utilisé dans cette fonction.
-  \item On vous donne également les valeurs suivantes, obtenues dans
-    R:
+  \item Vous disposez des valeurs suivantes, obtenues dans R.
 <<echo=FALSE>>=
 op <- options(width = 50, digits = 2)
 simul <- function(n, alpha, beta)
@@ -2312,7 +2258,7 @@ simul <- function(n, alpha, beta)
 set.seed(12345)
 runif(10)
 @
-    Évaluer le résultat des expressions suivantes:
+    Évaluer le résultat des expressions ci-dessous.
 <<echo=TRUE, eval=FALSE>>=
 set.seed(12345)
 simul(2, alpha = 2, beta = 3)
@@ -2331,9 +2277,9 @@ options(op)
   \end{rep}
   \begin{sol}
     \begin{enumerate}
-    \item On reconnaît l'algorithme d'acceptation-rejet de
+    \item Vous reconnaitrez l'algorithme d'acceptation-rejet de
       l'\autoref{ex:simulation:mode}.
-    \item On doit simuler deux observations d'une loi Bêta$(2, 3)$
+    \item Vous devez simuler deux observations d'une loi Bêta$(2, 3)$
       dont la fonction de densité de probabilité est
       \begin{displaymath}
         f(x) = 12 x (1 - x)^2, \quad 0 < x < 1.
@@ -2343,8 +2289,8 @@ options(op)
       ce mode est $M = f(1/3) = 16/9$. Pour obtenir le résultat de
       l'appel de la fonction \code{simul}, il faut s'assurer
       d'utiliser les nombres uniformes dans le bon ordre. Quatre
-      itérations de la boucle \code{repeat} seront nécessaires;
-      voici leurs résultas.
+      itérations de la boucle \code{repeat} seront nécessaires.
+      Voici leurs résultas.
       \begin{enumerate}[1.]
       \item On a $u = 0,72$, puis $(16/9) (0,88) > f(0,72)$, donc $u$
         est rejeté.
@@ -2380,9 +2326,9 @@ options(op)
         - 1} e^{-x} \leq x^{\alpha - 1}$. De même, puisque $0 < \alpha
       < 1$, $x^{\alpha - 1} < 1$ pour $x > 1$, d'où  $x^{\alpha - 1}
       e^{-x} \leq e^{-x}$ pour $x > 1$.
-    \item On veut borner la densité $f_X(x) = x^{\alpha - 1}
+    \item Il faut borner la densité $f_X(x) = x^{\alpha - 1}
       e^{-x}/\Gamma(\alpha)$, $x > 0$ et $0 < \alpha < 1$. Du résultat
-      en a), on a
+      en a):
       \begin{displaymath}
         f_X(x) \leq
         \begin{cases}
@@ -2431,7 +2377,7 @@ options(op)
           & e/(\alpha + e) < x \leq 1.
         \end{cases}
       \end{align*}
-      On remarque que
+      Or,
       \begin{displaymath}
         \frac{f_X(x)}{c g_Y(x)} =
         \begin{cases}
@@ -2439,7 +2385,7 @@ options(op)
           x^{\alpha - 1}, & x > 1.
         \end{cases}
       \end{displaymath}
-      On a donc l'algorithme de simulation suivant:
+      Il découle de ce précède l'algorithme de simulation suivant.
       \begin{enumerate}[1.]
       \item Simuler deux nombres $u_1$ et $u_2$ d'une $U(0, 1)$.
       \item Poser $y = G_Y^{-1}(u_1)$.
@@ -2458,13 +2404,13 @@ options(op)
 \end{exercice}
 
 \begin{exercice}
-  On vous donne l'inégalité suivante, valide pour $\alpha \geq 1$:
+  Soit l'inégalité suivante, valide pour $\alpha \geq 1$:
   \begin{displaymath}
     x^{\alpha - 1} e^{-x}
     \leq \alpha^{\alpha - 1} e^{-x/\alpha + 1 -  \alpha}, \quad x > 0.
   \end{displaymath}
   Utiliser cette inégalité pour justifier l'algorithme
-  d'acceptation-rejet suivant pour simuler des observations d'une loi
+  d'acceptation-rejet ci-dessous pour simuler des observations d'une loi
   Gamma$(\alpha, 1)$ avec $\alpha \geq 1$:
   \begin{enumerate}[1.]
   \item Simuler deux observations indépendantes $v_1$ et $v_2$ d'une
@@ -2473,9 +2419,9 @@ options(op)
     \alpha v_1$. Sinon, retourner à l'étape 1.
   \end{enumerate}
   \begin{sol}
-    On veut simuler des observations de la fonction de densité de
+    Vous devez simuler des observations de la fonction de densité de
     probabilité $f_X(x) = x^{\alpha - 1} e^{-x}/\Gamma(\alpha)$ avec
-    $\alpha \geq 1$. Or, on nous donne
+    $\alpha \geq 1$. Or, vous savez que
     \begin{displaymath}
       f_X(x) \leq \frac{\alpha^\alpha}{\Gamma(\alpha)}\,
       e^{1 - \alpha}\,
