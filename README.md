@@ -91,7 +91,7 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ## Historique des versions
 
-### (en développement)
+### 2018.01-1 (2018-01-22)
 
 Les documents de référence sont basés sur les versions de l'hiver 2016 des documents de référence des parties II à IV du cours ACT-2002 encore disponibles [dans le Portail libre](https://libre.act.ulaval.ca/index.php?id=448) de l'École d'actuariat. 
 
