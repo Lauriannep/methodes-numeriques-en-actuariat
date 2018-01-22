@@ -20,7 +20,7 @@
 lambda <- 5
 x <- -log(runif(1000))/lambda
 
-## Pour faire une petite vérification, on va tracer
+## Pour faire une petite vérification, nous allons tracer
 ## l'histogramme de l'échantillon et y superposer la véritable
 ## densité d'une exponentielle de paramètre lambda. Les deux
 ## graphiques devraient concorder.
@@ -28,21 +28,21 @@ x <- -log(runif(1000))/lambda
 ## Tracé de l'histogramme. Il faut spécifier l'option 'prob =
 ## TRUE' pour que l'axe des ordonnées soit gradué en
 ## probabilités plutôt qu'en nombre de données. Sinon, le
-## graphique de la densité que l'on va ajouter dans un moment
-## n'apparaîtra pas sur le graphique.
+## graphique de la densité que nous allons ajouter dans un
+## moment n'apparaîtra pas sur le graphique.
 hist(x, prob = TRUE) # histogramme gradué en probabilités
 
-## Pour ajouter la densité, on a la très utile fonction
-## curve() pour tracer une fonction f(x) quelconque. Avec
-## l'option 'add = TRUE', le graphique est ajouté au graphique
-## existant.
+## Ajoutons maintenant la densité à l'aide de la très utile
+## fonction 'curve' qui permet de tracer une fonction f(x)
+## quelconque. Avec l'option 'add = TRUE', le graphique est
+## ajouté au graphique existant.
 curve(dexp(x, rate = lambda), add = TRUE)
 
 ###
 ### EXEMPLE 2.4
 ###
 
-## On trouvera ci-dessous une mise en oeuvre de l'algorithme
+## Nous effectuons une mise en oeuvre de l'algorithme
 ## d'acceptation-rejet pour simuler des observations d'une
 ## distribution Bêta(3, 2). La procédure est intrinsèquement
 ## itérative, alors nous devons utiliser une boucle. Il y a
@@ -50,10 +50,10 @@ curve(dexp(x, rate = lambda), add = TRUE)
 ## 'repeat'; une autre mise en oeuvre est présentée dans les
 ## exercices.
 ##
-## On remarque que le vecteur contenant les résultats est
-## initialisé au début de la fonction pour éviter l'écueil de
-## la «boîte à biscuits» expliqué à la section 4.5 du document
-## de référence de la partie I.
+## Remarquez que le vecteur contenant les résultats est
+## initialisé au début de la fonction pour éviter le Syndrôme
+## de la plaque à biscuits expliqué au chapitre 6 de
+## Goulet, V. «Programmer avec R», 2017.
 rbeta.ar <- function(n)
 {
     x <- numeric(n)        # initialisation du contenant
@@ -90,15 +90,16 @@ runif(10, 2, 5)            # sur un autre intervalle
 2 + 3 * runif(10)          # équivalent, moins lisible
 
 ## R est livré avec plusieurs générateurs de nombres
-## aléatoires. On peut en changer avec la fonction 'RNGkind'.
+## aléatoires. Nous pouvons en changer avec la fonction
+## 'RNGkind'.
 RNGkind("Wichmann-Hill")   # générateur de Excel
 runif(10)                  # rien de particulier à voir
 RNGkind("default")         # retour au générateur par défaut
 
 ## La fonction 'set.seed' est très utile pour spécifier
 ## l'amorce d'un générateur. Si deux simulations sont
-## effectuées avec la même amorce, on obtiendra exactement les
-## mêmes nombres aléatoires et, donc, les mêmes résultats.
+## effectuées avec la même amorce, nous obtiendrons exactement
+## les mêmes nombres aléatoires et, donc, les mêmes résultats.
 ## Très utile pour répéter une simulation à l'identique.
 set.seed(1)                # valeur sans importance
 runif(5)                   # 5 nombres aléatoires
@@ -131,17 +132,16 @@ sample(1:10, 10)           # permutation des nombres de 1 à 10
 sample(1:10)               # idem, plus simple
 sample(10)                 # idem, encore plus simple!
 
-## On peut échantillonner avec remise.
+## Échantillonnage avec remise.
 sample(1:10, 10, replace = TRUE)
 
-## On peut aussi spécifier une distribution de probabilités
-## non uniforme.
+## Distribution de probabilités non uniforme.
 x <- sample(c(0, 2, 5), 1000, replace = TRUE,
             prob = c(0.2, 0.5, 0.3))
 table(x)                   # tableau de fréquences
 
 ###
-### MODÈLES ACTUARIELS COURANTS
+### MODÈLES ACTUARIELS
 ###
 
 ## Le paquetage actuar contient plusieurs fonctions de
@@ -202,120 +202,119 @@ curve(0.55 * dlnorm(x, 3.6, 0.6) +
 x <- rmixture(10000, probs = c(0.55, 0.45),
               models = expression(rlnorm(3.6, 0.6),
                                   rlnorm(4.5, 0.3)))
-hist(x, prob = TRUE)       # histogramme
+
+## Vérifions la validité de la fonction en superposant à
+## l'histogramme de l'échantillon la densité théorique du
+## mélange.
+hist(x, prob = TRUE)                     # histogramme
 curve(0.55 * dlnorm(x, 3.6, 0.6) +
       0.45 * dlnorm(x, 4.5, 0.3),
       add = TRUE, lwd = 2, col = "red3") # densité théorique
 
 ## Simulation d'un mélange de deux exponentielles (de moyennes
-## 1/3 et 1/7) avec poids égal.
+## 1/3 et 1/7) avec poids égal. Le vecteur de poids est
+## recyclé automatiquement par 'rmixture'.
 rmixture(10, 0.5, expression(rexp(3), rexp(7)))
-
 
 ## MÉLANGES CONTINUS
 
-## Un mélange continu de deux variables aléatoires est créé
-## lorsque l'on suppose qu'un paramètre d'une distribution f
-## est une réalisation d'une autre variable aléatoire avec
-## densité u, comme ceci:
+## La simulation des mélanges continus est simple à faire en R
+## puisque les fonctions r<loi> sont vectorielles. Il suffit
+## de simuler autant de paramètres de mélange que nous
+## souhaitons obtenir d'observations de la distribution
+## marginale.
 ##
-## X|Theta = theta ~ f(x|theta)
-##           Theta ~ u(theta)
+## Reprenons ici l'exemple du texte, soit:
 ##
-## Ce genre de modèle est fréquent en analyse bayesienne et
-## souvent utilisé en actuariat. Certaines lois de probabilité
-## sont aussi uniquement définies en tant que mélanges.
+##   X|Theta = theta ~ Poisson(theta)
+##             Theta ~ Gamma(5, 4)
 ##
-## L'intérêt, ici, est d'obtenir des observations de la
-## variable aléatoire non conditionnelle X. L'algorithme de
-## simulation est simple:
-##
-## 1. Simuler un nombre theta de la distribution de Theta.
-## 2. Simuler une valeur x de la distribution de
-##    X|Theta = theta.
-##
-## Ce qu'il importe de remarquer dans l'algorithme ci-dessus,
-## c'est que le paramètre de mélange (theta) change pour
-## chaque observation simulée. Autrement il n'y a juste pas de
-## mélange, on obtient simplement un échantillon de la
-## distribution f(x|theta).
-##
-## Les mélanges continus sont simples à faire en R puisque les
-## fonctions de simulation sont vectorielles. Par exemple,
-## simulons 1000 observations du mélange
-##
-## X|Theta = theta ~ Poisson(theta)
-##           Theta ~ Gamma(5, 4)
+## D'abord en deux étapes.
 theta <- rgamma(1000, 5, 4) # 1000 paramètres de mélange...
-x <- rpois(1000, theta)     # ... pour 1000 Poisson différentes
+x <- rpois(1000, theta)     # ... pour 1000 lois de Poisson
 
-## On peut écrire le tout en une seule expression.
+## Nous pouvons écrire le tout en une seule expression.
 x <- rpois(1000, rgamma(1000, 5, 4))
 
-## On peut démontrer que la distribution non conditionnelle de
-## X est une binomiale négative de paramètres 5 et 4/(4 + 1) =
-## 0,8. Faisons une vérification empirique. On calcule d'abord
-## le tableau de fréquences des observations de l'échantillon
-## avec la fonction 'table'. Il existe une méthode de 'plot'
-## pour les tableaux de fréquences.
+## On peut démontrer (faites-le en exercice!) que la
+## distribution non conditionnelle de X est une binomiale
+## négative de paramètres 5 et 4/(4 + 1) = 0,8.
+##
+## Vérifions ce résultat empiriquement en calculant d'abord le
+## tableau de fréquences des observations de l'échantillon
+## avec la fonction 'table', puis en traçant le graphique des
+## résultats. Il existe une méthode de 'plot' pour les
+## tableaux de fréquences.
 (p <- table(x))            # tableau de fréquences
-plot(p/length(x))          # graphique
+plot(p/length(x))          # graphique (fréquences relatives)
 
-## On ajoute au graphique les masses de probabilités théoriques.
+## Ajoutons au graphique les masses de probabilités
+## théoriques.
 (xu <- unique(x))          # valeurs distinctes de x
 points(xu, dnbinom(xu, 5, 0.8), pch = 21, bg = "red3")
 
+## DISTRIBUTIONS COMPOSÉES
 
-## CONVOLUTIONS
+## La simulation des distributions composées S = X_1 + ... +
+## X_N est une procédure intrinsèquement itérative puisque
+## pour chaque observation de la variable aléatoire S, il faut
+## d'abord connaitre le nombre d'observations à simuler de la
+## variable aléatoire X, nombre obtenu de la distribution de
+## la variable aléatoire N.
+##
+## Nous présentons deux techniques «manuelles» avant
+## d'illustrer les fonctions 'rcomppois' et 'rcompound' du
+## paquetage actuar.
+##
+## Considérons le cas d'une Poisson composée. Le paramètre de
+## Poisson vaut 2 et la distribution de la variable aléatoire
+## X est une Gamma(2, 1).
+##
+## Une première approche repose sur la fonction 'sapply'. Elle
+## applique pour chaque observation de la loi de Poisson une
+## fonction anonyme qui, elle, génère les observations x_1,
+## ..., x_n et calcule la somme s = x_1 + ... + x_n.
+sapply(rpois(10, 2), function(n) sum(rgamma(n, 2, 1)))
 
-## Une convolution est la somme de deux variables aléatoires
-## indépendantes. De manière générale, une convolution est
-## très compliquée à évaluer, même numériquement. Certaines
-## convolutions sont toutefois bien connues:
-##
-## 1. une somme de Bernoulli est une binomiale;
-## 2. une somme de géométriques est une binomiale négative;
-## 3. une somme d'exponentielles est une gamma;
-## 4. une somme de Poisson est une Poisson;
-## 5. une somme de normales est une normale, etc.
-##
-## On peut utiliser ces résultats pour simuler des
-## observations de certaines lois.
-##
-## Par exemple, pour simuler une observation d'une
-## distribution Gamma(alpha, lambda), on peut sommer alpha
-## observations d'une Exponentielle(lambda). Ces dernières
-## sont obtenues par la méthode de l'inverse.
-alpha <- 5
-lambda <- 2
-- sum(log(runif(alpha)))/lambda # une observation de la gamma
+## Une approche alternative consiste à générer les
+## observations de la loi de Poisson et toutes les
+## observations de la loi gamma, à séparer ces dernières en
+## catégories à l'aide de facteurs et à effectuer les sommes
+## par catégorie. Il faut explicitement tenir compte, dans
+## cette procédure, des cas où N = 0.
+s <- numeric(10)               # contenant avec des 0
+N <- rpois(10, 2)              # échantillon loi de Poisson
+x <- rgamma(sum(N), 2, 1)      # échantillon loi gamma
+f <- rep.int(seq_len(10), N)   # facteurs
+s[which(N != 0)] <- tapply(x, f, sum) # sommes par catégorie
+s                                       # résultats
 
-## Pour simuler un échantillon de taille n de la gamma, il
-## faut simuler n * alpha observations de l'exponentielle. Il
-## existe des algorithmes plus efficaces pour simuler d'une
-## loi gamma.
-n <- 1000                  # taille de l'échantillon
-x <- - rowSums(matrix(log(runif(n * alpha)),
-                      nrow = n))/lambda
-hist(x, prob = TRUE)       # histogramme
-curve(dgamma(x, alpha, lambda),
-      add = TRUE, lwd = 2, col = "red3") # densité théorique
+## La seconde approche est moins intuitive que la première,
+## mais elle s'avère plus simple à programmer de manière
+## générale et, de plus, elle est un peu plus rapide.
+n <- 1e6
+system.time(sapply(rpois(n, 2), function(n) sum(rgamma(n, 2, 1))))
+system.time({
+    s <- numeric(n)
+    N <- rpois(n, 2)
+    x <- rgamma(sum(N), 2, 1)
+    f <- rep.int(seq_len(n), N)
+    s[which(N != 0)] <- tapply(x, f, sum);
+    s})
 
-## La simulation peut aussi servir à estimer des
-## caractéristiques de la distribution d'une convolution
-## difficiles à calculer explicitement. Par exemple, supposons
-## que l'on a
-##
-## X ~ Gamma(3, 4)
-## Y ~ Gamma(5, 2)
-##
-## et que l'on souhaite calculer le 95e centile de X + Y. Il
-## n'y a pas de solution explicite pour la distribution de X +
-## Y puisque les deux lois gamma n'ont pas le même paramètre
-## d'échelle (lambda). Procédons donc par simulation pour
-## obtenir une approximation du résultat.
-x <- rgamma(10000, 3, 4)   # échantillon de la première loi
-y <- rgamma(10000, 5, 2)   # échantillon de la deuxième loi
-quantile(x + y, 0.95)      # 95e centile de la convolution
+## C'est l'approche utilisée par les fonctions 'rcomppois' et
+## 'rcompound' de actuar.
+rcomppois
 
-## Il est laissé en exercice de faire le même calcul avec Excel.
+## Nous pouvons simuler une Poisson composée de manière plus
+## intuitive avec la fonction 'rcomppois'. Nous spécifions le
+## modèle de variable aléatoire X comme dans 'rmixture'.
+## Puisqu'il n'y a qu'un modèle à spécifier, il n'est pas
+## nécessaire de le placer dans 'expression'.
+rcomppois(10, 2, rgamma(2, 1))
+
+## La fonction 'rcompound' permet de simuler des distributions
+## composées générales où la distribution de fréquence est
+## autre que la Poisson. Voici un exemple de binomiale
+## négative composée.
+rcompound(10, rnbinom(2, 0.2), rgamma(2, 1))
