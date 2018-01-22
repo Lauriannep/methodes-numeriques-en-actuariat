@@ -93,3 +93,13 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ### (en développement)
 
+Les documents de référence sont basés sur les versions de l'hiver 2016 des documents de référence des parties II à IV du cours ACT-2002 encore disponibles [dans le Portail libre](https://libre.act.ulaval.ca/index.php?id=448) de l'École d'actuariat. 
+
+La présente édition contient une version révisée du document sur la
+simulation stochastique. Les autres documents n'ont pas été modifiés.
+
+- Les références à VBA ont à peu près toutes été supprimées du texte.
+- Le chapitre 2 contient une nouvelle section sur la simulation de modèles actuariels.
+- Le code informatique du chapitre 2 offre des exemples d'utilisation des fonctions de simulation du paquetage actuar.
+- Style plus personnel utilisant le «nous» et le «vous» plutôt que le «on».
+
