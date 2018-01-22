@@ -162,8 +162,9 @@ intervalle quelconque, en général $(0, 1)$. Comment procéder?
     nombres issus d'un tel processus.
   \end{itemize}
   L'utilisation de listes de nombres aléatoires ou de sources
-  physiques est toutefois peu pratique avec un ordinateur, surtout si
-  l'on a besoin de milliers ou de millions de nombres aléatoires.
+  physiques est toutefois peu pratique avec un ordinateur, surtout
+  lorsque l'on a besoin de milliers ou de millions de nombres
+  aléatoires.
 \item Une ancienne technique est celle des carrés centraux de
   von~Neumann: on prend un nombre à quatre chiffres, on l'élève au
   carré puis on extrait les quatre chiffres du milieu, et ainsi de
@@ -181,7 +182,7 @@ En fait, les générateurs couramment utilisés aujourd'hui dans les
 ordinateurs sont des évolutions des générateurs dits
 \emph{congruentiels}. Ils sont particulièrement utiles parce
 qu'aisément \emph{reproduisibles}. De plus, nous pouvons généralement
-en connaître les propriétés --- notamment la période --- par une
+en connaitre les propriétés --- notamment la période --- par une
 analyse mathématique poussée. \citet[section 3.1]{Knuth:ACP:vol2:1997}
 fournit un exemple éloquent de l'importance de pouvoir démontrer
 mathématiquement les propriétés d'un générateur de nombres aléatoires.

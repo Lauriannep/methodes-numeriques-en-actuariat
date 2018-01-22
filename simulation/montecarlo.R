@@ -29,7 +29,7 @@ x <- runif(1e5, 2, 5)
 x <- runif(1e6, 2, 5)
 3 * mean(f(x))
 
-## On trace des graphiques de la vraie fonction à intégrer et
+## Traçons des graphiques de la vraie fonction à intégrer et
 ## de trois évaluations par la méthode Monte Carlo.
 op <- par(mfrow = c(2, 2)) # 4 graphiques en grille 2 x 2
 curve(f(x), xlim = c(2, 5), lwd = 2, main = "Vraie fonction")
@@ -67,8 +67,8 @@ mean(sqrt(4 - u^2 - v^2)) * 1.25^2
 
 ## Graphiques de la vraie fonction et des points où celle-ci
 ## est évaluée avec la méthode Monte Carlo. Pour faire un
-## graphique en trois dimensions, on peut utiliser la fonction
-## 'persp'.
+## graphique en trois dimensions, nous pouvons utiliser la
+## fonction 'persp'.
 op <- par(mfrow = c(2, 2), mar = c(1, 1, 2, 1))
 f <- function(x, y) sqrt(4 - x^2 - y^2)
 x <- seq(0, 1.25, length = 25)

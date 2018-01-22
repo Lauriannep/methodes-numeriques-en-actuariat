@@ -15,7 +15,7 @@
 ### EXEMPLE 1.3
 ###
 
-## On définit tout d'abord une petite fonction pour calculer
+## Définissons tout d'abord une petite fonction pour calculer
 ## les valeurs successives d'un générateur congruentiel
 ## linéaire général.
 rand <- function(n, a, c, m, seed)
@@ -27,10 +27,10 @@ rand <- function(n, a, c, m, seed)
     x[-1]
 }
 
-## On peut toujours obtenir une période maximale de m avec un
-## générateur congruentiel en posant a = c = 1, mais l'aspect
-## aléatoire de la suite de nombres obtenus en prend alors
-## pour son rhume...
+## Nous pouvons toujours obtenir une période maximale de m
+## avec un générateur congruentiel en posant a = c = 1, mais
+## l'aspect aléatoire de la suite de nombres obtenus en prend
+## alors pour son rhume...
 rand(17, a = 1, c = 1, m = 16, seed = 0)
 
 ## Avec un meilleur choix de multiplicateur et d'incrément, la
@@ -68,13 +68,14 @@ length(unique(rand(32, a = 3, c = 0, m = 31, seed = 19)))
 par(pch = 19)
 plot(x)
 
-## Par contre, si l'on fait un graphique des paires de valeurs
-## successives (c'est-à-dire x[1] en fonction de x[2], x[2] en
-## fonction de x[3], etc.), un portrait dérangeant apparaît.
+## Par contre, si nous traçons un graphique des paires de
+## valeurs successives (c'est-à-dire x[1] en fonction de x[2],
+## x[2] en fonction de x[3], etc.), un portrait dérangeant
+## apparait.
 plot(head(x, -1), tail(x, -1))
 
 ## Augmenter la valeur du multiplicateur améliore la
-## situation. Si l'on utilise plutôt a = 12 (une racine
+## situation. Si nous utilisons plutôt a = 12 (une racine
 ## primitive), alors la période est toujours de 30 et donc les
 ## valeurs de la suite sont les mêmes que ci-dessus, dans un
 ## ordre différent. Cependant, les valeurs sont mieux
@@ -82,7 +83,7 @@ plot(head(x, -1), tail(x, -1))
 x <- rand(30, a = 12, c = 0, m = 31, seed = 19)
 plot(head(x, -1), tail(x, -1))
 
-## On illustre par six autres graphiques comment le
+## Illustrons par six autres graphiques comment le
 ## choix des paramètres d'un générateur congruentiel
 ## peut avoir une importance majeure sur la qualité des
 ## nombres générés.

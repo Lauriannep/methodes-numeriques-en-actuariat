@@ -70,7 +70,7 @@ et d'analyse statistique.
 \label{sec:simulation:inverse}
 
 La méthode de l'inverse repose sur une idée toute simple, soit que
-l'on peut transformer des nombres uniformes sur $(0, 1)$ en des
+nous pouvons transformer des nombres uniformes sur $(0, 1)$ en des
 nombres provenant de la distribution avec fonction de répartition
 $F_X(x)$ en utilisant le théorème suivant.
 
@@ -509,8 +509,8 @@ si
   u c g_Y(y) \leq f_X(y),
 \end{equation*}
 où $u$ est un nombre issu d'une loi $U(0, 1)$. Graphiquement, cela
-signifie que l'on accepte la valeur $y$ si le point $(y, u c g_Y(y))$
-se trouve sous la courbe $f$ en $y$ et qu'on le rejette s'il se trouve
+signifie que nous acceptons la valeur $y$ si le point $(y, u c g_Y(y))$
+se trouve sous la courbe $f$ en $y$ et que nous le rejetons s'il se trouve
 entre $f$ et l'enveloppe. La
 \autoref{fig:simulation:acceptation-rejet2} illustre cette
 interprétation.
@@ -541,7 +541,7 @@ text(0.1, m + 0.08, "c g(y)")
 \end{figure}
 
 \tipbox{Évidemment, plus l'enveloppe est près de $f_X(x)$, plus
-  l'algorithme est performant puisque l'on rejette alors moins de
+  l'algorithme est performant puisque nous rejetons alors moins de
   valeurs.}
 
 \begin{exemple}
@@ -1063,9 +1063,8 @@ donc à chaque fois. C'est essentiel, autrement il n'y aurait pas de
 mélange et nous obtiendrions simplement un échantillon de la
 distribution $f(x|theta)$ pour une valeur de $\theta$ quelconque.
 
-Le fait que les fonctions de simulation de variables aléatoire de R
-sont vectorielles rend la simulation de mélanges continus très simples
-à réaliser.
+La simulation de mélanges continus s'avère très simple à réaliser en R
+grâce à la nature vectorielle des fonctions de simulation.
 
 \begin{exemple}
   Soit $X$ une variable aléatoire issue du mélange
@@ -2102,7 +2101,7 @@ points(y1/(y1 + y2), rep(0, length(y1)), pch = 19, col = col)
     l'\autoref{ex:simulation:mode} et à
     l'\autoref{exemple:simulation:beta:1} pour le cas présent.
   \item Calculer l'efficacité de l'algorithme développé dans
-    l'\autoref{exemple:simulation:beta:2}, où l'on a déterminé que
+    l'\autoref{exemple:simulation:beta:2}, où nous avons déterminé que
     \begin{displaymath}
       f_{X}(x) \leq
       \begin{cases}

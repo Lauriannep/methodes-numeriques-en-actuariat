@@ -11,11 +11,10 @@
 
 \chapter[Planification d'une simulation avec R]{%
   Planification d'une simulation \\ avec R}
-\index{simulation!planification|(}
-\label{planification} %|
+\label{chap:planification} %|
 
 <<echo=FALSE>>=
-options(width = 60)
+options(width = 52)
 @
 
 <<echo=FALSE>>=
@@ -78,11 +77,11 @@ d'autres. Cette annexe passe en revue diverses façons de faire des
 simulations avec R à l'aide d'un exemple simple de nature statistique.
 
 \section{Contexte}
-\label{planification:contexte}
+\label{sec:planification:contexte}
 
 Soit $X_1, \dots, X_n$ un échantillon aléatoire tiré d'une population
 distribuée selon une loi uniforme sur l'intervalle $(\theta -
-\frac{1}{2}, \theta + \frac{1}{2})$. On considère trois
+\frac{1}{2}, \theta + \frac{1}{2})$ et trois
 estimateurs sans biais du paramètre inconnu $\theta$:
 \begin{enumerate}
 \item la moyenne arithmétique
@@ -105,26 +104,24 @@ estimateurs sans biais du paramètre inconnu $\theta$:
   \end{displaymath}
 \end{enumerate}
 
-À l'aide de la simulation on veut, d'une part, vérifier si les trois
+À l'aide de la simulation nous voulons, d'une part, vérifier si les trois
 estimateurs sont bel et bien sans biais et, d'autre part, déterminer
 lequel a la plus faible variance.
 
-Pour ce faire, on doit d'abord simuler un grand nombre $N$
+Pour ce faire, nous devons d'abord simuler un grand nombre $N$
 d'échantillons aléatoires de taille $n$ d'une distribution $U(\theta -
 \frac{1}{2}, \theta + \frac{1}{2})$ pour une valeur de $\theta$
-choisie. Pour chaque échantillon, on calculera ensuite les trois
+choisie. Pour chaque échantillon, nous calculerons ensuite les trois
 estimateurs ci-dessus, puis la moyenne et la variance, par type
 d'estimateur, de tous les estimateurs obtenus. Si la moyenne des $N$
 estimateurs $\hat{\theta}_i$, $i = 1, 2, 3$ est près de $\theta$,
-alors on pourra conclure que $\hat{\theta}_i$ est sans biais. De même,
-on déterminera lequel des trois estimateurs a la plus faible variance
+alors nous pourrons conclure que $\hat{\theta}_i$ est sans biais. De même,
+nous déterminerons lequel des trois estimateurs a la plus faible variance
 selon le classement des variances empiriques.
 
 
-
 \section{Première approche: avec une boucle}
-\index{boucle}
-\label{planification:boucle}
+\label{sec:planification:boucle}
 
 La façon la plus intuitive de mettre en {\oe}uvre cette étude de
 simulation en R consiste à utiliser une boucle \code{for}. Avec
@@ -154,8 +151,8 @@ a <- theta - 0.5           # borne inférieure de l'uniforme
 b <- theta + 0.5           # borne supérieure de l'uniforme
 
 ## Initialisation de la matrice dans laquelle seront
-## stockées les valeurs des estimateurs. On donne également
-## des noms aux lignes de la matrice afin de facilement
+## stockées les valeurs des estimateurs. Les noms donnés
+## aux lignes de la matrice permettent de facilement
 ## identifier les estimateurs.
 x <- matrix(0, nrow = 3, ncol = nsimul)
 rownames(x) <- c("Moyenne", "Mediane", "Mi-etendue")
@@ -169,8 +166,8 @@ for (i in 1:nsimul)
                 mean(range(u))) # mi-étendue
 }
 
-## On peut maintenant calculer la moyenne et la variance
-## par ligne.
+## Nous pouvons maintenant calculer la moyenne et la
+## variance par ligne.
 rowMeans(x) - theta        # vérification du biais
 apply(x, 1, var)           # comparaison des variances
 \end{lstlisting}
@@ -211,25 +208,28 @@ Si l'on souhaite pouvoir exécuter le code de la
 expression, il suffit de placer l'ensemble du code dans une fonction.
 La fonction \code{simul1} de la \autoref{fig:planification:simul1}
 reprend le code de la \autoref{fig:planification:boucle}, sans les
-commentaires. On a alors:
-
+commentaires.
 <<echo=TRUE>>=
 simul1(10000, 100, 0)
 @
 
+
 \section{Seconde approche: avec \code{sapply}}
-\label{planification:sapply}
+\label{sec:planification:sapply}
 
 Dans R, il est plus élégant --- et parfois plus efficace --- de
 masquer les calculs itératifs avec les fonctions d'application
 \code{lapply} et \code{sapply}
-\citep[chapitre~6]{Goulet:programmer-avec-r:2017}. On rappelle que la
-syntaxe de ces fonctions est
-\begin{quote}
-  \code{lapply(x, FUN, ...)} \\
-  \code{sapply(x, FUN, ...)}
-\end{quote}
-Ces fonctions appliquent la fonction \code{FUN} à tous les éléments de
+\citep[chapitre~6]{Goulet:programmer-avec-r:2017}. Rappellons que la
+syntaxe de ces fonctions est:
+\begin{Schunk}
+\begin{Verbatim}
+lapply(x, FUN, ...)
+sapply(x, FUN, ...)
+\end{Verbatim}
+\end{Schunk}
+
+Les fonctions appliquent la fonction \code{FUN} à tous les éléments de
 la liste ou du vecteur \code{x} et retournent les résultats sous forme
 de liste (\code{lapply}) ou, lorsque c'est possible, de vecteur ou
 de matrice (\code{sapply}). Il est important de noter que les
@@ -240,11 +240,14 @@ arguments de \code{FUN} sont spécifiés dans le champ~`\code{...}'.
 Pour pouvoir utiliser ces fonctions dans le cadre d'une simulation
 comme celle dont il est question ici, il s'agit de définir une
 fonction qui fera tous les calculs pour une simulation, puis de la
-passer à \code{sapply} pour obtenir les résultats de $N$
-simulations. La \autoref{fig:planification:lapply} présente une
-première version d'une telle fonction. On remarquera que l'argument
-\code{i} ne joue aucun rôle dans la fonction. Voici un exemple
-d'utilisation pour un petit nombre de simulations (4):
+passer à \code{sapply} pour obtenir les résultats de $N$ simulations.
+La \autoref{fig:planification:lapply} présente une première version
+d'une telle fonction. Vous remarquerez que l'argument \code{i} ne joue
+aucun rôle dans la fonction. L'expression ci-dessous fournit un
+exemple d'utilisation pour un petit ($4$) nombre de simulations.
+<<echo=TRUE>>=
+sapply(1:4, fun1, size = 10, a = -0.5, b = 0.5)
+@
 
 \begin{figure}
   \centering
@@ -274,26 +277,23 @@ simul2 <- function(nsimul, size, theta)
   \label{fig:planification:lapply}
 \end{figure}
 
-<<echo=TRUE>>=
-sapply(1:4, fun1, size = 10, a = -0.5, b = 0.5)
-@
-
-On remarque donc que les résultats de chaque simulation se trouvent
+Vous remarquerez que les résultats de chaque simulation se trouvent
 dans les colonnes de la matrice obtenue avec \code{sapply}.
 
-Pour compléter l'analyse, on englobe le tout dans une fonction
+Pour compléter l'analyse, nous englobons le tout dans une fonction
 \code{simul2}, dont le code se trouve à la
-\autoref{fig:planification:lapply}:
+\autoref{fig:planification:lapply}.
 <<echo=TRUE>>=
 simul2(10000, 100, 0)
 @
+
 Il est généralement plus facile de déboguer le code avec cette
-approche puisque l'on peut rapidement circonscrire un éventuel
+approche puisque nous pouvons rapidement circonscrire un éventuel
 problème à \code{fun1} ou \code{simul2}.
 
 
 \section{Variante de la seconde approche}
-\label{planification:replicate}
+\label{sec:planification:replicate}
 
 Une chose manque d'élégance dans la seconde approche: l'obligation
 d'inclure un argument factice dans la fonction \code{fun1}. La
@@ -304,7 +304,7 @@ une expression quelconque.
 Les fonctions \code{fun2} et \code{simul3} de la
 \autoref{fig:planification:replicate} sont des versions légèrement
 modifiées de \code{fun1} et \code{simul2} pour utilisation avec
-\code{replicate}. On a alors
+\code{replicate}.
 <<echo=TRUE>>=
 simul3(10000, 100, 0)
 @
@@ -348,29 +348,31 @@ de script. Pour un plus gros projet, cependant, il vaut souvent mieux
 avoir recours à plusieurs fichiers différents. Le présent auteur
 utilise pour sa part un fichier par fonction.
 
-À des fins d'illustration, supposons que l'on utilise l'approche de la
+À des fins d'illustration, supposons que nous utilisons l'approche de la
 \autoref{planification:replicate} avec la fonction
 \code{replicate} et que le code des fonctions \code{fun2} et
 \code{simul3} est sauvegardé dans des fichiers \code{fun2.R} et
-\code{simul3.R}, dans l'ordre. Si l'on crée un autre fichier, disons
+\code{simul3.R}, dans l'ordre. Si nous créons un autre fichier, disons
 \code{go.R}, ne contenant que des expressions \code{source} pour
 lire les autres fichiers, il est alors possible de démarrer des
 simulations en exécutant ce seul fichier. Dans notre exemple, le
 fichier \code{go.R} contiendrait les lignes suivantes:
-\begin{quote}
-  \code{source("fun2.R")} \\
-  \code{source("simul3.R")} \\
-  \code{simul3(10000, 100, 0)}
-\end{quote}
-Une simple commande
+\begin{Schunk}
+\begin{Verbatim}
+source("fun2.R")
+source("simul3.R")
+simul3(10000, 100, 0)
+\end{Verbatim}
+\end{Schunk}
+
+La simple commande ci-dessous exécutera alors une simulation complète.
 <<echo=TRUE, eval=FALSE>>=
 source("go.R")
 @
-exécutera alors une simulation complète.
 
 
 \section{Exécution en lot}
-\label{planification:batch}
+\label{sec:planification:batch}
 
 Les utilisateurs plus avancés pourront vouloir exécuter leur
 simulation R en lot (\emph{batch}) pour en accélérer le traitement.
@@ -383,24 +385,27 @@ On exécute R en lot depuis la ligne de commande (Invite de commande
 sous Windows, Terminal sous macOS ou Linux). Une fois placé dans le
 répertoire contenant les fichiers de script, il suffit d'entrer à la
 ligne de commande
-\begin{quote}
-\verb|R CMD BATCH go.R|
-\end{quote}
+\begin{Schunk}
+\begin{Verbatim}
+$ R CMD BATCH go.R
+\end{Verbatim}
+\end{Schunk}
+
 La sortie de cette commande (et donc tous les résultats des
 expressions R du fichier \code{go.R}) seront placés par défaut dans le
 fichier \code{go.Rout}. Sous Windows, le dossier d'installation de R
 peut ne pas se trouver dans la variable d'environnement \verb|%PATH%|,
-auquel cas il faut spécifier le chemin d'accès complet de l'exécutable
+auquel cas il faut spécifier le chemin d'accès complet du programme
 à la ligne de commande:
-\begin{quote}
-\verb|"c:\Program Files\R\R-x.y.z\bin\R" CMD BATCH go.R|
-\end{quote}
-Remplacer \code{R-x.y.z} par le numéro de version courant de R.
-
+\begin{Schunk}
+\begin{Verbatim}[commandchars=|\{\}]
+$ "c:\Program Files\R\R-|meta{x.y.z}\bin\R" CMD BATCH go.R
+\end{Verbatim}
+\end{Schunk}
 
 
 \section{Conclusion}
-\label{planification:conclusion}
+\label{sec:planification:conclusion}
 
 Le nombre de simulations, $N$, et la taille de l'échantillon, $n$, ont
 tous deux un impact sur la qualité des résultats, mais de manière
@@ -427,9 +432,9 @@ et donc
 \end{displaymath}
 pour tout $n \geq 2$.
 
-\index{simulation!planification|)}
-
 %%% Local Variables:
-%%% TeX-master: "methodes_numeriques-partie_2"
+%%% mode: latex
+%%% TeX-engine: xetex
+%%% TeX-master: "methodes-numeriques-en-actuariat_simulation"
 %%% coding: utf-8
 %%% End:

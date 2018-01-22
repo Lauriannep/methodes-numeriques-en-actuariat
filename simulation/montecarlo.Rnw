@@ -30,8 +30,7 @@ pour référer à toute utilisation de la simulation.
 
 L'une des utilisations de la simulation Monte Carlo la plus répandue
 est le calcul d'intégrales, principalement pour des dimensions
-supérieures à un. On ne présente ici que l'idée générale.
-
+supérieures à un. Nous ne présentons ici que l'idée générale.
 
 \begin{prob-enonce}
   L'intégrale de Gauss
@@ -40,29 +39,29 @@ supérieures à un. On ne présente ici que l'idée générale.
   \end{equation*}
   intervient dans plusieurs disciplines des mathématiques. En
   probabilités, elle est notamment à la base de la définition de la
-  loi normale, ou loi gaussienne. Sans primitive, on l'utilise
-  souvent, en calcul intégral, comme un exemple d'intégrale définie
-  qu'il faut résoudre par la transformation du domaine en coordonnées
-  polaires.
+  loi normale, ou loi gaussienne. Sans primitive, elle sert souvent,
+  en calcul intégral, comme exemple d'intégrale définie qu'il faut
+  résoudre par la transformation du domaine en coordonnées polaires.
 
-  On sait que
+  Nous savons que
   \begin{equation*}
     G = \int_{-\infty}^{\infty} e^{-x^2}\, dx = \sqrt{\pi}.
   \end{equation*}
-  Comment pourrait-on vérifier ce résultat à l'aide de la simulation?
+  Comment pourrions-nous vérifier ce résultat à l'aide de la
+  simulation?
 \end{prob-enonce}
 
 
 \section{Contexte}
 \label{sec:montecarlo:contexte}
 
-Supposons que l'on souhaite calculer l'intégrale
+Nous souhaitons calculer l'intégrale
 \begin{equation}
   \label{eq:montecarlo:int:depart}
   \theta = \int_a^b h(x)\, dx,
 \end{equation}
-mais que celle-ci est trop compliquée pour être évaluée explicitement.
-On pourrait d'abord faire deux approximations de l'aire sous la
+mais celle-ci est trop compliquée pour être évaluée explicitement.
+Nous pourrions d'abord faire deux approximations de l'aire sous la
 fonction $h$ à l'aide des sommes de Riemann
 \begin{align*}
   R_n^- &= \sum_{k = 0}^{n - 1} h(a + k \Delta x) \Delta x \\
@@ -116,7 +115,7 @@ L'idée de l'intégration Monte Carlo consiste à évaluer la fonction à
 intégrer en des points choisis aléatoirement, puis à s'en remettre à
 la Loi des grands nombres pour estimer l'intégrale.
 
-On exprime tout d'abord la fonction $h(x)$ sous la forme
+Nous exprimons tout d'abord la fonction $h(x)$ sous la forme
 \begin{equation*}
   h(x) = g(x) f(x),
 \end{equation*}
@@ -139,12 +138,12 @@ grands nombres, $\hat{\theta}_n \stackrel{n \rightarrow
   \infty}{\longrightarrow} \theta$.
 
 Par souci de simplicité et parce qu'il est facile d'obtenir un
-échantillon aléatoire d'une loi uniforme, on pose en général $X \sim
-U(a, b)$, soit
+échantillon aléatoire d'une loi uniforme, nous posons en général
+$X \sim U(a, b)$, soit
 \begin{equation*}
   f(x) = \frac{1}{b - a}, \quad a < x < b.
 \end{equation*}
-Dans ce cas, on a $g(x) = (b - a) h(x)$ et l'intégrale de départ
+Dans ce cas, $g(x) = (b - a) h(x)$ et l'intégrale de départ
 \eqref{eq:montecarlo:int:depart} se réécrit
 \begin{align}
   \label{eq:montecarlo:int:uniforme}
@@ -160,7 +159,8 @@ alors
 \end{equation*}
 où $x_1, \dots, x_n$ est un échantillon aléatoire d'une loi $U(a, b)$.
 
-On remarquera qu'il est équivalent de faire le changement de variable
+Vous remarquerez qu'il est équivalent d'effectuer le changement de
+variable
 \begin{equation*}
   \begin{split}
     u  &= \frac{x - a}{b - a} \\
@@ -183,7 +183,7 @@ où $U \sim U(0, 1)$. Une estimation de l'intégrale est donc
   \hat{\theta}_n = \frac{b - a}{n} \sum_{i = 1}^n h(a + (b - a) u_i),
 \end{equation*}
 où $u_1, \dots, u_n$ est un échantillon aléatoire d'une loi $U(0, 1)$.
-On doit utiliser la technique du changement de variable lorsque le
+Nous devons utiliser la technique du changement de variable lorsque le
 domaine est infini.
 
 
@@ -234,9 +234,10 @@ domaine est infini.
   \begin{equation*}
     \theta = \int_2^5 x^{11/5} e^{-x/10}\, dx.
   \end{equation*}
-  Parce que l'exposant de $x$ n'est pas un entier, on ne peut évaluer
-  cette intégrale par parties. Cependant, on remarque que la fonction
-  à intégrer est, à une constante près, la densité d'une loi gamma:
+  Parce que l'exposant de $x$ n'est pas un entier, nous ne pouvons
+  évaluer cette intégrale par parties. Cependant, nous remarquons que
+  la fonction à intégrer est, à une constante près, la densité d'une
+  loi gamma:
   \begin{align*}
     \theta
     &= \int_2^5 x^{11/5} e^{-x/10}\, dx \\
@@ -252,12 +253,13 @@ domaine est infini.
     \right],
   \end{align*}
   où $G(x; \alpha, \lambda)$ est la fonction de répartition de la loi
-  Gamma$(\alpha, \lambda)$. Avec R, on obtient la valeur exacte
+  Gamma$(\alpha, \lambda)$. R nous fournit la valeur exacte de
+  l'intégrale.
 <<echo=TRUE>>=
 gamma(3.2) * diff(pgamma(c(2, 5), 3.2, 0.1)) / 0.1^3.2
 @
 
-  Pour utiliser la méthode Monte Carlo, on pose
+  Pour utiliser la méthode Monte Carlo, nous posons
   \begin{equation*}
     \theta = 3 \int_2^5 x^{11/5} e^{-x/10}
     \left( \frac{1}{3} \right)\, dx.
@@ -268,8 +270,8 @@ gamma(3.2) * diff(pgamma(c(2, 5), 3.2, 0.1)) / 0.1^3.2
     \hat{\theta}_n = \frac{3}{n} \sum_{i = 1}^n
     x_i^{11/5} e^{-x_i/10}
   \end{equation*}
-  est une estimation de $\theta$. On a obtenu les résultats suivants
-  avec R (voir aussi la \autoref{fig:montecarlo:2d}):
+  est une estimation de $\theta$. Nous obtenons les résultats suivants
+  avec R (voir aussi la \autoref{fig:montecarlo:2d}).
 <<echo=TRUE>>=
 f <- function(x) x^2.2 * exp(-x/10)
 x <- runif(1e2, 2, 5)
@@ -317,9 +319,9 @@ plot(x, f(x), main = "n = 10 000",
     \theta = \int_0^{5/4} \int_0^{5/4} \sqrt{4 - x^2 - y^2}\, dy\, dx.
   \end{equation*}
   La procédure à suivre avec les intégrales multiples est la même
-  qu'avec les intégrales simples, sauf que l'on tire des points
+  qu'avec les intégrales simples, sauf que nous tirons des points
   uniformément dans autant de dimensions que nécessaire. Ainsi, dans
-  le cas présent, on pose
+  le cas présent, nous posons:
   \begin{align*}
     \theta
     &= \int_0^{5/4} \int_0^{5/4} \sqrt{4 - x^2 - y^2}\, dy\, dx \\
@@ -336,8 +338,8 @@ plot(x, f(x), main = "n = 10 000",
   \begin{equation*}
     \hat{\theta}_n = \frac{25}{16 n} \sum_{i = 1}^n \sqrt{4 - x_i^2 - y_i^2}.
   \end{equation*}
-  On a obtenu les résultats suivants avec R (voir aussi la
-  \autoref{fig:montecarlo:3d}):
+  Voici quelques résultats obtenus avec R (voir aussi la
+  \autoref{fig:montecarlo:3d}).
 <<echo=TRUE>>=
 u <- runif(1e2, 0, 1.25)
 v <- runif(1e2, 0, 1.25)
@@ -411,7 +413,7 @@ points(trans3d(u, v, f(u, v), pm = res),
   pour $n$ grand et où $u_1, \dots, u_n$ sont des nombres aléatoires
   distribués uniformément sur l'intervalle $(0, 1)$.
 
-  Le calcul est ensuite très simple à faire avec R:
+  Le calcul est ensuite très simple à faire avec R.
 <<echo=FALSE>>=
 options(digits = 7)
 @
@@ -477,7 +479,7 @@ u <- runif(1E5)
       \hat{\theta} = \frac{1}{n} \sum_{i = 1}^n \ln(x_i),
     \end{displaymath}
     où $x_1, \dots, x_n$ est un échantillon aléatoire d'une
-    distribution $U(4, 9)$. Une évaluation avec R donne
+    distribution $U(4, 9)$. Voici le résultat d'une évaluation avec R.
 <<echo=TRUE>>=
 mean(log(runif(1e6, 4, 9)))
 @
@@ -492,7 +494,7 @@ mean(log(runif(1e6, 4, 9)))
   à l'aide de l'intégration Monte Carlo. Comparer la réponse obtenue
   avec la vraie valeur, $1,203758$, obtenue à l'aide de Maple.
   \begin{sol}
-    On pose
+    Posons
     \begin{align*}
       \theta
       &= \int_0^1 \int_0^1 e^{2xy} \ln(3x + y^2)\, dx dy \\
@@ -506,8 +508,8 @@ mean(log(runif(1e6, 4, 9)))
       e^{2 x_i y_i} \ln(3x_i + y_i^2)
     \end{displaymath}
     où $x_1, \dots, x_n$ et $y_1, \dots, y_n$ sont deux échantillons
-    aléatoires indépendants d'une distribution $U(0, 1)$. Une
-    évaluation avec R donne
+    aléatoires indépendants d'une distribution $U(0, 1)$. Voici le
+    résultat d'une évaluation avec R.
 <<echo=TRUE>>=
 x <- runif(1e6)
 y <- runif(1e6)
@@ -545,7 +547,7 @@ mean(exp(2 * x * y) * log(3 * x + y^2))
         (- \ln u_i^2)^2 \sin (- \pi \ln u_i^2),
       \end{displaymath}
       où $u_1, \dots, u_n$ est un échantillon aléatoire d'une
-      distribution $U(0, 1)$. Une évaluation avec R donne
+      distribution $U(0, 1)$. Voici le résultat d'une évaluation avec R.
 <<echo=TRUE>>=
 u <- runif(1e6)
 2 * mean((-log(u^2))^2 * sin(pi * (-log(u^2))))
@@ -565,7 +567,7 @@ u <- runif(1e6)
         \hat{\theta} = \frac{16}{n} \sum_{i = 1}^n \sin(\pi x_i)
       \end{displaymath}
       où $x_1, \dots, x_n$ est un échantillon aléatoire d'une
-      Gamma$(3, 1/2)$. Une évaluation avec R donne
+      Gamma$(3, 1/2)$. Voici le résultat d'une évaluation avec R.
 <<echo=TRUE>>=
 16 * mean(sin(pi * rgamma(1e6, 3, 0.5)))
 @
@@ -581,8 +583,8 @@ u <- runif(1e6)
   $\esp{X_{(5)}}$ par intégration Monte Carlo. Comparer la réponse
   obtenue avec la vraie espérance, $-0,90501$.
   \begin{sol}
-    On peut faire l'estimation en R simplement avec les expressions
-    suivantes:
+    Vous pouvez effectuer l'estimation avec R simplement avec les
+    expressions suivantes.
 <<echo=TRUE>>=
 x <- replicate(10000, rnorm(25))
 mean(apply(x, 2, function(x) sort(x)[5]))
