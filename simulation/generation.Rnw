@@ -154,7 +154,7 @@ intervalle quelconque, en général $(0, 1)$. Comment procéder?
   \item des nombres pris au hasard dans des tableaux de rapports ou
     dans un annuaire;
   \item la roulette;
-  \item le bruit électronique (tablaux RAND);
+  \item le bruit électronique (tableaux RAND);
   \item les intervalles de temps dans un processus de décroissance
     radioactive sont considérés parfaitement aléatoires; le site
     \link{http://www.fourmilab.ch/hotbits/}{HotBits} fournit des
