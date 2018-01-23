@@ -173,7 +173,7 @@ intervalle quelconque, en général $(0, 1)$. Comment procéder?
     8744^2 &= 76\symbf{4575}36 \\
     4575^2 &= 20\symbf{9306}25
   \end{align*}
-\item Nous pouvsons construire des générateurs basés sur la suite de
+\item Nous pouvons construire des générateurs basés sur la suite de
   Fibonacci, des générateurs chaotiques, etc.
 \end{enumerate}
 
