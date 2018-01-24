@@ -991,9 +991,9 @@ Vous aurez reconnu dans le test $u \leq p$, où $u$ provient d'une loi
 $U(0, 1)$, le cœur de la procédure de simulation d'une loi de
 Bernoulli mentionnée à l'\autoref{ex:simulation:binomiale}.
 L'\autoref*{algo:simulation:melange-discret} revient donc à simuler
-$1$ nombre de la distribution $F_1$ si $u \leq p$ $0$ nombre de la
-distribution $F_2$ ou, au contraire, $0$ nombre de $F_1$ si $u > p$ et
-$1$ nombre de $F_2$. Cette observation joue un rôle important pour
+un nombre de la distribution $F_1$ si $u \leq p$ et aucun nombre de la
+distribution $F_2$ ou, au contraire, aucun nombre de $F_1$ si $u > p$ et
+un nombre de $F_2$. Cette observation joue un rôle important pour
 concevoir une procédure de simulation de $n > 1$ valeurs d'un mélange.
 
 La fonction \code{rmixture} du paquetage \pkg{actuar} offre une
