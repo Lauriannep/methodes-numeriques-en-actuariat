@@ -2251,11 +2251,12 @@ simul(2, alpha = 2, beta = 3)
 <<echo=FALSE>>=
 set.seed(12345)
 x <- round(simul(2, alpha = 2, beta = 3), 2)
+x <- format(x, dec = ",")
 options(op)
 @
     \begin{enumerate}[a)]
       \stepcounter{enumii}
-    \item $\Sexpr{x[1]}$, $\Sexpr{x[2]}$
+    \item $(\Sexpr{x[1]}$, $\Sexpr{x[2]})$
     \end{enumerate}
   \end{rep}
   \begin{sol}
