@@ -461,8 +461,7 @@ variable aléatoire $X$.
   peut être vraie pour tout $x$ que si $c > 1$.}
 
 L'idée de la %
-\capsule{http://youtu.be/acceptation-rejet}{méthode
-  d'acceptation-rejet} %
+\capsule{https://youtu.be/1ptmo6CPKuQ}{méthode d'acceptation-rejet} %
 consiste à accepter la «bonne proportion» des réalisations de $Y$
 comme provenant de $X$. La principale difficulté avec la méthode
 d'acceptation-rejet consiste à trouver la fonction enveloppante
@@ -481,13 +480,6 @@ de la densité.
 \begin{figure}
   \centering
 <<echo=FALSE, fig=TRUE>>=
-## plot(NA, xlim = c(0, 1), ylim = c(0, 2), xlab = "y", ylab = "f(y)")
-## m <- dbeta(2/3, 3, 2)
-## x <- rep(c(0.22, 0.58, 0.83), each = 8)
-## y <- runif(24, 0, m)
-## points(x, y, pch = ifelse(y <= dbeta(x, 3, 2), 21, 1), bg = "darkgray")
-## curve(dbeta(x, 3, 2), xlim = c(0, 1), add = TRUE, lwd = 2, col = "blue3")
-## segments(0, m, 1, m, col = "red3", lwd = 2)
 plot(NA, xlim = c(0, 1), ylim = c(0, 2), xlab = "y", ylab = "f(y)")
 m <- dbeta(2/3, 3, 2)
 x <- c(0.22, 0.58, 0.83)
