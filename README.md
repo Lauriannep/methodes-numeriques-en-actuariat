@@ -91,6 +91,10 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ## Historique des versions
 
+### (en développement)
+
+- Correction du texte du paragraphe suivant l'algorithme 2.3.
+
 ### 2018.01-1a (2018-01-24)
 
 Corrections mineures de la version 2018.01-1. Aucun nouveau contenu.
