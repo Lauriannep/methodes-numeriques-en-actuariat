@@ -91,7 +91,9 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ## Historique des versions
 
-### (en développement)
+### 2018.01-1a (2018-01-24)
+
+Corrections mineures de la version 2018.01-1. Aucun nouveau contenu.
 
 - Correction de l'url de la vidéo sur la méthode d'acceptation-rejet au chapitre 2.
 - Réduction de la taille d'une police sur la page frontispice.
