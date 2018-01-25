@@ -36,11 +36,13 @@
 \def\authorfmt{%
   \sffamily\bfseries\fontsize{25}{25}\selectfont\theauthor}
 \def\affiliation{%
-  \sffamily\mdseries\fontsize{18}{18}\selectfont
+  \sffamily\mdseries\fontsize{18}{25}\selectfont
   Professeur titulaire \\
-  École d'actuariat, Université Laval \\[12mm]
+  École d'actuariat, Université Laval}
+\def\collaboration{%
+  \sffamily\mdseries\fontsize{18}{18}\selectfont
   Avec la collaboration de \\
-  \bfseries\fontsize{25}{30}\selectfont
+  \bfseries\fontsize{25}{32}\selectfont
   Laurent Caron}
 \def\edition{%
   \sffamily\mdseries\fontsize{18}{18}\selectfont
@@ -105,6 +107,11 @@
 %% affiliation
 \begin{textblock*}{2\TPHorizModule}(0.35\TPHorizModule,12\TPVertModule)
   \affiliation
+\end{textblock*}
+
+%% avec la collaboration
+\begin{textblock*}{2\TPHorizModule}(0.35\TPHorizModule,16\TPVertModule)
+  \collaboration
 \end{textblock*}
 
 %% édition
