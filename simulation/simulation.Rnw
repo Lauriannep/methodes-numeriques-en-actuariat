@@ -893,7 +893,7 @@ sample(x, size, replace = FALSE, prob = NULL)},
 \label{sec:simulation:modeles-actuariels}
 
 Cette section traite de techniques de simulation pour des
-distributions couramment utilisés dans la modélisation des risques en
+distributions couramment utilis�es dans la modélisation des risques en
 sciences actuarielles.
 
 \subsection{Mélanges discrets}
