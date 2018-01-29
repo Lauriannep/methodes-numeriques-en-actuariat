@@ -78,7 +78,7 @@ lines(X[hpts, ])
 La simulation stochastique est une technique de plus en plus utilisée
 en actuariat comme dans la plupart des sciences appliquées, en génie,
 en finance, etc. Les modèles mathématiques et la simulation
-stochastiques comportent plusieurs avantages par rapport à
+stochastique comportent plusieurs avantages par rapport à
 l'expérimentation directe, dont, entre autres:
 \begin{itemize}
 \item la simulation est non destructrice et peu coûteuse;
