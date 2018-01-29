@@ -1053,7 +1053,7 @@ deux étapes de l'\autoref*{algo:simulation:melange-continu} pour
 \emph{chaque} observation. Le paramètre de mélange ($\theta$) change
 donc à chaque fois. C'est essentiel, autrement il n'y aurait pas de
 mélange et nous obtiendrions simplement un échantillon de la
-distribution $f(x|theta)$ pour une valeur de $\theta$ quelconque.
+distribution $f(x|\theta)$ pour une valeur de $\theta$ quelconque.
 
 La simulation de mélanges continus s'avère très simple à réaliser en R
 grâce à la nature vectorielle des fonctions de simulation.
