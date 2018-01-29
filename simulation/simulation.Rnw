@@ -893,7 +893,7 @@ sample(x, size, replace = FALSE, prob = NULL)},
 \label{sec:simulation:modeles-actuariels}
 
 Cette section traite de techniques de simulation pour des
-distributions couramment utilis�es dans la modélisation des risques en
+distributions couramment utilisées dans la modélisation des risques en
 sciences actuarielles.
 
 \subsection{Mélanges discrets}
@@ -1024,7 +1024,7 @@ $p_j$ de la \autoref{def:simulation:melange-discret}.
   \begin{equation*}
     f_X(x) = \int_\Omega f(x|\theta) u(\theta)\, d\theta.
   \end{equation*}
-  Cette distribution distribution est un mélange continu des
+  Cette distribution est un mélange continu des
   distributions de $X|\Theta$ et $\Theta$.
 \end{definition}
 
