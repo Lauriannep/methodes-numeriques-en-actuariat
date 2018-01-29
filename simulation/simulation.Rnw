@@ -323,7 +323,7 @@ axis(2, at = 0:2/2)
     \begin{displaymath}
       x =
       \begin{cases}
-        2u,    & \text{si } 0 \leq u < 1 \\
+        2u,    & \text{si } 0 \leq u < 0,5 \\
         2,     & \text{si } u = 0,5 \\
         2u + 1 & \text{si } 0,5 < u < 1.
       \end{cases}
