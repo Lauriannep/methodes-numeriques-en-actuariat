@@ -281,12 +281,12 @@ nombres uniformes sur $[0, 1)$.
     \end{cases}
   \end{displaymath}
   Il s'agit d'une variable aléatoire \emph{mixte} (en partie continue
-  et en partie continue) dont la fonction de répartition est
+  et en partie discrète) dont la fonction de répartition est
   \begin{displaymath}
     F(x) =
     \begin{cases}
       0,5x, & 0 \leq x < 1 \\
-      0,5   & 1 \leq x < 2 \\
+      0,5,   & 1 \leq x < 2 \\
       0,5x - 0,5, & 2 \leq x < 3.
     \end{cases}
   \end{displaymath}
@@ -323,7 +323,7 @@ axis(2, at = 0:2/2)
     \begin{displaymath}
       x =
       \begin{cases}
-        2u,    & \text{si } 0 \leq u < 1 \\
+        2u,    & \text{si } 0 \leq u < 0,5 \\
         2,     & \text{si } u = 0,5 \\
         2u + 1 & \text{si } 0,5 < u < 1.
       \end{cases}
@@ -684,7 +684,7 @@ axis(side = 1, at = 0.5)
 <<echo=FALSE, fig=TRUE>>=
 x <- runif(200, -1, 1)
 y <- runif(200, -1, 1)
-w <- x^2 + y^2 < 1
+w <- x^2 + y^2 < 1
 t <- seq(0, 2 * pi, length = 1000)
 
 plot(x, y, xlab="x", ylab="y", xlim=c(-1, 1), ylim=c(-1, 1),
