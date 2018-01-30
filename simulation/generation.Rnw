@@ -118,7 +118,7 @@ en force.
   Nous pourrons faire la vérification demandée par simulation. L'idée
   consiste à générer les coordonnées de quatre points dans le plan et
   de vérifier si trois de ceux-ci forment l'enveloppe convexe ---
-  autrement dit, l'enveloppe est un triangle. En répètant cette
+  autrement dit, l'enveloppe est un triangle. En répétant cette
   procédure un grand nombre de fois, nous pourrons calculer la
   \emph{proportion} d'enveloppes triangulaires et ainsi obtenir une
   estimation de la \emph{probabilité} que l'enveloppe convexe de
