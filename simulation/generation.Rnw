@@ -278,7 +278,7 @@ où $0 \leq x_i < m$ et
 Un générateur est dit \emph{multiplicatif} lorsque l'incrément est
 $c = 0$, et \emph{mixte} dans le cas contraire.
 
-Pour obtenir des nombre uniformes sur $[0, 1]$ ou $(0, 1)$, il suffit
+Pour obtenir des nombres uniformes sur $[0, 1]$ ou $(0, 1)$, il suffit
 de définir
 \begin{equation*}
   u_i = \frac{x_i}{m}.
