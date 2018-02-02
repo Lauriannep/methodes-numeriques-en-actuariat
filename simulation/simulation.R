@@ -15,7 +15,7 @@
 ### EXEMPLE 2.1
 ###
 
-## Simulation un échantillon aléatoire d'une distribution
+## Simulation d'un échantillon aléatoire d'une distribution
 ## exponentielle par la méthode de l'inverse.
 lambda <- 5
 x <- -log(runif(1000))/lambda
