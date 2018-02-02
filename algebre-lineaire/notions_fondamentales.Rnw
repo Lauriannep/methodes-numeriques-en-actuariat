@@ -9,7 +9,7 @@
 %%% International de Creative Commons.
 %%% http://creativecommons.org/licenses/by-sa/4.0/
 
-\chapter{Notions fondamentales d’algrèbre linéaire}
+\chapter{Notions fondamentales d’algèbre linéaire}
 \label{chap:notions}
 
 \begin{objectifs}
