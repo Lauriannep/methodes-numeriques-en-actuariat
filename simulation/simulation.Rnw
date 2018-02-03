@@ -2530,7 +2530,7 @@ rmixture(n, c(0.3, 0.7),
     \item Le mélange discret est, ici, celui d'une distribution dégénérée
       en $x = 0$ et d'une Poisson de paramètre $\lambda = 2$. La
       simulation «manuelle» est en tous points similaire à ce que nous
-      avons fait en b). Cependant, à moins de créer une fonction de
+      avons fait en a). Cependant, à moins de créer une fonction de
       «simulation» d'une distribution dégénérée, nous ne pouvons
       utiliser directement la fonction \code{rmixture}.
 <<echo=TRUE, eval=FALSE>>=
