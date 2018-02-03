@@ -2534,8 +2534,8 @@ rmixture(n, c(0.3, 0.7),
       «simulation» d'une distribution dégénérée, nous ne pouvons
       utiliser directement la fonction \code{rmixture}.
 <<echo=TRUE, eval=FALSE>>=
-n1 <- rbinom(1, n, 0.3)
-c(rep(n1, 0), rpois(n - n1, 2))
+n1 <- rbinom(1, n, 0.5647)
+c(rep(0, n1), rpois(n - n1, 2))
 @
       Le paquetage \pkg{actuar} fournit néanmoins une fonction pour
       simuler des observations d'un tel mélange. En effet, celui-ci
