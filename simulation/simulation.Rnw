@@ -1849,7 +1849,7 @@ plot(x1, x2, pch = 19, col = col)
     \text{Gamma}(\beta, 1)$ deux variables aléatoires
     indépendantes. Démontrer que
     \begin{displaymath}
-      X = \frac{Y_1}{Y_1 + Y_2} \sim \text{Bêta}(\alpha, \lambda).
+      X = \frac{Y_1}{Y_1 + Y_2} \sim \text{Bêta}(\alpha, \beta).
     \end{displaymath}
   \item Utiliser le résultat en a) pour proposer un algorithme de
     simulation d'observations d'une loi Bêta$(\alpha, \lambda)$.
@@ -2530,12 +2530,12 @@ rmixture(n, c(0.3, 0.7),
     \item Le mélange discret est, ici, celui d'une distribution dégénérée
       en $x = 0$ et d'une Poisson de paramètre $\lambda = 2$. La
       simulation «manuelle» est en tous points similaire à ce que nous
-      avons fait en b). Cependant, à moins de créer une fonction de
+      avons fait en a). Cependant, à moins de créer une fonction de
       «simulation» d'une distribution dégénérée, nous ne pouvons
       utiliser directement la fonction \code{rmixture}.
 <<echo=TRUE, eval=FALSE>>=
-n1 <- rbinom(1, n, 0.3)
-c(rep(n1, 0), rpois(n - n1, 2))
+n1 <- rbinom(1, n, 0.5647)
+c(rep(0, n1), rpois(n - n1, 2))
 @
       Le paquetage \pkg{actuar} fournit néanmoins une fonction pour
       simuler des observations d'un tel mélange. En effet, celui-ci
