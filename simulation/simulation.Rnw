@@ -972,7 +972,7 @@ curve(p * dlnorm(x, par1[1], par1[2]) + (1 - p) * dlnorm(x, par2[1], par2[2]),
 La conception d'un algorithme de simulation d'un mélange discret à
 deux distributions nécessite de bien comprendre que chaque observation
 provient de l'une \emph{ou} de l'autre des distributions. Reste, à
-chaque fois, à déterminer de quelle distribution simuler.
+chaque fois, à déterminer à partir de quelle distribution simuler.
 
 \begin{algorithme}[Mélange discret de deux distributions]
   \label{algo:simulation:melange-discret}
