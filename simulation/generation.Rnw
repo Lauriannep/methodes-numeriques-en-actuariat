@@ -377,7 +377,7 @@ des ans, plusieurs articles scientifiques ont démontré les lacunes de
 la fonction \code{RAND()}.
 
 Par exemple, dans les versions 2003 et 2007, Microsoft Excel utilisait
-le générateur de nombres aléatoire Whichmann--Hill. Ce générateur a
+le générateur de nombres aléatoires Whichmann--Hill. Ce générateur a
 longtemps été considéré comme le meilleur disponible, mais il a été
 supplanté ces dernières années. Microsoft prétendait que la période du
 générateur Whichmann--Hill est $10^{13}$, mais omettait de tenir
