@@ -2554,7 +2554,7 @@ rzmpois(n, 2, p0 = 0.6236)
       paquetage \pkg{actuar}, ou encore plus directement avec la
       fonction \code{rpoisinvgauss} du même paquetage.
 <<echo=TRUE, eval=FALSE>>=
-rpois(n, rinvgauss(2, 1))
+rpois(n, rinvgauss(n, 2, 1))
 @
 <<echo=TRUE, eval=FALSE>>=
 rpoisinvgauss(n, 2, 1)
