@@ -15,7 +15,7 @@
 ### EXEMPLE 2.1
 ###
 
-## Simulation d'un échantillon aléatoire d'une distribution
+## Simulation un échantillon aléatoire d'une distribution
 ## exponentielle par la méthode de l'inverse.
 lambda <- 5
 x <- -log(runif(1000))/lambda
@@ -125,7 +125,7 @@ rgamma(n, 11:2, 2:11)      # G(11, 2), G(10, 3), ..., G(2, 11)
 ## La fonction 'sample' sert pour simuler d'une distribution
 ## discrète quelconque. Le premier argument est le support de
 ## la distribution et le second, la taille de l'échantillon
-## désirée. Par défaut, l'échantillonnage se fait avec remise
+## désirée. Par défaut, l'échantillonnage se fait sans remise
 ## et avec des probabilités égales sur tout le support.
 sample(1:49, 7)            # numéros pour le 7/49
 sample(1:10, 10)           # permutation des nombres de 1 à 10
