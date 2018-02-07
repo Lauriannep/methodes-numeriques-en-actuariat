@@ -384,7 +384,7 @@ pratique.
 On exécute R en lot depuis la ligne de commande (Invite de commande
 sous Windows, Terminal sous macOS ou Linux). Une fois placé dans le
 répertoire contenant les fichiers de script, il suffit d'entrer à la
-ligne de commande
+ligne de commande:
 \begin{Schunk}
 \begin{Verbatim}
 $ R CMD BATCH go.R

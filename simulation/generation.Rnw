@@ -118,7 +118,7 @@ en force.
   Nous pourrons faire la vérification demandée par simulation. L'idée
   consiste à générer les coordonnées de quatre points dans le plan et
   de vérifier si trois de ceux-ci forment l'enveloppe convexe ---
-  autrement dit, l'enveloppe est un triangle. En répètant cette
+  autrement dit, l'enveloppe est un triangle. En répétant cette
   procédure un grand nombre de fois, nous pourrons calculer la
   \emph{proportion} d'enveloppes triangulaires et ainsi obtenir une
   estimation de la \emph{probabilité} que l'enveloppe convexe de
@@ -278,7 +278,7 @@ où $0 \leq x_i < m$ et
 Un générateur est dit \emph{multiplicatif} lorsque l'incrément est
 $c = 0$, et \emph{mixte} dans le cas contraire.
 
-Pour obtenir des nombre uniformes sur $[0, 1]$ ou $(0, 1)$, il suffit
+Pour obtenir des nombres uniformes sur $[0, 1]$ ou $(0, 1)$, il suffit
 de définir
 \begin{equation*}
   u_i = \frac{x_i}{m}.
@@ -377,7 +377,7 @@ des ans, plusieurs articles scientifiques ont démontré les lacunes de
 la fonction \code{RAND()}.
 
 Par exemple, dans les versions 2003 et 2007, Microsoft Excel utilisait
-le générateur de nombres aléatoire Whichmann--Hill. Ce générateur a
+le générateur de nombres aléatoires Whichmann--Hill. Ce générateur a
 longtemps été considéré comme le meilleur disponible, mais il a été
 supplanté ces dernières années. Microsoft prétendait que la période du
 générateur Whichmann--Hill est $10^{13}$, mais omettait de tenir

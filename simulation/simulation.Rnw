@@ -281,12 +281,12 @@ nombres uniformes sur $[0, 1)$.
     \end{cases}
   \end{displaymath}
   Il s'agit d'une variable aléatoire \emph{mixte} (en partie continue
-  et en partie continue) dont la fonction de répartition est
+  et en partie discrète) dont la fonction de répartition est
   \begin{displaymath}
     F(x) =
     \begin{cases}
       0,5x, & 0 \leq x < 1 \\
-      0,5   & 1 \leq x < 2 \\
+      0,5,   & 1 \leq x < 2 \\
       0,5x - 0,5, & 2 \leq x < 3.
     \end{cases}
   \end{displaymath}
@@ -323,7 +323,7 @@ axis(2, at = 0:2/2)
     \begin{displaymath}
       x =
       \begin{cases}
-        2u,    & \text{si } 0 \leq u < 1 \\
+        2u,    & \text{si } 0 \leq u < 0,5 \\
         2,     & \text{si } u = 0,5 \\
         2u + 1 & \text{si } 0,5 < u < 1.
       \end{cases}
@@ -684,7 +684,7 @@ axis(side = 1, at = 0.5)
 <<echo=FALSE, fig=TRUE>>=
 x <- runif(200, -1, 1)
 y <- runif(200, -1, 1)
-w <- x^2 + y^2 < 1
+w <- x^2 + y^2 < 1
 t <- seq(0, 2 * pi, length = 1000)
 
 plot(x, y, xlab="x", ylab="y", xlim=c(-1, 1), ylim=c(-1, 1),
@@ -893,7 +893,7 @@ sample(x, size, replace = FALSE, prob = NULL)},
 \label{sec:simulation:modeles-actuariels}
 
 Cette section traite de techniques de simulation pour des
-distributions couramment utilisés dans la modélisation des risques en
+distributions couramment utilisées dans la modélisation des risques en
 sciences actuarielles.
 
 \subsection{Mélanges discrets}
@@ -972,7 +972,7 @@ curve(p * dlnorm(x, par1[1], par1[2]) + (1 - p) * dlnorm(x, par2[1], par2[2]),
 La conception d'un algorithme de simulation d'un mélange discret à
 deux distributions nécessite de bien comprendre que chaque observation
 provient de l'une \emph{ou} de l'autre des distributions. Reste, à
-chaque fois, à déterminer de quelle distribution simuler.
+chaque fois, à déterminer à partir de quelle distribution simuler.
 
 \begin{algorithme}[Mélange discret de deux distributions]
   \label{algo:simulation:melange-discret}
@@ -1024,7 +1024,7 @@ $p_j$ de la \autoref{def:simulation:melange-discret}.
   \begin{equation*}
     f_X(x) = \int_\Omega f(x|\theta) u(\theta)\, d\theta.
   \end{equation*}
-  Cette distribution distribution est un mélange continu des
+  Cette distribution est un mélange continu des
   distributions de $X|\Theta$ et $\Theta$.
 \end{definition}
 
@@ -1849,7 +1849,7 @@ plot(x1, x2, pch = 19, col = col)
     \text{Gamma}(\beta, 1)$ deux variables aléatoires
     indépendantes. Démontrer que
     \begin{displaymath}
-      X = \frac{Y_1}{Y_1 + Y_2} \sim \text{Bêta}(\alpha, \lambda).
+      X = \frac{Y_1}{Y_1 + Y_2} \sim \text{Bêta}(\alpha, \beta).
     \end{displaymath}
   \item Utiliser le résultat en a) pour proposer un algorithme de
     simulation d'observations d'une loi Bêta$(\alpha, \lambda)$.
@@ -2485,7 +2485,7 @@ options(op)
   \item Variable aléatoire dont la fonction de densité est
     $f(x) = 0,3 f_1(x) + 0,7 f_2(x)$, où $f_1$ est la densité d'une
     distribution exponentielle de moyenne $1/2$ et $f_2$ est la
-    densité d'une distribution gamma de paramètre $\alpha = 3$ et de
+    densité d'une distribution gamma de paramètre $\alpha = 2$ et de
     moyenne $6$.
   \item Mélange $f(x) = 0,5647 I\{x = 0\} + 0,4353 (2^x e^{-2}/x!)$,
     où $I\{\mathcal{A}\}$ est une fonction indicatrice qui vaut $1$
@@ -2530,12 +2530,12 @@ rmixture(n, c(0.3, 0.7),
     \item Le mélange discret est, ici, celui d'une distribution dégénérée
       en $x = 0$ et d'une Poisson de paramètre $\lambda = 2$. La
       simulation «manuelle» est en tous points similaire à ce que nous
-      avons fait en b). Cependant, à moins de créer une fonction de
+      avons fait en a). Cependant, à moins de créer une fonction de
       «simulation» d'une distribution dégénérée, nous ne pouvons
       utiliser directement la fonction \code{rmixture}.
 <<echo=TRUE, eval=FALSE>>=
-n1 <- rbinom(1, n, 0.3)
-c(rep(n1, 0), rpois(n - n1, 2))
+n1 <- rbinom(1, n, 0.5647)
+c(rep(0, n1), rpois(n - n1, 2))
 @
       Le paquetage \pkg{actuar} fournit néanmoins une fonction pour
       simuler des observations d'un tel mélange. En effet, celui-ci
@@ -2554,7 +2554,7 @@ rzmpois(n, 2, p0 = 0.6236)
       paquetage \pkg{actuar}, ou encore plus directement avec la
       fonction \code{rpoisinvgauss} du même paquetage.
 <<echo=TRUE, eval=FALSE>>=
-rpois(n, rinvgauss(2, 1))
+rpois(n, rinvgauss(n, 2, 1))
 @
 <<echo=TRUE, eval=FALSE>>=
 rpoisinvgauss(n, 2, 1)
