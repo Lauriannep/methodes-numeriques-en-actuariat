@@ -1085,7 +1085,7 @@ qui donne lieu à ce que nous nommerons des \emph{modèles
   forme d'arbre. Dans de tels cas, le nombre de valeurs à simuler
   pourrait différer à chaque niveau de l'arbre.}. %
 La généralisation de l'\autoref{algo:simulation:melange-continu} pour
-les modèles hiérarchique devrait aller de soi.
+les modèles hiérarchiques devrait aller de soi.
 
 \begin{exemple}
   Soit le modèle hiérarchique suivant où les variables aléatoires
