@@ -166,7 +166,7 @@ intervalle quelconque, en général $(0, 1)$. Comment procéder?
   aléatoires.
 \item Une ancienne technique est celle des carrés centraux de
   von~Neumann: on prend un nombre à quatre chiffres, on l'élève au
-  carré puis on extrait les quatre chiffres du milieu, et ainsi de
+  carré, puis on extrait les quatre chiffres du milieu, et ainsi de
   suite. Par exemple:
   \begin{align*}
     8653^2 &= 74\symbf{8744}09 \\
