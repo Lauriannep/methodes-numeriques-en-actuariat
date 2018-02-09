@@ -329,9 +329,6 @@ axis(2, at = 0:2/2)
       \end{cases}
     \end{displaymath}
   \end{enumerate}
-  \gotorbox{Une mise en œuvre en R de l'algorithme ci-dessus est
-    présentée dans le code informatique de la
-    \autoref{sec:simulation:code}.}%
   \qed
 \end{exemple}
 
@@ -661,6 +658,10 @@ axis(side = 1, at = 0.5)
   s'attendre à ne rejeter que $0,2/1,2 \approx 17~\%$ des nombres
   simulés, une amélioration importante par rapport à
   l'\autoref{exemple:simulation:beta:1}. %
+
+  \gotorbox{Une mise en œuvre en R de l'algorithme ci-dessus est
+    présentée dans le code informatique de la
+    \autoref{sec:simulation:code}.}%
   \qed
 \end{exemple}
 
@@ -2504,11 +2505,11 @@ options(op)
     \pkg{actuar} permet de simuler des observations de la distribution
     inverse gaussienne.
   \item Dsitribution composée $S = X_1 + \dots + X_N$ avec
-    $N \sim \text{Poisson}(2)$ et $X \sim \text{Log-normale}(7,1, 1)$.
+    $N \sim \text{Poisson}(2)$ et $X \sim \text{Log-normale}(7, 1)$.
   \item Binomiale négative composée où les paramètres de la binomiale
     négative sont $r = 2$ et $p = 0,3$, et la distribution de la
     variable aléatoire $X$ est une log-normale de paramètres
-    $(7,1, 1)$.
+    $(7, 1)$.
   \end{enumerate}
   \begin{sol}
     Dans chacun des cas ci-dessous, nous considérons que l'objet
@@ -2542,7 +2543,7 @@ c(rep(0, n1), rpois(n - n1, 2))
       est simplement une distribution de Poisson avec une probabilité
       en $x = 0$ de $p_0 = 0,5647 + 0,4353 e^{-2} = 0,6236$, une
       distribution autrement connue sous le nom de Poisson
-      zéro-modifiée. Les fonctions avec racine \meta{zmpois} de
+      zéro modifiée. Les fonctions avec racine \meta{zmpois} de
       \pkg{actuar} permettent de travailler avec cette distribution.
 <<echo=TRUE, eval=FALSE>>=
 rzmpois(n, 2, p0 = 0.6236)
@@ -2564,20 +2565,20 @@ rpoisinvgauss(n, 2, 1)
       \code{rcomppois} pour ce faire.
 <<echo=TRUE, eval=FALSE>>=
 sapply(rpois(n, 2),
-       function(n) sum(rlnorm(n, log(2000), 1)))
+       function(n) sum(rlnorm(n, 7, 1)))
 @
 <<echo=TRUE, eval=FALSE>>=
-rcomppois(n, 2, rlnorm(log(2000), 1))
+rcomppois(n, 2, rlnorm(7, 1))
 @
     \item Il faut cette fois simuler des observations d'une distribution
       binomiale négative composée. Le paquetage \pkg{actuar} fournit
       la fonction \code{rcompound} pour ce cas général.
 <<echo=TRUE, eval=FALSE>>=
 sapply(rnbinom(n, 2, 0.3),
-       function(n) sum(rlnorm(n, log(2000), 1)))
+       function(n) sum(rlnorm(n, 7, 1)))
 @
 <<echo=TRUE, eval=FALSE>>=
-rcompound(n, rnbinom(2, 0.3), rlnorm(log(2000), 1))
+rcompound(n, rnbinom(2, 0.3), rlnorm(7, 1))
 @
     \end{enumerate}
   \end{sol}
