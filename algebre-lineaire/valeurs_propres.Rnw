@@ -1806,8 +1806,7 @@ eigen(m)
 \input{reponses-valeurs_propres}
 
 %%% Local Variables:
-%%% mode: latex
-%%% TeX-engine: xetex
 %%% TeX-master: "methodes-numeriques-en-actuariat_algebre-lineaire.tex"
+%%% TeX-engine: xetex
 %%% coding: utf-8
 %%% End:

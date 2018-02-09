@@ -2051,6 +2051,6 @@ omet généralement $b$ pour les nombres en base $10$.
 \input{reponses-arithmetique_ordinateurs}
 
 %%% Local Variables:
-%%% engine: xetex
 %%% TeX-master: "methodes-numeriques-en-actuariat_analyse-numerique"
+%%% TeX-engine: xetex
 %%% End:

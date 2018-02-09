@@ -709,8 +709,7 @@ plot3d(u[1:1000], u[2:1001], u[3:1002])
 \Closesolutionfile{solutions}
 
 %%% Local Variables:
-%%% mode: latex
-%%% TeX-engine: xetex
 %%% TeX-master: "methodes-numeriques-en-actuariat_simulation"
+%%% TeX-engine: xetex
 %%% coding: utf-8
 %%% End:
