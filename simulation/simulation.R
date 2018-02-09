@@ -39,7 +39,7 @@ hist(x, prob = TRUE) # histogramme gradué en probabilités
 curve(dexp(x, rate = lambda), add = TRUE)
 
 ###
-### EXEMPLE 2.4
+### EXEMPLE 2.5
 ###
 
 ## Nous effectuons une mise en oeuvre de l'algorithme
