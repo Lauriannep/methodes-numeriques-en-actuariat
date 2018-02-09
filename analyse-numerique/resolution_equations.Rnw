@@ -893,7 +893,7 @@ développement comme négligeables. On obtient alors l'approximation
 Tel qu'illustré à la \autoref{fig:resolution:newtonraphson}, on
 peut répéter la procédure ci-dessus si le point $\hat{x}$ est trop
 éloigné de la racine $x^*$. On utilise alors $\hat{x}$ comme nouveau
-point où l'on calcule la tengente, et ainsi de suite jusqu'à
+point où l'on calcule la tangente, et ainsi de suite jusqu'à
 l'obtention d'une «bonne» approximation.
 
 Formellement, soit $f$ une fonction différentiable sur $[a, b]$ et
