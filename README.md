@@ -94,6 +94,9 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 ### (en développement)
 
 - Correction du texte du paragraphe suivant l'algorithme 2.3.
+- Au chapitre 2, le renvoi vers le code informatique à la fin de l'exemple 2.2 devait plutôt se trouver à la fin de l'exemple 2.5.
+- Dans `simulation.R`, le code correspondant à l'exemple 2.5 était identifié à l'exemple 2.4.
+- À l'exercice 2.17, parties d) et e), le premier paramètre de la distribution log-normale est changé de 7,1 à 7 pour éviter toute confusion dans l'énoncé, et de log(2000) à 7 dans la solution pour que la solution soit juste, quoi.
 
 ### 2018.01-1a (2018-01-24)
 
