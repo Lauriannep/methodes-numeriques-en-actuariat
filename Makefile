@@ -26,9 +26,14 @@
 ARCHIVE = methodes-numeriques-en-actuariat.zip
 PREAMBLE = share/preamble.tex
 README = README.md
-OTHER = LICENSE COLLABORATION-HOWTO.md
+COLLABORATEURS = COLLABORATEURS
+OTHER = LICENSE COLLABORATION-HOWTO.md 
 
-## Numéro de version extrait du préambule partagé
+## Informations de publication extraites du préambule partagé
+TITLE = $(shell grep "\\\\title" ${PREAMBLE} \
+	| cut -d { -f 2 | tr -d })
+URL = $(shell grep "newcommand{\\\\ghurl" ${PREAMBLE} \
+	| cut -d } -f 2 | tr -d {)
 YEAR = $(shell grep "newcommand{\\\\year" ${PREAMBLE} \
 	| cut -d } -f 2 | tr -d {)
 MONTH = $(shell grep "newcommand{\\\\month"  ${PREAMBLE} \
@@ -50,14 +55,24 @@ all: pdf
 
 .PHONY: pdf zip release create-release upload publish clean
 
+FORCE: ;
+
 pdf:
 	${MAKE} pdf -C simulation
 	${MAKE} pdf -C analyse-numerique
 	${MAKE} pdf -C algebre-lineaire
 
-release: zip create-release upload publish
+contrib: ${COLLABORATEURS}
 
-zip: ${README} ${OTHER}
+${COLLABORATEURS}: FORCE
+	git log --pretty="%an%n" | sort | uniq | grep -v -E "Vincent Goulet|Inconnu" | \
+	  awk 'BEGIN { print "Les personnes dont le nom [1] apparait ci-dessous ont contribué à\nl'\''amélioration de «${TITLE}»." } \
+	       { print $$0 } \
+	       END { print "\n[1] Noms tels qu'\''ils figurent dans le journal du dépôt Git\n    ${URL}" }' > ${COLLABORATEURS}
+
+release: contrib zip create-release upload publish
+
+zip: ${README} ${OTHER} ${COLLABORATEURS}
 	if [ -d ${TMPDIR} ]; then ${RM} ${TMPDIR}; fi
 	mkdir -p ${TMPDIR}/simulation \
 	  ${TMPDIR}/analyse-numerique \
@@ -66,7 +81,7 @@ zip: ${README} ${OTHER}
 	  awk 'state==0 && /^# / { state=1 }; \
 	       /^## Auteur/ { printf("## Édition\n\n%s\n\n", "${VERSION}") } \
 	       state' ${README} >> ${TMPDIR}/${README}
-	cp ${OTHER} ${TMPDIR}
+	cp ${OTHER} ${COLLABORATEURS} ${TMPDIR}
 	${MAKE} install -C simulation
 	${MAKE} install -C analyse-numerique
 	${MAKE} install -C algebre-lineaire
@@ -97,7 +112,7 @@ create-release :
 	      README.md >> relnotes.in
 	curl --data @relnotes.in ${REPOSURL}/releases?access_token=${OAUTHTOKEN}
 	rm relnotes.in
-	@echo ----- Done creating the release
+		@echo ----- Done creating the release
 
 upload :
 	@echo ----- Getting upload URL from GitHub...
