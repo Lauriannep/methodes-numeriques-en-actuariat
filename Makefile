@@ -6,11 +6,15 @@
 ## 'make pdf' crée les fichiers .tex à partir des fichiers .Rnw avec
 ## Sweave et compile le document maître avec XeLaTeX.
 ##
-## 'make zip' crée l'archive contenant le code source des sections
-## d'exemples.
+## 'make tex' crée les fichiers .tex à partir des fichiers .Rnw avec
+## Sweave.
 ##
-## 'make release' crée une nouvelle version dans GitHub, téléverse les
-## fichiers PDF et .zip et modifie les liens de la page web.
+## 'make contrib' crée le fichier COLLABORATEURS.
+##
+## 'make zip' crée l'archive de la distribution.
+##
+## 'make release' crée une nouvelle version dans GitHub, téléverse le
+## fichier .zip et modifie les liens de la page web.
 ##
 ## 'make all' est équivalent à 'make pdf' question d'éviter les
 ## publications accidentelles.
