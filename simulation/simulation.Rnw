@@ -1217,7 +1217,7 @@ sim.disque <- function(n)
 \begin{prob-solution}
   Nous adoptons la stratégie expliquée à l'astuce de la
   \autopageref{astuce:simulation:2}. La fonction R de la
-  \autoref{fig:simulation:sim.disque} genère des points distribués
+  \autoref{fig:simulation:sim.disque} génère des points distribués
   uniformément sur un disque par la méthode d'acceptation-rejet en
   simulant d'abord des points sur un carré.
 
