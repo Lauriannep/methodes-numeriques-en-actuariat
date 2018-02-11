@@ -72,7 +72,7 @@ est une matrice $m \times n$ composée des éléments $a_{ij}$, $i = 1,
   \intertext{ou simplement}
   \mat{A} &= [a_{ij}]
 \end{align*}
-lorsque les dimensions de la matrices sont claires par le contexte.
+lorsque les dimensions de la matrice sont claires par le contexte.
 
 
 \subsection{Matrice carrée}
