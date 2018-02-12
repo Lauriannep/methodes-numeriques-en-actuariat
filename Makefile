@@ -62,7 +62,7 @@ all: pdf
 
 .PHONY: pdf zip release create-release upload publish clean
 
-FORCE: ;
+FORCE:
 
 pdf:
 	${MAKE} pdf -C simulation
@@ -96,7 +96,7 @@ zip: ${README} ${OTHER} ${COLLABORATEURS}
 	cd ${TMPDIR} && zip --filesync -r ../${ARCHIVE} *
 	${RM} ${TMPDIR}
 
-create-release :
+create-release:
 	@echo ----- Creating release on GitHub...
 	@if [ -n "$(shell git status --porcelain | grep -v '^??')" ]; then \
 	     echo "uncommitted changes in repository; not creating release"; exit 2; fi
@@ -122,7 +122,7 @@ create-release :
 	rm relnotes.in
 		@echo ----- Done creating the release
 
-upload :
+upload:
 	@echo ----- Getting upload URL from GitHub...
 	$(eval upload_url=$(shell curl -s ${REPOSURL}/releases/latest \
 	 			  | awk -F '[ {]' '/^  \"upload_url\"/ \
@@ -135,13 +135,13 @@ upload :
              -i "${upload_url}?&name=${ARCHIVE}" -s
 	@echo ----- Done uploading files
 
-publish :
+publish:
 	@echo ----- Publishing the web page...
 	${MAKE} -C docs
 	@echo ----- Done publishing
 
 clean:
-	$(RM) $(RNWFILES:.Rnw=.tex) \
+	${RM} ${RNWFILES:.Rnw=.tex} \
 	      *-[0-9][0-9][0-9].pdf \
 	      *.aux *.log  *.blg *.bbl *.out *.rel *~ Rplots.ps
 

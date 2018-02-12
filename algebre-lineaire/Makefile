@@ -52,29 +52,29 @@ all: pdf
 
 .PHONY: tex pdf Rout clean
 
-pdf: $(MASTER)
+pdf: ${MASTER}
 
-tex: $(RNWFILES:.Rnw=.tex)
+tex: ${RNWFILES:.Rnw=.tex}
 
-Rout: $(SCRIPTS:.R=.Rout)
+Rout: ${SCRIPTS:.R=.Rout}
 
 %.tex: %.Rnw
-	$(SWEAVE) '$<'
+	${SWEAVE} '$<'
 
 %.Rout: %.R
 	echo "options(error=expression(NULL))" | cat - $< > $<.tmp
-	$(RBATCH) $<.tmp $@
-	$(RM) $<.tmp
+	${RBATCH} $<.tmp $@
+	${RM} $<.tmp
 
-$(MASTER): $(MASTER:.pdf=.tex) $(RNWFILES:.Rnw=.tex) $(TEXFILES) $(SCRIPTS)
-	$(TEXI2DVI) $(MASTER:.pdf=.tex)
+${MASTER}: ${MASTER:.pdf=.tex} ${RNWFILES:.Rnw=.tex} ${TEXFILES} ${SCRIPTS}
+	${TEXI2DVI} ${MASTER:.pdf=.tex}
 
 ## la règle 'install' ne devrait être appelée que par ../Makefile
 install: pdf Rout
 	cp ${MASTER} ${SCRIPTS} ${SCRIPTS:.R=.Rout} ../${TMPDIR}/${PARTNAME}
 
 clean:
-	$(RM) $(RNWFILES:.Rnw=.tex) $(SCRIPTS:.R=.Rout) \
+	${RM} ${RNWFILES:.Rnw=.tex} ${SCRIPTS:.R=.Rout} \
 	*-[0-9][0-9][0-9].eps \
 	*-[0-9][0-9][0-9].pdf \
 	*.aux *.log *.blg *.bbl *.out *.rel *~ Rplots.ps
