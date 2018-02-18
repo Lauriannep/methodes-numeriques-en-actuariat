@@ -2504,7 +2504,7 @@ options(op)
     \emph{Astuce}: la fonction \code{rinvgauss} du paquetage
     \pkg{actuar} permet de simuler des observations de la distribution
     inverse gaussienne.
-  \item Dsitribution composée $S = X_1 + \dots + X_N$ avec
+  \item Distribution composée $S = X_1 + \dots + X_N$ avec
     $N \sim \text{Poisson}(2)$ et $X \sim \text{Log-normale}(7, 1)$.
   \item Binomiale négative composée où les paramètres de la binomiale
     négative sont $r = 2$ et $p = 0,3$, et la distribution de la
