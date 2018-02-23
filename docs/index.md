@@ -47,7 +47,7 @@ Vincent Goulet, professeur titulaire, [École d'actuariat](https://www.act.ulava
 
 ## Édition
 
-2018.01-1a ([notes de mise à jour]({{ site.github.repository_url }}/releases/tag/v2018.01-1a/))
+2018.02 ([notes de mise à jour]({{ site.github.repository_url }}/releases/tag/v2018.02/))
 
 ## Table des matières abrégée
 
