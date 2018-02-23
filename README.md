@@ -93,6 +93,8 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ### 2018.02 (2018-02-23)
 
+Corrections diverses. Aucun nouveau contenu.
+
 - Intégration des corrections soumises par les étudiantes et étudiants, principalement dans le document de la première partie.
 - Nouveau fichier `COLLABORATEURS` contenant la liste des personnes ayant contribué à l'amélioration des documents.
 - Correction du texte du paragraphe suivant l'algorithme 2.3.
