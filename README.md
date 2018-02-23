@@ -91,8 +91,10 @@ Question d'éviter les publications accidentelles, `make all` est équivalent à
 
 ## Historique des versions
 
-### (en développement)
+### 2018.02 (2018-02-23)
 
+- Intégration des corrections soumises par les étudiantes et étudiants, principalement dans le document de la première partie.
+- Nouveau fichier `COLLABORATEURS` contenant la liste des personnes ayant contribué à l'amélioration des documents.
 - Correction du texte du paragraphe suivant l'algorithme 2.3.
 - Au chapitre 2, le renvoi vers le code informatique à la fin de l'exemple 2.2 devait plutôt se trouver à la fin de l'exemple 2.5.
 - Dans `simulation.R`, le code correspondant à l'exemple 2.5 était identifié à l'exemple 2.4.
